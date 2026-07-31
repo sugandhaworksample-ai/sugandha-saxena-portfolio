@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-label="Logo and visiting card project cover">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1c2430"/>
+      <stop offset="55%" stop-color="#2f3d4d"/>
+      <stop offset="100%" stop-color="#6f8796"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#g)"/>
+  <rect x="120" y="180" width="620" height="380" rx="18" fill="#f4f1ea" opacity="0.92"/>
+  <rect x="820" y="280" width="540" height="320" rx="18" fill="#0f141b" opacity="0.85"/>
+  <circle cx="430" cy="370" r="58" fill="#1c2430"/>
+  <text x="180" y="640" fill="#f4f1ea" font-family="Georgia, serif" font-size="42">Logo &amp; Visiting Card</text>
+  <text x="180" y="700" fill="#c9d3da" font-family="Arial, sans-serif" font-size="24">Sugandha Saxena  Brand Identity</text>
+</svg>

@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sugandha Saxena Portfolio
 
-## Getting Started
+Premium personal portfolio for **Sugandha Saxena** — Sr. Creative Designer & Creative Technologist based in Noida.
 
-First, run the development server:
+This is not a template site. The goal is a digital experience with editorial typography, intentional motion, structured case studies, and excellent performance.
+
+## Stack
+
+- Next.js 15 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- shadcn/ui
+- Framer Motion + GSAP
+- React Three Fiber (used only where meaningful)
+- MDX case studies
+- ESLint + Prettier + Husky + lint-staged
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script              | Purpose                  |
+| ------------------- | ------------------------ |
+| `npm run dev`       | Local development server |
+| `npm run build`     | Production build         |
+| `npm run start`     | Serve production build   |
+| `npm run lint`      | ESLint                   |
+| `npm run format`    | Prettier write           |
+| `npm run typecheck` | TypeScript check         |
 
-## Learn More
+## Content workflow
 
-To learn more about Next.js, take a look at the following resources:
+Projects live in `content/projects/*.mdx` with Zod-validated frontmatter.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Add an MDX file: `content/projects/my-project.mdx`
+2. Place media in `public/projects/my-project/`
+3. The route `/projects/my-project` is generated automatically
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Source of truth for Phase 2 imports: [Behance profile](https://www.behance.net/saxenasugu7614).
 
-## Deploy on Vercel
+## Architecture
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+app/            App Router pages + SEO routes
+components/     Shared UI, layout, MDX renderers
+features/       Feature-level compositions
+content/        MDX projects
+lib/            Projects loader, SEO, motion tokens, utils
+constants/      Site + navigation config
+hooks/          Shared hooks
+public/         Static assets + project media
+styles/         Global CSS + design tokens
+types/          Shared TypeScript types
+utils/          Convenience re-exports
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Design system
+
+- Display font: Syne
+- Body font: Instrument Sans
+- Dark mode default via `next-themes`
+- Motion tokens in `lib/motion.ts` (Emil Kowalski-aligned: UI under ~300ms, ease-out)
+
+## Deployment
+
+Vercel-ready. Set the production domain in `constants/site.ts` before launch.
+
+## License
+
+Private portfolio content. All project work © Sugandha Saxena.
