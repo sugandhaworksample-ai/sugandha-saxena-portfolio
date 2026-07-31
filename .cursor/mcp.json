@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "behance": {
+      "command": "node",
+      "args": ["C:\\suggu\\tools\\behance-mcp-server\\dist\\index.js"],
+      "env": {
+        "PUPPETEER_EXECUTABLE_PATH": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+      }
+    }
+  }
+}

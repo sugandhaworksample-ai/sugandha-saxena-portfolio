@@ -4,8 +4,10 @@ import { Instrument_Sans, Syne } from "next/font/google";
 import { PersonJsonLd } from "@/components/seo/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { ThemeConfigProvider } from "@/components/theme-config-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { siteConfig } from "@/constants/site";
+import { DEFAULT_THEME_PRESET } from "@/constants/theme";
 
 import "@/styles/globals.css";
 
@@ -67,6 +69,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
+      data-theme={DEFAULT_THEME_PRESET}
       className={`${instrumentSans.variable} ${syne.variable} h-full`}
     >
       <body className="flex min-h-full flex-col">
@@ -76,10 +79,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <PersonJsonLd />
-          <SiteHeader />
-          <main className="flex-1">{children}</main>
-          <SiteFooter />
+          <ThemeConfigProvider>
+            <PersonJsonLd />
+            <SiteHeader />
+            <main className="flex-1">{children}</main>
+            <SiteFooter />
+          </ThemeConfigProvider>
         </ThemeProvider>
       </body>
     </html>

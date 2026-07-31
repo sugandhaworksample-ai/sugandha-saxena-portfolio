@@ -1,0 +1,458 @@
+{
+  "version": "1.0.0",
+  "testedAt": "2026-07-31T20:34:05.698Z",
+  "executablePath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "results": {
+    "get_behance_profile_details": {
+      "ok": true,
+      "ms": 10371,
+      "summary": {
+        "keys": [
+          "username",
+          "displayName",
+          "profileUrl",
+          "avatar",
+          "bio",
+          "occupation",
+          "location",
+          "followers",
+          "following",
+          "appreciations",
+          "views",
+          "projectCount",
+          "socialLinks",
+          "projects"
+        ],
+        "title": "Sugandha Saxena"
+      },
+      "sample": {
+        "username": "saxenasugu7614",
+        "displayName": "Sugandha Saxena",
+        "profileUrl": "https://www.behance.net/saxenasugu7614",
+        "avatar": "https://pps.services.adobe.com/api/profile/CAC73DF05A55DBC80A495E41@AdobeID/image/a1ef9edb-baf7-4a86-815b-cf3c4e851475/276",
+        "bio": "Sugandha Saxena on Behance",
+        "occupation": "Sr. Creative Designer",
+        "location": "Noida, India",
+        "followers": "0",
+        "following": "0",
+        "appreciations": "0",
+        "views": "0",
+        "projectCount": 12,
+        "socialLinks": {
+          "linkedin": "https://www.linkedin.com/company/151575",
+          "instagram": "http://instagram.com/behance",
+          "twitter": "http://twitter.com/behance"
+        },
+        "projects": [
+          {
+            "title": "AI Generated Video | Conceptual Visual Story",
+            "url": "https://www.behance.net/gallery/244999627/AI-Generated-Video-Conceptual-Visual-Story"
+          },
+          {
+            "title": "AI Generated Video | Conceptual Visual Story",
+            "url": "https://www.behance.net/gallery/244999505/AI-Generated-Video-Conceptual-Visual-Story"
+          },
+          {
+            "title": "AI Generated Video | Conceptual Visual Story",
+            "url": "https://www.behance.net/gallery/244998983/AI-Generated-Video-Conceptual-Visual-Story"
+          },
+          {
+            "title": "Logo & Visiting Card Design",
+            "url": "https://www.behance.net/gallery/118539013/Logo-Visiting-Card-Design"
+          },
+          {
+            "title": "Brochure Design",
+            "url": "https://www.behance.net/gallery/245014153/Brochure-Design"
+          },
+          {
+            "title": "Website UI Design",
+            "url": "https://www.behance.net/gallery/245013033/Website-UI-Design"
+          },
+          {
+            "title": "Pamphlet Design",
+            "url": "https://www.behance.net/gallery/245010937/Pamphlet-Design"
+          },
+          {
+            "title": "Diary Design",
+            "url": "https://www.behance.net/gallery/230667653/Diary-Design"
+          },
+          {
+            "title": "Board Games Design",
+            "url": "https://www.behance.net/gallery/230598373/Board-Games-Design"
+          },
+          {
+            "title": "Kit Packaging Design",
+            "url": "https://www.behance.net/gallery/230595893/Kit-Packaging-Design"
+          },
+          {
+            "title": "Kit Packaging Design",
+            "url": "https://www.behance.net/gallery/230592641/Kit-Packaging-Design"
+          },
+          {
+            "title": "Kit Packaging Design",
+            "url": "https://www.behance.net/gallery/230590759/Kit-Packaging-Design"
+          }
+        ]
+      }
+    },
+    "search_behance_profiles": {
+      "ok": true,
+      "ms": 8840,
+      "summary": {
+        "count": 5
+      },
+      "sample": [
+        {
+          "username": "claudia-silva",
+          "displayName": "Cláudia SilvaAveiro, Portugal",
+          "profileUrl": "https://www.behance.net/claudia-silva",
+          "avatar": "https://a5.behance.net/c26311680f7d1316b8eb82e933f66a3acc876ded/img/hire/claudia-silva.webp",
+          "location": "",
+          "followers": "0",
+          "following": "0",
+          "appreciations": "0",
+          "views": "0",
+          "projectCount": 0,
+          "isHiring": false
+        },
+        {
+          "username": "sugandhasaxena",
+          "displayName": "sugandhasaxena",
+          "profileUrl": "https://www.behance.net/sugandhasaxena",
+          "avatar": "https://pps.services.adobe.com/api/profile/image/default/c2b0057a-2512-4f9c-acff-b4b342208d8f/276",
+          "location": "",
+          "followers": "0",
+          "following": "0",
+          "appreciations": "0",
+          "views": "0",
+          "projectCount": 0,
+          "isHiring": false
+        },
+        {
+          "username": "saxenasugu7614",
+          "displayName": "saxenasugu7614",
+          "profileUrl": "https://www.behance.net/saxenasugu7614",
+          "avatar": "https://pps.services.adobe.com/api/profile/CAC73DF05A55DBC80A495E41@AdobeID/image/a1ef9edb-baf7-4a86-815b-cf3c4e851475/276",
+          "location": "",
+          "followers": "0",
+          "following": "0",
+          "appreciations": "0",
+          "views": "0",
+          "projectCount": 0,
+          "isHiring": false
+        },
+        {
+          "username": "sugandhasaxena2",
+          "displayName": "sugandhasaxena2",
+          "profileUrl": "https://www.behance.net/sugandhasaxena2",
+          "avatar": "https://pps.services.adobe.com/api/profile/image/default/714bc487-36b8-4fb8-b03e-39cfa266ba36/276",
+          "location": "",
+          "followers": "0",
+          "following": "0",
+          "appreciations": "0",
+          "views": "0",
+          "projectCount": 0,
+          "isHiring": false
+        },
+        {
+          "username": "sugandhac91a",
+          "displayName": "sugandhac91a",
+          "profileUrl": "https://www.behance.net/sugandhac91a",
+          "avatar": "https://pps.services.adobe.com/api/profile/image/default/bb99dbb8-eab4-438d-ab41-f2f9f1b8ead3/276",
+          "location": "",
+          "followers": "0",
+          "following": "0",
+          "appreciations": "0",
+          "views": "0",
+          "projectCount": 0,
+          "isHiring": false
+        }
+      ]
+    },
+    "search_behance_projects": {
+      "ok": true,
+      "ms": 10023,
+      "summary": {
+        "count": 5
+      },
+      "sample": [
+        {
+          "id": "251511455",
+          "title": "Project 251511455",
+          "url": "https://www.behance.net/gallery/251511455/29CM-NIKE-MOON-SHOE-SPECIAL-SEEDING-KIT-DESIGN",
+          "creator": "",
+          "creatorUrl": "",
+          "thumbnail": "https://mir-s3-cdn-cf.behance.net/projects/404/fc38f7251511455.Y3JvcCwyODQzLDIyMjQsNDU3LDE2MQ.png",
+          "views": "0",
+          "appreciations": "0",
+          "comments": "0",
+          "publishedDate": "",
+          "fields": [],
+          "images": []
+        },
+        {
+          "id": "251304835",
+          "title": "Project 251304835",
+          "url": "https://www.behance.net/gallery/251304835/LANEIGE-NEO-CUSHION-MEWY-SEEDING-KIT",
+          "creator": "",
+          "creatorUrl": "",
+          "thumbnail": "https://mir-s3-cdn-cf.behance.net/projects/404/b1f5a6251304835.Y3JvcCw1MTEzLDQwMDAsNDQzLDA.png",
+          "views": "0",
+          "appreciations": "0",
+          "comments": "0",
+          "publishedDate": "",
+          "fields": [],
+          "images": []
+        },
+        {
+          "id": "242683821",
+          "title": "Project 242683821",
+          "url": "https://www.behance.net/gallery/242683821/TAG-HEUER-EXCLUSIVE-GALA-DINNER-INVITATION-KIT",
+          "creator": "",
+          "creatorUrl": "",
+          "thumbnail": "https://mir-s3-cdn-cf.behance.net/projects/404/6d4975242683821.Y3JvcCwxNDAwLDEwOTUsMCwxNTI.png",
+          "views": "0",
+          "appreciations": "0",
+          "comments": "0",
+          "publishedDate": "",
+          "fields": [],
+          "images": []
+        },
+        {
+          "id": "251305811",
+          "title": "Project 251305811",
+          "url": "https://www.behance.net/gallery/251305811/MAMONDE-X-CHUPA-CHUPS-COLLABORATION-KIT",
+          "creator": "",
+          "creatorUrl": "",
+          "thumbnail": "https://mir-s3-cdn-cf.behance.net/projects/404/9a95af251305811.Y3JvcCwxNzA1LDEzMzQsMTE4LDQ2.png",
+          "views": "0",
+          "appreciations": "0",
+          "comments": "0",
+          "publishedDate": "",
+          "fields": [],
+          "images": []
+        },
+        {
+          "id": "247586775",
+          "title": "Project 247586775",
+          "url": "https://www.behance.net/gallery/247586775/Sadira-Full-Brand-Identity-Packaging",
+          "creator": "",
+          "creatorUrl": "",
+          "thumbnail": "https://mir-s3-cdn-cf.behance.net/projects/404/c1c7c8247586775.Y3JvcCw3NzEsNjAzLDM2LDA.jpg",
+          "views": "0",
+          "appreciations": "0",
+          "comments": "0",
+          "publishedDate": "",
+          "fields": [],
+          "images": []
+        }
+      ]
+    },
+    "search_behance_images": {
+      "ok": true,
+      "ms": 11753,
+      "summary": {
+        "count": 5
+      },
+      "sample": [
+        {
+          "id": "5842a8198895393.66488eb3845f4.jpg",
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/5842a8198895393.66488eb3845f4.jpg",
+          "projectTitle": "My Visiting Card",
+          "projectUrl": "https://www.behance.net/gallery/198895393/My-Visiting-Card/modules/1126898679",
+          "creator": "",
+          "width": 1440,
+          "height": 962
+        },
+        {
+          "id": "3849e588233607.61361e7864faf.jpg",
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/3849e588233607.61361e7864faf.jpg",
+          "projectTitle": "Business Card Design Visiting Card Design Name Card",
+          "projectUrl": "https://www.behance.net/gallery/88233607/Business-Card-Design-Visiting-Card-Design-Name-Card/modules/719782379",
+          "creator": "",
+          "width": 1440,
+          "height": 960
+        },
+        {
+          "id": "b86a83163494499.63e6813d788df.png",
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/b86a83163494499.63e6813d788df.png",
+          "projectTitle": "Business Card Design",
+          "projectUrl": "https://www.behance.net/gallery/163494499/Business-Card-Design/modules/922156849",
+          "creator": "",
+          "width": 1440,
+          "height": 1080
+        },
+        {
+          "id": "103c7f217652613.6793d19eb96de.jpg",
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/103c7f217652613.6793d19eb96de.jpg",
+          "projectTitle": "Best business card & brand card design, visiting cards",
+          "projectUrl": "https://www.behance.net/gallery/217652613/Best-business-card-brand-card-design-visiting-cards/modules/1239969919",
+          "creator": "",
+          "width": 1440,
+          "height": 3525
+        },
+        {
+          "id": "bfba5a142332363.62652f3759a28.jpg",
+          "url": "https://mir-s3-cdn-cf.behance.net/project_modules/disp/bfba5a142332363.62652f3759a28.jpg",
+          "projectTitle": "Business Card Desig",
+          "projectUrl": "https://www.behance.net/gallery/142332363/Business-Card-Desig/modules/804102465",
+          "creator": "",
+          "width": 1440,
+          "height": 960
+        }
+      ]
+    },
+    "get_behance_jobs": {
+      "ok": true,
+      "ms": 8717,
+      "summary": {
+        "count": 5
+      },
+      "sample": [
+        {
+          "id": "joblist?tracking_source=nav20",
+          "title": "Jobs",
+          "company": "",
+          "location": "",
+          "jobType": "",
+          "url": "https://www.behance.net/joblist?tracking_source=nav20",
+          "postedDate": "",
+          "skills": [],
+          "remote": false
+        },
+        {
+          "id": "joblist?jobType=freelance",
+          "title": "Freelance Pro",
+          "company": "",
+          "location": "",
+          "jobType": "",
+          "url": "https://www.behance.net/joblist?jobType=freelance",
+          "postedDate": "",
+          "skills": [],
+          "remote": false
+        },
+        {
+          "id": "joblist?jobType=fulltime&jobType=contract",
+          "title": "baggage Full-Time",
+          "company": "",
+          "location": "",
+          "jobType": "",
+          "url": "https://www.behance.net/joblist?jobType=fulltime&jobType=contract",
+          "postedDate": "",
+          "skills": [],
+          "remote": false
+        },
+        {
+          "id": "pro?tracking_source=footer_pro_marketing_page_joblist%2Fdetails",
+          "title": "Try Behance Pro",
+          "company": "",
+          "location": "",
+          "jobType": "",
+          "url": "https://www.behance.net/pro?tracking_source=footer_pro_marketing_page_joblist%2Fdetails",
+          "postedDate": "",
+          "skills": [],
+          "remote": false
+        },
+        {
+          "id": "recruiter-pro?tracking_source=footer_pro_marketing_page_joblist%2Fdetails",
+          "title": "Try Recruiter Pro",
+          "company": "",
+          "location": "",
+          "jobType": "",
+          "url": "https://www.behance.net/recruiter-pro?tracking_source=footer_pro_marketing_page_joblist%2Fdetails",
+          "postedDate": "",
+          "skills": [],
+          "remote": false
+        }
+      ]
+    },
+    "get_behance_project_details": {
+      "ok": true,
+      "ms": 9334,
+      "summary": {
+        "keys": [
+          "title",
+          "description",
+          "images",
+          "tags",
+          "tools",
+          "fields",
+          "thumbnail"
+        ],
+        "title": "29CM NIKE MOON SHOE SPECIAL SEEDING KIT DESIGN",
+        "imageCount": 14,
+        "tags": [
+          "Seoul, Korea, Republic of",
+          "Korea, Republic of",
+          "Photoshop",
+          "Illustrator",
+          "InDesign",
+          "Graphic Design",
+          "Branding",
+          "Packaging",
+          "seeding kit",
+          "packaging design",
+          "branding",
+          "package design",
+          "press kit",
+          "Nike"
+        ],
+        "tools": ["photoshop", "illustrator", "indesign"]
+      },
+      "sample": {
+        "title": "29CM NIKE MOON SHOE SPECIAL SEEDING KIT DESIGN",
+        "description": "This is 29CM's special seeding kit, created to mark the launch of a new product that carries on the heritage of the 'Moon Shoe' — a Nike archive piece and the origin of racing history.",
+        "images": [
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400/ea9fe4251511455.6a38dd5907341.png",
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/ea9fe4251511455.6a38dd5907341.png",
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400/a80761251511455.6a38dd590a104.gif",
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/66f49c251511455.6a38dd5907b53.png",
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/32fbea251511455.6a38dd5908d20.png",
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400/8083cf251511455.6a38dd59097f3.gif",
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/a5f221251511455.6a38dd59094c1.png",
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/265d3d251511455.6a38dd59082b6.png",
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/1a111d251511455.6a38dd5909b52.png",
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/53265a251511455.6a38dd5909148.png",
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/48ac87251511455.6a38dd5907754.png",
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/f6e1db251511455.6a38dd5907f04.png",
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400/943f25251511455.6a38dd59089bd.gif",
+          "https://mir-s3-cdn-cf.behance.net/project_modules/1400_webp/82f6d9251511455.6a38dd590864b.png"
+        ],
+        "tags": [
+          "Seoul, Korea, Republic of",
+          "Korea, Republic of",
+          "Photoshop",
+          "Illustrator",
+          "InDesign",
+          "Graphic Design",
+          "Branding",
+          "Packaging",
+          "seeding kit",
+          "packaging design",
+          "branding",
+          "package design",
+          "press kit",
+          "Nike"
+        ],
+        "tools": ["photoshop", "illustrator", "indesign"],
+        "fields": [
+          "This is 29CM's special seeding kit",
+          "created to mark the launch of a new product that carries on the heritage of the 'Moon Shoe' — a Nike archive piece and the origin of racing history."
+        ],
+        "thumbnail": "https://mir-s3-cdn-cf.behance.net/project_modules/1400/ea9fe4251511455.6a38dd5907341.png"
+      }
+    },
+    "get_behance_job_details": {
+      "ok": true,
+      "ms": 6551,
+      "summary": {
+        "keys": ["title", "description"],
+        "title": "Jobs"
+      },
+      "sample": {
+        "title": "Jobs",
+        "description": "Discover your next career move, freelance gig, or internship"
+      }
+    }
+  }
+}

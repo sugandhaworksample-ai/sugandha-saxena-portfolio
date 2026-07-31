@@ -3,6 +3,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* -------------------------------------------------------------------------- */
+/* Base tokens (paper-like light) + motion CSS vars                            */
+/* -------------------------------------------------------------------------- */
+
 :root {
   --background: oklch(0.985 0.004 95);
   --foreground: oklch(0.18 0.01 260);
@@ -24,6 +28,16 @@
   --input: oklch(0.88 0.01 95);
   --ring: oklch(0.55 0.04 230);
   --radius: 0.5rem;
+
+  --hero-glow: oklch(0.55 0.06 230 / 0.22);
+  --hero-veil: oklch(0.96 0.01 95 / 0.9);
+  --grain-opacity: 0.035;
+  --motion-scale: 1;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --duration-fast: 150ms;
+  --duration-base: 220ms;
+  --duration-slow: 300ms;
 }
 
 .dark {
@@ -46,6 +60,96 @@
   --border: oklch(0.28 0.012 260);
   --input: oklch(0.28 0.012 260);
   --ring: oklch(0.72 0.05 230);
+  --hero-glow: oklch(0.45 0.06 230 / 0.35);
+  --hero-veil: oklch(0.14 0.01 260 / 0.55);
+  --grain-opacity: 0.05;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Preset: ink                                                                 */
+/* -------------------------------------------------------------------------- */
+
+[data-theme="ink"] {
+  --accent: oklch(0.48 0.04 240);
+  --ring: oklch(0.48 0.04 240);
+  --radius: 0.4rem;
+  --hero-glow: oklch(0.5 0.05 240 / 0.2);
+  --grain-opacity: 0.04;
+  --motion-scale: 1;
+}
+
+[data-theme="ink"].dark {
+  --background: oklch(0.13 0.012 260);
+  --card: oklch(0.16 0.012 260);
+  --accent: oklch(0.74 0.045 230);
+  --ring: oklch(0.74 0.045 230);
+  --hero-glow: oklch(0.42 0.05 230 / 0.4);
+  --hero-veil: oklch(0.12 0.012 260 / 0.65);
+  --grain-opacity: 0.055;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Preset: paper                                                               */
+/* -------------------------------------------------------------------------- */
+
+[data-theme="paper"] {
+  --background: oklch(0.975 0.008 90);
+  --foreground: oklch(0.2 0.02 70);
+  --card: oklch(0.99 0.004 90);
+  --primary: oklch(0.24 0.03 70);
+  --primary-foreground: oklch(0.98 0.006 90);
+  --muted: oklch(0.94 0.01 90);
+  --muted-foreground: oklch(0.46 0.02 70);
+  --accent: oklch(0.52 0.08 55);
+  --accent-foreground: oklch(0.99 0.004 90);
+  --border: oklch(0.88 0.015 90);
+  --ring: oklch(0.52 0.08 55);
+  --radius: 0.35rem;
+  --hero-glow: oklch(0.72 0.08 70 / 0.28);
+  --hero-veil: oklch(0.98 0.008 90 / 0.85);
+  --grain-opacity: 0.045;
+  --motion-scale: 0.95;
+}
+
+[data-theme="paper"].dark {
+  --background: oklch(0.18 0.015 70);
+  --foreground: oklch(0.96 0.01 90);
+  --card: oklch(0.22 0.015 70);
+  --primary: oklch(0.95 0.01 90);
+  --primary-foreground: oklch(0.2 0.02 70);
+  --muted: oklch(0.26 0.015 70);
+  --muted-foreground: oklch(0.72 0.02 80);
+  --accent: oklch(0.78 0.08 70);
+  --accent-foreground: oklch(0.18 0.02 70);
+  --border: oklch(0.32 0.015 70);
+  --ring: oklch(0.78 0.08 70);
+  --hero-glow: oklch(0.55 0.07 70 / 0.3);
+  --hero-veil: oklch(0.16 0.015 70 / 0.6);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Preset: studio                                                              */
+/* -------------------------------------------------------------------------- */
+
+[data-theme="studio"] {
+  --accent: oklch(0.55 0.09 210);
+  --ring: oklch(0.55 0.09 210);
+  --radius: 0.65rem;
+  --hero-glow: oklch(0.62 0.1 210 / 0.25);
+  --grain-opacity: 0.03;
+  --motion-scale: 1.05;
+}
+
+[data-theme="studio"].dark {
+  --background: oklch(0.15 0.02 240);
+  --card: oklch(0.19 0.02 240);
+  --muted: oklch(0.24 0.02 240);
+  --border: oklch(0.3 0.02 240);
+  --accent: oklch(0.78 0.1 205);
+  --ring: oklch(0.78 0.1 205);
+  --hero-glow: oklch(0.5 0.1 205 / 0.42);
+  --hero-veil: oklch(0.14 0.02 240 / 0.55);
+  --grain-opacity: 0.04;
 }
 
 @theme inline {
@@ -101,5 +205,40 @@
 
   ::selection {
     @apply bg-accent/30 text-foreground;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer utilities {
+  .hero-atmosphere {
+    background:
+      radial-gradient(
+        ellipse 80% 55% at 50% -10%,
+        var(--hero-glow),
+        transparent 60%
+      ),
+      linear-gradient(180deg, var(--background), var(--hero-veil));
+  }
+
+  .grain-overlay {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    opacity: var(--grain-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+
+  .pressable {
+    transition: transform var(--duration-fast) var(--ease-out);
+  }
+
+  .pressable:active {
+    transform: scale(0.97);
   }
 }

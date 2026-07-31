@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 
 import { mdxComponents } from "@/components/mdx/mdx-components";
+import { Reveal } from "@/components/motion/reveal";
 import { Separator } from "@/components/ui/separator";
 import {
   getAllProjects,
@@ -84,7 +85,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
       </div>
 
       {project.cover ? (
-        <div className="bg-muted relative mt-12 aspect-[16/9] overflow-hidden">
+        <Reveal className="bg-muted relative mt-12 aspect-[16/9] overflow-hidden">
           <Image
             src={project.cover}
             alt={project.title}
@@ -93,11 +94,11 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
             className="object-cover"
             sizes="(max-width: 1200px) 100vw, 1152px"
           />
-        </div>
+        </Reveal>
       ) : null}
 
       <div className="mt-12 grid gap-10 md:grid-cols-[220px_minmax(0,1fr)]">
-        <aside className="space-y-6 text-sm">
+        <aside className="space-y-6 text-sm md:sticky md:top-24 md:self-start">
           {project.skills.length > 0 ? (
             <div>
               <p className="text-muted-foreground mb-2 text-xs tracking-[0.16em] uppercase">
