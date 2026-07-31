@@ -9,10 +9,16 @@ export function PersonJsonLd() {
     url: siteConfig.url,
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Noida",
+      addressRegion: "Uttar Pradesh",
       addressCountry: "IN",
     },
-    sameAs: [siteConfig.links.behance, siteConfig.links.github],
+    email: siteConfig.email,
+    telephone: siteConfig.phone,
+    sameAs: [
+      siteConfig.links.behance,
+      siteConfig.links.linkedin,
+      siteConfig.links.github,
+    ],
   };
 
   return (

@@ -1,0 +1,254 @@
+\documentclass[a4paper,9pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+\usepackage{parskip}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[scale=0.9]{geometry}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{supertabular}
+\usepackage{titlesec}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{fontawesome5}
+\usepackage[unicode]{hyperref}
+
+%----------------------------------------------------------------------------------------
+%	STYLING
+%----------------------------------------------------------------------------------------
+\renewcommand{\familydefault}{\sfdefault} % Use sans-serif font (Arial equivalent)
+\definecolor{linkgray}{gray}{0.4}
+\definecolor{textgray}{gray}{0.4}
+
+\hypersetup{
+    colorlinks=true,
+    urlcolor=linkgray,
+    linkcolor=linkgray
+}
+
+% Section style
+\titleformat{\section}{\large\bfseries\color{black}}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{12pt}{8pt}
+
+% Custom bullet
+\renewcommand{\labelitemi}{\textcolor{gray!60}{\large\textbullet}}
+
+% Job listing environments
+\newenvironment{jobshort}[2]
+    {
+    \begin{tabularx}{\linewidth}{@{}l X r@{}}
+    \textbf{#1} & \hfill & {\color{textgray} #2} \\[3.75pt]
+    \end{tabularx}
+    }
+    {}
+
+\newenvironment{joblong}[3]
+    {
+    \begin{tabularx}{\linewidth}{@{}l X r@{}}
+    \textbf{#1} & \hfill & {\color{textgray} #3} \\
+    {\small\color{textgray} #2} & & \\[3.75pt]
+    \end{tabularx}
+    \begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut, leftmargin=1em, itemsep=3pt]
+    }
+    {
+    \end{itemize}
+    \end{minipage}
+    }
+
+\newenvironment{jobproject}[2]
+    {
+    \begin{tabularx}{\linewidth}{@{}l X r@{}}
+    \textbf{#1} & \hfill & {\color{textgray} #2} \\[3.75pt]
+    \end{tabularx}
+    \begin{minipage}[t]{\linewidth}
+    \begin{itemize}[nosep,after=\strut, leftmargin=1em, itemsep=3pt]
+    }
+    {
+    \end{itemize}
+    \end{minipage}
+    }
+
+\newenvironment{education}[3]
+{
+\begin{tabularx}{\linewidth}{@{}l X r@{}}
+\textbf{#1} & \hfill & {\color{textgray} #3} \\
+{\small\color{textgray} #2} & & \\[6pt]
+\end{tabularx}
+}
+{}
+%----------------------------------------------------------------------------------------
+%	DOCUMENT START
+%----------------------------------------------------------------------------------------
+\begin{document}
+\pagestyle{empty}
+
+%----------------------------------------------------------------------------------------
+%	HEADER
+%----------------------------------------------------------------------------------------
+\begin{tabularx}{\linewidth}{>{\centering\arraybackslash}X}
+\Huge{\textbf{\MakeUppercase{Sugandha Saxena}}} \\[5pt]
+\href{https://www.behance.net/saxenasugu7614}{Behance} \ $|$ \
+\href{https://www.linkedin.com/in/sugandhasaxena/}{LinkedIn} \ $|$ \
+\href{https://rb.gy/6m6b8}{Portfolio} \ $|$ \
+\href{mailto:saxenasugu23@gmail.com}{saxenasugu23@gmail.com} \ $|$ \
+\href{tel:+917838292838}{+91 78382 92838} \ $|$ \
+{Uttar Pradesh, India, 201306}
+\end{tabularx}
+
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+%	SUMMARY
+%----------------------------------------------------------------------------------------
+\section{Summary}
+
+Senior Creative Designer with \textbf{7+ years of experience} delivering creative solutions across branding, marketing, digital, print, motion graphics, UI/UX, and web design. Experienced in building brand identities, designing high-impact campaigns, and creating visual content that strengthens brand presence and audience engagement. Contributed to projects for \textbf{Red Chillies Entertainment}, \textbf{Clean Slate Filmz}, and led the creative design for the national-level \textbf{STEAM Innovation League 2025}. Early adopter of AI-powered creative workflows, using modern AI tools to accelerate ideation, content creation, image generation, and production without compromising design quality.
+
+%----------------------------------------------------------------------------------------
+%	WORK EXPERIENCE
+%----------------------------------------------------------------------------------------
+\section{Work Experience}
+
+\begin{joblong}{Sr. Creative Designer, STEMROBO TECHNOLOGIES PVT LTD}{Noida, Uttar Pradesh, India}{Mar 2022 – Present}
+   \item Designed brand identity development for six sister companies, delivering more than 150+ assets in print, digital, and outdoor media, increasing brand visibility by 80\%.
+    \item Designed educational materials, books, packaging, and manuals to enhance user experience.
+    \item Collaborated on event marketing designs to boost audience engagement.
+    \item Designed and maintained company websites for a consistent user experience.
+\end{joblong}
+
+\begin{joblong}{Graphic Designer, TERABLOCK}{Remote}{Jul 2021 – Feb 2022}
+    \item Produced 80+ social media creatives, logos and UI elements, increasing digital reach by 40\%.
+    \item Developed blog campaign designs, email marketing visuals, and video edits.
+    \item Designed illustrations to enhance brand communication.
+\end{joblong}
+
+\begin{joblong}{Motion Graphic Designer, BHARAT ARPANET}{Noida, Uttar Pradesh, India}{Sep 2020 – Feb 2021}
+    \item Delivered motion graphics, user interface assets, and promotional videos that contributed to a 60\% boost in the engagement of the client's campaign.
+    \item Designed targeted Google ads, YouTube thumbnails, and social posts that drove 50\% more traffic to landing pages.
+    \item Coordinated directly with 5+ international clients, achieving a 100\% on-time delivery rate for custom designs.
+\end{joblong}
+
+\begin{joblong}{Graphic Designer, IBA CRAFTS PVT. LTD.}{Noida, Uttar Pradesh, India}{Jun 2019 – Aug 2020}
+    \item Developed e-commerce product mockups for 300+ apparel listings, boosting online sales conversion by 30\%.
+    \item Edited more than 500+ images for faster load times and optimized images for online use.
+\end{joblong}
+
+\begin{joblong}{Graphic Designer, BRIDE AND BEAUTIFUL}{Delhi, India}{Jan 2018 – Oct 2018}
+    \item Designed more than 30+ garment patterns (textile design) for western gowns.
+    \item Designed social media campaigns and brand logo, increasing the follower count by 60\% in three months.
+\end{joblong}
+
+%----------------------------------------------------------------------------------------
+%	FREELANCE PROJECTS
+%----------------------------------------------------------------------------------------
+\section{Freelance Projects}
+
+\begin{jobproject}{Red Chillies Entertainment (SRK Production House)}{}
+\item Designed social media creatives to enhance Shah Rukh Khan’s brand presence.
+\end{jobproject}
+
+\begin{jobproject}{Clean Slate Filmz (Anushka Sharma Production House)}{}
+\item Created social media content to boost online visibility.
+\end{jobproject}
+
+\begin{jobproject}{U.P. Election Campaign – Ajna Media \& Entertainment Pvt. Ltd.}{}
+\item Designed candidate profiles, banners, and campaign visuals to influence voter engagement.
+\end{jobproject}
+
+\begin{jobproject}{Branding \& Advertising – Insights Opinion}{}
+\item Created logos, brand guidelines, and visual communication strategies.
+\end{jobproject}
+
+\begin{jobproject}{Ganesh Chaturthi Campaign – Jack Martin}{}
+\item Designed motion graphics videos and social media content.
+\end{jobproject}
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+\section{Education}
+
+\begin{education}
+{Bachelor of Mass Communication}
+{Galgotias University, Greater Noida, Uttar Pradesh, India}
+{2015 -- 2018}
+\end{education}
+
+\begin{education}
+{Diploma in Design and Advertising}
+{Jagran Institute of Management and Mass Communication, Noida, Uttar Pradesh, India}
+{2016 -- 2018}
+\end{education}
+
+\begin{education}
+{Senior Secondary (XII) – Commerce}
+{DAV Public School, CBSE, Rajendar Nagar, Uttar Pradesh, India}
+{2015}
+\end{education}
+
+\begin{education}
+{Secondary (X)}
+{Springfield Public School, CBSE, Shalimar Garden, Uttar Pradesh, India}
+{2013}
+\end{education}
+
+%----------------------------------------------------------------------------------------
+%	SOFTWARE
+%----------------------------------------------------------------------------------------
+\section{Software}
+
+\begin{multicols}{2}
+\begin{itemize}[leftmargin=1.5em, label={\large\textbullet}, itemsep=2pt]
+    \item Adobe Photoshop
+    \item Adobe Illustrator
+    \item Adobe InDesign
+    \item Adobe After Effects
+    \item Adobe Premiere Pro
+    \item Adobe XD
+    \item Figma
+    \item CorelDRAW
+\end{itemize}
+\end{multicols}
+
+%----------------------------------------------------------------------------------------
+%	CORE SKILLS
+%----------------------------------------------------------------------------------------
+\section{Core Skills}
+\begin{multicols}{2}
+\begin{itemize}[leftmargin=1.5em, label={\large\textbullet}, itemsep=2pt]
+    \item Brand Identity Design
+    \item Visual Identity \& Brand Guidelines
+    \item Typography
+    \item Print \& Digital Design
+    \item Marketing Collateral Design
+    \item Social Media Design
+    \item Advertising Design
+    \item Layout Design
+    \item Logo Design
+    \item Illustration
+    \item Infographic Design
+    \item Presentation Design
+    \item UI/UX Design
+    \item Wireframing \& Prototyping
+    \item Motion Graphics \& Animation
+    \item Packaging Design
+    \item Video Editing \& Post-Production
+    \item Generative AI Tools
+    \item Color Theory \& Design Principles
+    \item Event \& Stall Designing
+\end{itemize}
+\end{multicols}
+
+%----------------------------------------------------------------------------------------
+%	LANGUAGES
+%----------------------------------------------------------------------------------------
+\section{Languages}
+{\color{black}English, Hindi}
+
+\end{document}
