@@ -9,7 +9,11 @@ import { SmoothScrollProvider } from "@/components/motion/smooth-scroll";
 import { ThemeConfigProvider } from "@/components/theme-config-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { siteConfig } from "@/constants/site";
-import { DEFAULT_THEME_PRESET } from "@/constants/theme";
+import {
+  buildThemeCss,
+  getDefaultThemeId,
+  getThemePresetMetas,
+} from "@/lib/theme";
 
 import "@/styles/globals.css";
 
@@ -67,13 +71,25 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const themePresets = getThemePresetMetas();
+  const defaultTheme = getDefaultThemeId();
+  const themeCss = buildThemeCss();
+
   return (
     <html
       lang="en"
       suppressHydrationWarning
-      data-theme={DEFAULT_THEME_PRESET}
+      data-theme={defaultTheme}
       className={`${instrumentSans.variable} ${syne.variable} h-full`}
     >
+      <head>
+        {themeCss ? (
+          <style
+            id="portfolio-themes"
+            dangerouslySetInnerHTML={{ __html: themeCss }}
+          />
+        ) : null}
+      </head>
       <body className="flex min-h-full flex-col">
         <ThemeProvider
           attribute="class"
@@ -81,7 +97,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ThemeConfigProvider>
+          <ThemeConfigProvider
+            presets={themePresets}
+            defaultPreset={defaultTheme}
+          >
             <SmoothScrollProvider>
               <SectionRise />
               <PersonJsonLd />

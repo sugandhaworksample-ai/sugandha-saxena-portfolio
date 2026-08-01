@@ -1,0 +1,31 @@
+# ============================================================
+# content/themes/ink.yaml
+# ============================================================
+# Ink — charcoal surfaces with a steel / warm accent.
+# Edit colors below, save, rebuild/refresh to see changes.
+#
+# Colors accept any CSS color: #hex, oklch(...), rgb(...).
+# Leave a field out to inherit the base site colors.
+# ============================================================
+
+id: ink
+label: Ink
+description: Charcoal surfaces with steel accent — default dark studio feel.
+preferredMode: dark
+
+light:
+  accent: "oklch(0.52 0.08 250)"
+  ring: "oklch(0.52 0.08 250)"
+  radius: "0.5rem"
+  heroGlow: "oklch(0.55 0.1 250 / 0.28)"
+  displayTracking: "-0.045em"
+  motionScale: 1.08
+
+dark:
+  background: "oklch(0.07 0.012 270)"
+  card: "oklch(0.11 0.015 270)"
+  accent: "oklch(0.82 0.08 85)"
+  ring: "oklch(0.82 0.08 85)"
+  heroGlow: "oklch(0.6 0.1 85 / 0.35)"
+  heroVeil: "oklch(0.06 0.012 270 / 0.65)"
+  spotlight: "oklch(0.75 0.1 85 / 0.2)"

@@ -1,0 +1,29 @@
+# ============================================================
+# content/themes/studio.yaml
+# ============================================================
+# Studio — cool slate surfaces with a sharper cyan accent.
+# ============================================================
+
+id: studio
+label: Studio
+description: Cool slate surfaces with a sharper cyan accent.
+preferredMode: dark
+
+light:
+  accent: "oklch(0.6 0.18 195)"
+  ring: "oklch(0.6 0.18 195)"
+  radius: "1rem"
+  heroGlow: "oklch(0.65 0.16 195 / 0.4)"
+  grainOpacity: 0.05
+  motionScale: 1.12
+  displayTracking: "-0.05em"
+
+dark:
+  background: "oklch(0.08 0.03 230)"
+  card: "oklch(0.13 0.035 230)"
+  muted: "oklch(0.18 0.035 230)"
+  border: "oklch(0.26 0.04 230)"
+  accent: "oklch(0.82 0.16 190)"
+  ring: "oklch(0.82 0.16 190)"
+  heroGlow: "oklch(0.55 0.18 190 / 0.5)"
+  spotlight: "oklch(0.75 0.16 190 / 0.25)"

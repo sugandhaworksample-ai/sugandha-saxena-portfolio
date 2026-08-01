@@ -6,12 +6,11 @@ import { useEffect, useState } from "react";
 
 import { useThemeConfig } from "@/components/theme-config-provider";
 import { Button } from "@/components/ui/button";
-import { getThemePreset } from "@/constants/theme";
 import { cn } from "@/lib/utils";
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const { preset, cyclePreset } = useThemeConfig();
+  const { preset, cyclePreset, presets } = useThemeConfig();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -32,15 +31,15 @@ export function ThemeToggle() {
   }
 
   const isDark = resolvedTheme === "dark";
-  const presetMeta = getThemePreset(preset);
+  const presetMeta = presets.find((item) => item.id === preset) ?? presets[0];
 
   return (
     <div className="flex items-center gap-1">
       <Button
         variant="ghost"
         size="icon"
-        aria-label={`Theme preset: ${presetMeta.label}. Click to cycle.`}
-        title={`Preset: ${presetMeta.label}`}
+        aria-label={`Theme preset: ${presetMeta?.label ?? "Theme"}. Click to cycle.`}
+        title={`Preset: ${presetMeta?.label ?? "Theme"}`}
         onClick={cyclePreset}
         className={cn("relative")}
       >

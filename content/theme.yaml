@@ -1,0 +1,11 @@
+# ============================================================
+# content/theme.yaml
+# ============================================================
+# Which theme loads first for new visitors (before they pick one).
+# Must match an `id` from a file in content/themes/.
+#
+# After a visitor chooses a palette, their choice is remembered
+# in the browser — this only sets the starting default.
+# ============================================================
+
+default: ink

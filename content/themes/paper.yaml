@@ -1,0 +1,45 @@
+# ============================================================
+# content/themes/paper.yaml
+# ============================================================
+# Paper — editorial bone and ink, print-inspired.
+# preferredMode: light means picking this preset also switches
+# the site into light mode.
+# ============================================================
+
+id: paper
+label: Paper
+description: Editorial bone and ink — light, print-inspired.
+preferredMode: light
+
+light:
+  background: "oklch(0.97 0.012 85)"
+  foreground: "oklch(0.16 0.03 55)"
+  card: "oklch(0.99 0.008 85)"
+  primary: "oklch(0.2 0.04 55)"
+  primaryForeground: "oklch(0.98 0.01 85)"
+  muted: "oklch(0.93 0.015 85)"
+  mutedForeground: "oklch(0.42 0.03 55)"
+  accent: "oklch(0.55 0.16 35)"
+  accentForeground: "oklch(0.99 0.01 85)"
+  border: "oklch(0.87 0.02 85)"
+  ring: "oklch(0.55 0.16 35)"
+  radius: "0.35rem"
+  heroGlow: "oklch(0.75 0.12 55 / 0.35)"
+  heroVeil: "oklch(0.98 0.01 85 / 0.8)"
+  grainOpacity: 0.07
+  motionScale: 1
+  displayTracking: "-0.035em"
+
+dark:
+  background: "oklch(0.14 0.02 55)"
+  foreground: "oklch(0.96 0.015 85)"
+  card: "oklch(0.19 0.025 55)"
+  primary: "oklch(0.95 0.015 85)"
+  primaryForeground: "oklch(0.16 0.03 55)"
+  muted: "oklch(0.24 0.025 55)"
+  mutedForeground: "oklch(0.72 0.03 70)"
+  accent: "oklch(0.8 0.12 55)"
+  accentForeground: "oklch(0.14 0.03 55)"
+  border: "oklch(0.3 0.025 55)"
+  ring: "oklch(0.8 0.12 55)"
+  heroGlow: "oklch(0.55 0.1 55 / 0.4)"

@@ -1,34 +1,20 @@
-export const themePresets = [
-  {
-    id: "ink",
-    label: "Ink",
-    description:
-      "Charcoal surfaces with steel accent — default dark studio feel.",
-    preferredMode: "dark" as const,
-  },
-  {
-    id: "paper",
-    label: "Paper",
-    description: "Editorial bone and ink — light, print-inspired.",
-    preferredMode: "light" as const,
-  },
-  {
-    id: "studio",
-    label: "Studio",
-    description: "Cool slate surfaces with a sharper cyan accent.",
-    preferredMode: "dark" as const,
-  },
-] as const;
+import type { ThemePresetMeta } from "@/types/theme";
 
-export type ThemePresetId = (typeof themePresets)[number]["id"];
-
-export const DEFAULT_THEME_PRESET: ThemePresetId = "ink";
+/** localStorage key for the visitor's chosen palette */
 export const THEME_PRESET_STORAGE_KEY = "portfolio-theme-preset";
 
-export function isThemePresetId(value: string): value is ThemePresetId {
-  return themePresets.some((preset) => preset.id === value);
+export type ThemePresetId = string;
+
+export function isThemePresetId(
+  value: string,
+  presets: ThemePresetMeta[],
+): boolean {
+  return presets.some((preset) => preset.id === value);
 }
 
-export function getThemePreset(id: ThemePresetId) {
-  return themePresets.find((preset) => preset.id === id) ?? themePresets[0];
+export function getThemePreset(
+  id: string,
+  presets: ThemePresetMeta[],
+): ThemePresetMeta {
+  return presets.find((preset) => preset.id === id) ?? presets[0];
 }
