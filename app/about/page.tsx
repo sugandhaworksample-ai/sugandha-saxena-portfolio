@@ -23,8 +23,9 @@ export default function AboutPage() {
   const { stats } = getAboutPage();
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-x-clip">
       <div aria-hidden className="hero-atmosphere absolute inset-0 -z-10" />
+      <div aria-hidden className="grain-overlay -z-10" />
       <section className="mx-auto grid max-w-6xl gap-12 px-6 pt-28 pb-16 md:grid-cols-[1.1fr_0.9fr] md:pt-36">
         <Reveal>
           <p className="text-muted-foreground text-xs tracking-[0.2em] uppercase">

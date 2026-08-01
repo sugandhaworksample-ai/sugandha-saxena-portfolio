@@ -62,7 +62,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     .slice(0, 3);
 
   return (
-    <article className="relative overflow-hidden">
+    <article className="relative overflow-x-clip">
       <div
         aria-hidden
         className="hero-atmosphere absolute inset-0 -z-10 opacity-40"

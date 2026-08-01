@@ -3,7 +3,14 @@ import Link from "next/link";
 
 import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal } from "@/components/motion/reveal";
-import { StaggerItem, StaggerList } from "@/components/motion/stagger-list";
+import {
+  EducationList,
+  SkillGroups,
+} from "@/components/resume/education-skills";
+import {
+  ClientList,
+  ExperienceList,
+} from "@/components/resume/experience-list";
 import { Button } from "@/components/ui/button";
 import { getResume } from "@/lib/resume";
 import { createPageMetadata } from "@/lib/seo";
@@ -18,7 +25,7 @@ export default function ResumePage() {
   const resume = getResume();
 
   return (
-    <div className="relative overflow-hidden pb-28">
+    <div className="relative overflow-x-clip pb-28">
       <div
         aria-hidden
         className="hero-atmosphere absolute inset-0 -z-10 opacity-50"
@@ -35,6 +42,11 @@ export default function ResumePage() {
             <p className="text-muted-foreground mt-4 max-w-2xl text-lg">
               {resume.summary}
             </p>
+            {(resume.location || resume.phone) && (
+              <p className="text-muted-foreground mt-3 text-sm">
+                {[resume.location, resume.phone].filter(Boolean).join(" · ")}
+              </p>
+            )}
           </div>
           <Magnetic>
             <Button asChild className="pressable">
@@ -46,64 +58,48 @@ export default function ResumePage() {
 
       <section className="mx-auto mt-16 max-w-6xl px-6">
         <h2 className="font-display text-2xl font-semibold">Skills</h2>
-        <div className="mt-8 grid gap-8 md:grid-cols-2">
-          {resume.skills.map((group) => (
-            <div key={group.category}>
-              <p className="text-muted-foreground text-xs tracking-[0.16em] uppercase">
-                {group.category}
-              </p>
-              <ul className="mt-4 space-y-3">
-                {group.items.map((item, index) => (
-                  <li key={item} className="group">
-                    <div className="flex items-center justify-between gap-4 text-sm">
-                      <span>{item}</span>
-                      <span className="text-muted-foreground tabular-nums">
-                        {Math.min(96, 62 + ((index * 7) % 30))}%
-                      </span>
-                    </div>
-                    <div className="bg-muted mt-2 h-1.5 overflow-hidden rounded-full">
-                      <div
-                        className="bg-accent h-full origin-left rounded-full transition-transform duration-500 ease-out group-hover:scale-x-105"
-                        style={{
-                          width: `${Math.min(96, 62 + ((index * 7) % 30))}%`,
-                        }}
-                      />
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+        <div className="mt-8">
+          <SkillGroups groups={resume.skills} />
         </div>
       </section>
 
       <section className="mx-auto mt-20 max-w-6xl px-6">
         <h2 className="font-display text-2xl font-semibold">Experience</h2>
-        <StaggerList className="mt-8 space-y-6" as="ul">
-          {resume.experience.map((role) => (
-            <StaggerItem key={`${role.company}-${role.role}`}>
-              <article className="border-border/60 hover:border-accent rounded-2xl border p-6 transition-colors duration-200">
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <h3 className="font-display text-xl font-semibold">
-                    {role.role}
-                  </h3>
-                  <p className="text-muted-foreground text-sm">
-                    {role.start} — {role.end}
-                  </p>
-                </div>
-                <p className="text-accent mt-1 text-sm">{role.company}</p>
-                <ul className="text-muted-foreground mt-4 space-y-2 text-sm">
-                  {role.responsibilities.map((item) => (
-                    <li key={item}>• {item}</li>
-                  ))}
-                </ul>
-              </article>
-            </StaggerItem>
-          ))}
-        </StaggerList>
+        <div className="mt-8">
+          <ExperienceList items={resume.experience} />
+        </div>
       </section>
 
-      <section className="mx-auto mt-16 flex max-w-6xl gap-3 px-6">
+      {resume.education.length > 0 ? (
+        <section className="mx-auto mt-20 max-w-6xl px-6">
+          <h2 className="font-display text-2xl font-semibold">Education</h2>
+          <div className="mt-8">
+            <EducationList items={resume.education} />
+          </div>
+        </section>
+      ) : null}
+
+      {resume.projects.length > 0 ? (
+        <section className="mx-auto mt-20 max-w-6xl px-6">
+          <h2 className="font-display text-2xl font-semibold">
+            Freelance & clients
+          </h2>
+          <div className="mt-8">
+            <ClientList items={resume.projects} />
+          </div>
+        </section>
+      ) : null}
+
+      {resume.languages.length > 0 ? (
+        <section className="mx-auto mt-20 max-w-6xl px-6">
+          <h2 className="font-display text-2xl font-semibold">Languages</h2>
+          <p className="text-muted-foreground mt-4 text-sm">
+            {resume.languages.join(" · ")}
+          </p>
+        </section>
+      ) : null}
+
+      <section className="mx-auto mt-16 flex max-w-6xl flex-wrap gap-3 px-6">
         <Button asChild variant="outline" className="pressable">
           <Link href="/experience">Experience page</Link>
         </Button>

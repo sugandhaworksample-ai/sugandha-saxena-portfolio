@@ -4,6 +4,7 @@ import { Instrument_Sans, Syne } from "next/font/google";
 import { PersonJsonLd } from "@/components/seo/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { SectionRise } from "@/components/motion/section-rise";
 import { SmoothScrollProvider } from "@/components/motion/smooth-scroll";
 import { ThemeConfigProvider } from "@/components/theme-config-provider";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -82,6 +83,7 @@ export default function RootLayout({
         >
           <ThemeConfigProvider>
             <SmoothScrollProvider>
+              <SectionRise />
               <PersonJsonLd />
               <SiteHeader />
               <main className="flex-1">{children}</main>

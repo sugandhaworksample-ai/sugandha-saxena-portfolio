@@ -23,8 +23,8 @@ export function HorizontalTimeline({ events }: { events: TimelineEvent[] }) {
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top top",
-          end: () => `+=${amount + window.innerHeight * 0.5}`,
+          start: "top 64px",
+          end: () => `+=${amount}`,
           pin: true,
           scrub: 1,
           invalidateOnRefresh: true,
@@ -39,9 +39,10 @@ export function HorizontalTimeline({ events }: { events: TimelineEvent[] }) {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden">
-      <div className="flex h-[80vh] items-center md:h-screen">
+      <div className="flex h-dvh min-h-screen items-center">
         <div
           ref={trackRef}
+          data-timeline-track
           className="flex gap-6 px-6 will-change-transform md:gap-10"
         >
           <div className="flex w-[70vw] shrink-0 flex-col justify-center md:w-[36vw]">

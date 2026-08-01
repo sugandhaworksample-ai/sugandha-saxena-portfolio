@@ -139,7 +139,7 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
   }
 
   return (
-    <div ref={rootRef} className="relative">
+    <div ref={rootRef} className="relative overflow-x-clip">
       <div className="bg-border fixed top-0 right-0 left-0 z-[60] h-[2px]">
         <div
           ref={progressRef}
@@ -147,42 +147,60 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
         />
       </div>
 
-      {/* Chapter 1 — Brand */}
-      <section
-        data-chapter
-        className="chapter-screen relative overflow-visible"
-      >
-        <div
-          aria-hidden
-          data-hero-atmosphere
-          className="hero-atmosphere absolute inset-0 origin-center will-change-transform"
-        />
-        <div aria-hidden data-hero-grain className="grain-overlay" />
-        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col px-6">
-          <p
-            data-hero-role
-            className="text-muted-foreground mb-6 text-sm tracking-[0.22em] uppercase"
-          >
-            {siteConfig.role} · {siteConfig.location}
-          </p>
-          <NameRibbon />
-          <div data-brand-ctas className="mt-10 flex flex-wrap gap-4">
-            <Magnetic>
-              <Button asChild size="lg" className="pressable text-base">
-                <Link href="/projects">Enter the work</Link>
-              </Button>
-            </Magnetic>
-            <Magnetic strength={0.25}>
-              <Button asChild variant="outline" size="lg" className="pressable">
-                <Link href="/contact">Start a project</Link>
-              </Button>
-            </Magnetic>
+      {/* Chapter 1 — Brand (tall runway = ribbon scrub, then next panel covers) */}
+      <div className="hero-rise-runway" data-hero-runway>
+        <section
+          data-chapter
+          data-section-rise
+          className="chapter-screen relative overflow-x-clip"
+        >
+          <div
+            aria-hidden
+            data-hero-atmosphere
+            data-parallax-skip
+            className="hero-atmosphere absolute inset-0 origin-center will-change-transform"
+          />
+          <div
+            aria-hidden
+            data-hero-grain
+            data-parallax-skip
+            className="grain-overlay"
+          />
+          <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col px-6">
+            <p
+              data-hero-role
+              className="text-muted-foreground mb-6 text-sm tracking-[0.22em] uppercase"
+            >
+              {siteConfig.role} · {siteConfig.location}
+            </p>
+            <NameRibbon />
+            <div data-brand-ctas className="mt-10 flex flex-wrap gap-4">
+              <Magnetic>
+                <Button asChild size="lg" className="pressable text-base">
+                  <Link href="/projects">Enter the work</Link>
+                </Button>
+              </Magnetic>
+              <Magnetic strength={0.25}>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="pressable"
+                >
+                  <Link href="/contact">Start a project</Link>
+                </Button>
+              </Magnetic>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* Chapter 2 — Positioning */}
-      <section data-chapter className="chapter-screen relative overflow-hidden">
+      <section
+        data-chapter
+        data-section-rise
+        className="chapter-screen relative overflow-hidden"
+      >
         <div
           aria-hidden
           data-parallax
@@ -212,8 +230,12 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
         </div>
       </section>
 
-      {/* Chapter 3 — Selected work horizontal scrub */}
-      <section data-chapter className="relative overflow-hidden">
+      {/* Chapter 3 — Selected work horizontal scrub (own pin — skip sticky rise) */}
+      <section
+        data-chapter
+        data-rise-skip
+        className="relative z-[3] overflow-hidden bg-[var(--background)]"
+      >
         <div className="flex h-screen items-center">
           <div
             data-work-track
@@ -277,7 +299,11 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
       </section>
 
       {/* Chapter 4 — Skills marquee */}
-      <section data-chapter className="chapter-screen relative overflow-hidden">
+      <section
+        data-chapter
+        data-section-rise
+        className="chapter-screen relative overflow-hidden"
+      >
         <div className="w-full space-y-10">
           <div className="mx-auto max-w-6xl px-6">
             <p
@@ -314,7 +340,11 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
       </section>
 
       {/* Chapter 5 — Invite */}
-      <section data-chapter className="chapter-screen relative overflow-hidden">
+      <section
+        data-chapter
+        data-section-rise
+        className="chapter-screen relative overflow-hidden"
+      >
         <div aria-hidden className="hero-atmosphere absolute inset-0" />
         <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-start px-6">
           <h2

@@ -15,8 +15,9 @@ import {
 
 /**
  * Premium hero: sharp name + scroll-scrubbed ribbon.
- * At rest, the ribbon tip sits after “Saxena” like a full stop (no real “.”).
- * Scroll draws the ribbon from that exact point.
+ * At rest, tip sits after “Saxena” like a full stop.
+ * Path weaves in/out of the type, draws two hearts, then closes at the start.
+ * Pinning is owned by sticky .hero-rise-runway — not GSAP pin.
  */
 export function NameRibbon() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -40,6 +41,8 @@ export function NameRibbon() {
     const group = groupRef.current;
     const chapter =
       (root.closest("[data-chapter]") as HTMLElement | null) ?? root;
+    const runway =
+      (chapter.closest("[data-hero-runway]") as HTMLElement | null) ?? chapter;
     const path = pathRef.current;
     const wispy = pathWispyRef.current;
     const glow = pathGlowRef.current;
@@ -77,20 +80,18 @@ export function NameRibbon() {
         endRect.top + endRect.height * 0.78,
       );
 
-      // Clear transform so getBBox is in path-local space
       group.removeAttribute("transform");
       const bbox = path.getBBox();
       if (bbox.width < 1 || bbox.height < 1) return;
 
       const nameW = Math.max(nameBR.x - nameTL.x, 1);
       const nameH = Math.max(nameBR.y - nameTL.y, 1);
-      const targetW = nameW * 1.12;
-      const targetH = nameH * 1.35;
+      const targetW = nameW * 1.14;
+      const targetH = nameH * 1.4;
       const scale = Math.min(targetW / bbox.width, targetH / bbox.height);
       const clamped = Math.min(Math.max(scale, 0.9), 2.2);
 
       const origin = path.getPointAtLength(0);
-      // Scale about path start, then park that start on the Saxena tip
       group.setAttribute(
         "transform",
         `translate(${endPt.x} ${endPt.y}) scale(${clamped}) translate(${-origin.x} ${-origin.y})`,
@@ -124,7 +125,6 @@ export function NameRibbon() {
         opacity: 0.65,
       });
     }
-    // Tip visible at rest — typographic full-stop feel
     if (tip) {
       gsap.set(tip, {
         opacity: 1,
@@ -139,12 +139,10 @@ export function NameRibbon() {
         defaults: { ease: "none" },
         scrollTrigger: {
           id: "hero-ribbon",
-          trigger: chapter,
+          trigger: runway,
           start: "top top",
-          end: "+=240%",
-          pin: true,
-          scrub: 0.35,
-          anticipatePin: 1,
+          end: "bottom bottom",
+          scrub: 0.4,
           invalidateOnRefresh: true,
           fastScrollEnd: true,
           onRefresh: placeRibbonToName,
@@ -153,10 +151,9 @@ export function NameRibbon() {
 
       tl.to(path, { strokeDashoffset: 0, duration: 1 }, 0);
       if (glow) tl.to(glow, { strokeDashoffset: 0, duration: 1 }, 0);
-      if (wispy) tl.to(wispy, { strokeDashoffset: 0, duration: 1 }, 0.04);
+      if (wispy) tl.to(wispy, { strokeDashoffset: 0, duration: 1 }, 0.03);
 
       if (tip) {
-        // Stays put as “.” at the start, then rides the ribbon as it draws
         tl.to(
           tip,
           {
@@ -174,21 +171,31 @@ export function NameRibbon() {
           tip,
           {
             attr: { fill: "var(--accent)" },
-            scale: 1.15,
-            duration: 0.2,
+            scale: 1.2,
+            duration: 0.18,
           },
           0,
         );
-        tl.to(tip, { opacity: 0.35, scale: 0.7, duration: 0.18 }, 0.86);
+        // Closed path — tip returns to the full-stop start
+        tl.to(
+          tip,
+          {
+            attr: { fill: "var(--foreground)" },
+            scale: 1,
+            opacity: 1,
+            duration: 0.14,
+          },
+          0.86,
+        );
       }
 
       tl.to(
         chars,
         {
-          y: (i) => (i % 2 === 0 ? -6 : 5),
-          rotateZ: (i) => (i % 2 === 0 ? -0.7 : 0.7),
+          y: (i) => (i % 2 === 0 ? -7 : 6),
+          rotateZ: (i) => (i % 2 === 0 ? -0.8 : 0.8),
           duration: 1,
-          stagger: { each: 0.016, from: "start" },
+          stagger: { each: 0.014, from: "start" },
         },
         0,
       );
@@ -197,10 +204,10 @@ export function NameRibbon() {
         {
           y: 0,
           rotateZ: 0,
-          duration: 0.3,
+          duration: 0.28,
           stagger: { each: 0.01, from: "center" },
         },
-        0.78,
+        0.8,
       );
 
       if (atmosphere) {
@@ -224,8 +231,8 @@ export function NameRibbon() {
         tl.fromTo(
           ctas,
           { y: 10, scale: 0.98 },
-          { y: 0, scale: 1, duration: 0.3 },
-          0.68,
+          { y: 0, scale: 1, duration: 0.28 },
+          0.72,
         );
       }
     }, root);
@@ -249,6 +256,7 @@ export function NameRibbon() {
       window.clearTimeout(refreshId);
       window.removeEventListener("resize", onResize);
       ctx.revert();
+      killScrollTriggers(runway);
       killScrollTriggers(chapter);
     };
   }, [reduceMotion]);
@@ -335,7 +343,6 @@ export function NameRibbon() {
             />
           </g>
 
-          {/* Decorative full-stop tip — not real text */}
           <circle
             ref={tipRef}
             className="name-weave__tip"
@@ -389,55 +396,62 @@ export function NameRibbon() {
 }
 
 /**
- * Starts at Saxena tip (remapped + scaled in JS to span the full name).
- * Coils through both lines with at most two small heart flourishes.
+ * Closed silk ribbon — start = end at Saxena tip.
+ * Soft weave through both name lines; two hearts kept far apart
+ * (one high-right above Sugandha, one low-left by Saxena), then home.
  */
 const RIBBON_PATH = `
   M 900 420
-  C 780 455, 620 445, 480 410
-  C 360 375, 260 320, 200 260
-  C 140 200, 150 140, 240 115
-  C 330 90, 450 115, 540 165
-  C 490 100, 430 40, 490 10
-  C 530 -12, 585 -5, 610 35
-  C 635 -5, 690 -12, 730 10
-  C 790 40, 750 105, 690 155
-  C 780 120, 900 95, 1020 110
-  C 1140 125, 1220 180, 1240 250
-  C 1260 320, 1180 380, 1060 400
-  C 960 415, 860 370, 800 310
-  C 740 250, 720 180, 770 130
-  C 820 80, 920 60, 1000 85
-  C 960 45, 920 0, 960 -25
-  C 985 -42, 1020 -38, 1035 -15
-  C 1050 -38, 1085 -42, 1110 -25
-  C 1150 0, 1115 45, 1075 80
-  C 1140 120, 1200 190, 1185 270
-  C 1170 350, 1080 400, 960 415
-  C 840 430, 720 390, 640 330
-  C 560 270, 520 200, 550 145
-  C 470 175, 370 230, 310 300
-  C 250 370, 280 440, 380 455
-  C 520 475, 700 450, 860 420
+  C 740 465, 520 450, 360 385
+  C 220 325, 160 230, 220 155
+  C 270 95, 400 80, 560 100
+  C 720 120, 880 160, 1020 145
+  C 1120 130, 1200 95, 1185 45
+  C 1172 12, 1130 0, 1095 28
+  C 1065 0, 1020 10, 1005 42
+  C 985 85, 1040 125, 1140 150
+  C 1240 180, 1280 260, 1240 340
+  C 1205 400, 1100 425, 980 415
+  C 840 400, 700 355, 620 280
+  C 555 225, 560 155, 650 125
+  C 730 100, 850 115, 940 165
+  C 1010 205, 1040 275, 980 335
+  C 930 380, 820 395, 700 370
+  C 560 340, 420 300, 300 340
+  C 230 365, 180 410, 210 450
+  C 235 480, 285 485, 310 455
+  C 335 485, 385 480, 410 450
+  C 440 410, 400 355, 340 320
+  C 280 285, 260 220, 320 175
+  C 380 130, 500 125, 620 160
+  C 740 195, 820 260, 840 340
+  C 855 385, 880 410, 900 420
 `;
 
 const RIBBON_WISPY_PATH = `
   M 900 420
-  C 760 450, 600 435, 460 395
-  C 340 355, 250 300, 195 245
-  C 145 195, 165 145, 255 125
-  C 350 105, 470 135, 560 180
-  C 520 120, 470 60, 520 30
-  C 555 10, 600 15, 620 45
-  C 640 15, 685 10, 720 30
-  C 770 55, 740 115, 690 160
-  C 790 130, 930 110, 1050 125
-  C 1160 140, 1235 195, 1250 260
-  C 1265 330, 1170 390, 1040 405
-  C 1040 20, 1100 -20, 1135 5
-  C 1170 35, 1135 80, 1095 110
-  C 1170 170, 1210 260, 1140 340
-  C 1060 410, 900 430, 760 400
-  C 620 370, 500 320, 440 360
-  C 500 430, 680 440, 850 420
+  C 750 458, 540 445, 380 380
+  C 240 325, 180 235, 235 160
+  C 280 105, 410 90, 565 108
+  C 725 126, 885 162, 1020 148
+  C 1115 135, 1190 100, 1175 52
+  C 1162 22, 1125 12, 1095 35
+  C 1068 12, 1028 20, 1012 48
+  C 992 88, 1045 128, 1140 152
+  C 1235 182, 1270 258, 1230 335
+  C 1198 392, 1095 418, 980 410
+  C 845 396, 710 352, 630 282
+  C 568 230, 572 162, 655 132
+  C 732 108, 848 120, 935 168
+  C 1002 205, 1030 272, 972 330
+  C 925 375, 820 388, 705 365
+  C 570 338, 430 302, 315 342
+  C 248 368, 200 410, 225 448
+  C 248 475, 292 478, 315 452
+  C 338 478, 382 475, 405 448
+  C 432 410, 395 358, 338 325
+  C 282 292, 265 228, 322 182
+  C 380 138, 498 132, 615 165
+  C 732 198, 812 258, 835 338
+  C 850 382, 878 408, 900 420
 `;

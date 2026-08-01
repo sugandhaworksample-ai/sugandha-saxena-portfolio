@@ -35,6 +35,7 @@ export function ProjectsIndex({ projects }: ProjectsIndexProps) {
         aria-hidden
         className="hero-atmosphere absolute inset-0 -z-10 opacity-70"
       />
+      <div aria-hidden className="grain-overlay -z-10 opacity-60" />
       <div className="mx-auto w-full max-w-6xl px-6 pt-24 pb-10 md:pt-32">
         <p className="text-muted-foreground text-xs tracking-[0.2em] uppercase">
           Archive
