@@ -1,53 +1,24 @@
 # Theme configuration
 
-The portfolio supports **light/dark mode** and **three visual presets**. Tune look-and-feel without rewriting components.
+Configurable **Ink / Paper / Studio** presets with dramatic contrast for cinematic pages.
 
-## Quick controls (UI)
+## Controls
 
-- **Palette icon** in the header — cycles presets: Ink → Paper → Studio
-- **Sun / Moon** — toggles light / dark within the current preset
+- Palette icon — cycle presets
+- Sun / Moon — light / dark
 
-Preferences persist in `localStorage` (`portfolio-theme-preset`).
+Storage key: `portfolio-theme-preset`.
 
-## Presets
+## Drama tokens
 
-| Id       | Feel                      | Default mode |
-| -------- | ------------------------- | ------------ |
-| `ink`    | Charcoal + steel accent   | dark         |
-| `paper`  | Editorial bone + warm ink | light        |
-| `studio` | Cool slate + cyan accent  | dark         |
+Edit in [`styles/globals.css`](../styles/globals.css):
 
-Defined in [`constants/theme.ts`](../constants/theme.ts).  
-Color tokens live in [`styles/globals.css`](../styles/globals.css) under `[data-theme="…"]`.
+| Token                         | Purpose                    |
+| ----------------------------- | -------------------------- |
+| `--accent` / `--ring`         | Interactive accent         |
+| `--hero-glow` / `--spotlight` | Atmosphere and cursor glow |
+| `--grain-opacity`             | Film grain strength        |
+| `--display-tracking`          | Display type tightness     |
+| `--motion-scale`              | Duration multiplier        |
 
-## Change an accent (common edit)
-
-1. Open `styles/globals.css`
-2. Find `[data-theme="ink"]` / `.dark` block (or paper / studio)
-3. Edit `--accent`, `--ring`, `--hero-glow`, `--radius`, `--grain-opacity`, `--motion-scale`
-
-Example — warmer ink accent:
-
-```css
-[data-theme="ink"].dark {
-  --accent: oklch(0.78 0.08 70);
-  --ring: oklch(0.78 0.08 70);
-  --hero-glow: oklch(0.55 0.08 70 / 0.35);
-}
-```
-
-## Motion scale
-
-`--motion-scale` multiplies Framer/GSAP durations via helpers in [`lib/motion.ts`](../lib/motion.ts).  
-`paper` is slightly snappier (`0.95`); `studio` slightly more expressive (`1.05`).
-
-## Add a fourth preset
-
-1. Append to `themePresets` in `constants/theme.ts`
-2. Add matching `[data-theme="your-id"]` (+ `.dark`) rules in `globals.css`
-3. Reload — the header cycle includes it automatically
-
-## Related
-
-- Mode provider: `next-themes` in `app/layout.tsx`
-- Preset provider: `components/theme-config-provider.tsx`
+Presets live under `[data-theme="ink|paper|studio"]`.

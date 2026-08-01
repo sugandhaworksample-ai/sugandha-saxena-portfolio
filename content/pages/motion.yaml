@@ -1,0 +1,95 @@
+# ============================================================
+# content/pages/motion.yaml
+# ============================================================
+# Controls everything on the Motion page (/motion).
+#
+# HERO SECTION
+#   eyebrow  — tiny uppercase label above the H1 (e.g. "Motion")
+#   headline — the big display heading
+#   subtitle — paragraph below the heading
+#
+# ITEMS (showcase grid)
+#   Each item becomes one card in the 3-column grid.
+#   Fields per item:
+#     title      — card heading (required)
+#     subtitle   — small uppercase label above the heading
+#     body       — description text below the heading
+#     href       — if set, the whole card becomes a clickable link
+#     videoUrl   — embed URL for a YouTube/Vimeo preview
+#                  Example: "https://www.youtube.com/embed/VIDEO_ID"
+#     image      — path to a thumbnail image in /public
+#                  Example: "/motion/showreel-thumb.jpg"
+#     tags       — list of tags (currently unused in the UI, for future filtering)
+#
+# TIP: Add your real showreel videos by setting videoUrl on each item.
+# ============================================================
+
+eyebrow: "Motion"
+headline: "Frames that breathe"
+subtitle: >
+  Hover a panel — built for showreel embeds and kinetic case studies.
+  Add your video URLs in the items below to bring this page to life.
+
+items:
+  # ---- Replace these placeholders with your real motion work ----
+
+  - title: "Motion Graphics Showreel"
+    subtitle: "Showreel"
+    body: >
+      Add your Behance or YouTube showreel URL to the videoUrl field
+      and this card will embed it automatically.
+    # href: "https://www.behance.net/saxenasugu7614"
+    # videoUrl: "https://www.youtube.com/embed/YOUR_VIDEO_ID"
+    # image: "/motion/showreel-thumb.jpg"
+    tags:
+      - showreel
+      - motion
+
+  - title: "Brand Animation"
+    subtitle: "Brand Motion"
+    body: >
+      Logo animations, brand reveal sequences, and identity in motion.
+      Paste a Behance project link into href to link out.
+    # href: "https://www.behance.net/saxenasugu7614"
+    # image: "/motion/brand-animation-thumb.jpg"
+    tags:
+      - branding
+      - animation
+
+  - title: "Social Media Motion"
+    subtitle: "Social"
+    body: >
+      Scroll-stopping reels, story animations, and campaign motion graphics
+      for digital-first brands.
+    # href: "https://www.behance.net/saxenasugu7614"
+    # image: "/motion/social-motion-thumb.jpg"
+    tags:
+      - social
+      - motion
+
+  - title: "Title Sequences"
+    subtitle: "Cinematic"
+    body: >
+      Kinetic typography and opening title sequences with a cinematic feel.
+    # href: "https://www.behance.net/saxenasugu7614"
+    tags:
+      - typography
+      - cinematic
+
+  - title: "Video Editing"
+    subtitle: "Post-Production"
+    body: >
+      Full post-production editing including colour grading, sound design sync,
+      and motion graphics integration.
+    tags:
+      - editing
+      - post-production
+
+  - title: "After Effects Templates"
+    subtitle: "Capability"
+    body: >
+      Custom AE templates built for rapid iteration across campaign assets
+      without sacrificing quality.
+    tags:
+      - after-effects
+      - tools

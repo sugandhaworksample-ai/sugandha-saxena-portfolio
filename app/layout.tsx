@@ -4,6 +4,7 @@ import { Instrument_Sans, Syne } from "next/font/google";
 import { PersonJsonLd } from "@/components/seo/json-ld";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { SmoothScrollProvider } from "@/components/motion/smooth-scroll";
 import { ThemeConfigProvider } from "@/components/theme-config-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { siteConfig } from "@/constants/site";
@@ -80,10 +81,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ThemeConfigProvider>
-            <PersonJsonLd />
-            <SiteHeader />
-            <main className="flex-1">{children}</main>
-            <SiteFooter />
+            <SmoothScrollProvider>
+              <PersonJsonLd />
+              <SiteHeader />
+              <main className="flex-1">{children}</main>
+              <SiteFooter />
+            </SmoothScrollProvider>
           </ThemeConfigProvider>
         </ThemeProvider>
       </body>

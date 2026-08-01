@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { HoverLift } from "@/components/motion/hover-lift";
 import { Reveal } from "@/components/motion/reveal";
-import { PageShell } from "@/components/page-shell";
-import { Button } from "@/components/ui/button";
-import { getResume } from "@/lib/resume";
+import { StaggerItem, StaggerList } from "@/components/motion/stagger-list";
+import { TiltMedia } from "@/components/motion/tilt-media";
+import { getMotionPage } from "@/lib/pages";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
@@ -15,89 +16,61 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function MotionPage() {
-  const resume = getResume();
-  const motionRole = resume.experience.find((job) => /motion/i.test(job.role));
-  const motionClient = resume.projects.find((project) =>
-    /motion/i.test(project.description),
-  );
-  const motionSkills = resume.skills
-    .flatMap((group) => group.items)
-    .filter((item) =>
-      /motion|animation|video|after effects|premiere/i.test(item),
-    );
+  // All content for this page is configured in content/pages/motion.yaml
+  const { eyebrow, headline, subtitle, items } = getMotionPage();
 
   return (
-    <PageShell
-      title="Motion Design"
-      description="Motion graphics, promotional video, and timed visual storytelling — from campaign spots to social systems."
-    >
-      <div className="space-y-14">
-        <Reveal as="section" className="max-w-3xl space-y-4">
-          <p className="text-muted-foreground text-base leading-relaxed text-pretty">
-            Motion is a core part of the craft — building brand presence through
-            paced graphics, promotional edits, and social-first video. Showreel
-            and case study media land here as assets are ready.
-          </p>
-          <Button asChild variant="outline">
-            <Link href="/experience">See motion roles</Link>
-          </Button>
-        </Reveal>
+    <div className="relative overflow-hidden pb-28">
+      <div aria-hidden className="hero-atmosphere absolute inset-0 -z-10" />
+      <Reveal className="mx-auto max-w-6xl px-6 pt-28 md:pt-36">
+        <p className="text-muted-foreground text-xs tracking-[0.2em] uppercase">
+          {eyebrow}
+        </p>
+        <h1 className="kinetic-display mt-4 text-5xl md:text-7xl">
+          {headline}
+        </h1>
+        <p className="text-muted-foreground mt-5 max-w-xl text-lg">
+          {subtitle}
+        </p>
+      </Reveal>
 
-        {motionRole ? (
-          <Reveal as="section" className="space-y-4">
-            <h2 className="font-display text-2xl font-semibold tracking-tight">
-              Featured role
-            </h2>
-            <div className="max-w-2xl space-y-2">
-              <h3 className="font-display text-xl font-semibold tracking-tight">
-                {motionRole.role}
-              </h3>
-              <p className="text-muted-foreground text-sm">
-                {motionRole.company}
-                <span className="text-border mx-2">·</span>
-                {motionRole.start} – {motionRole.end}
-              </p>
-              <ul className="text-muted-foreground list-disc space-y-2 pl-5 text-sm leading-relaxed">
-                {motionRole.responsibilities.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-        ) : null}
-
-        {motionClient ? (
-          <Reveal as="section" className="space-y-3">
-            <h2 className="font-display text-2xl font-semibold tracking-tight">
-              Selected campaign
-            </h2>
-            <h3 className="font-display text-lg font-semibold tracking-tight">
-              {motionClient.title}
-            </h3>
-            <p className="text-muted-foreground max-w-2xl text-sm leading-relaxed">
-              {motionClient.description}
-            </p>
-          </Reveal>
-        ) : null}
-
-        {motionSkills.length > 0 ? (
-          <Reveal as="section" className="space-y-4">
-            <h2 className="font-display text-2xl font-semibold tracking-tight">
-              Motion toolkit
-            </h2>
-            <ul className="flex flex-wrap gap-2">
-              {motionSkills.map((item) => (
-                <li
-                  key={item}
-                  className="border-border/70 rounded-md border px-3 py-1.5 text-sm"
+      <StaggerList
+        className="mx-auto mt-14 grid max-w-6xl gap-6 px-6 md:grid-cols-2 lg:grid-cols-3"
+        as="ul"
+      >
+        {items.map((item) => (
+          <StaggerItem key={item.title}>
+            <HoverLift>
+              <TiltMedia>
+                <Link
+                  href={item.href ?? "/projects"}
+                  className="border-border/60 bg-card/50 group hover:border-accent relative block overflow-hidden rounded-3xl border p-6 transition-colors duration-200"
                 >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        ) : null}
-      </div>
-    </PageShell>
+                  <div className="bg-accent/20 absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="relative z-10">
+                    {item.subtitle ? (
+                      <p className="text-muted-foreground text-xs tracking-[0.16em] uppercase">
+                        {item.subtitle}
+                      </p>
+                    ) : null}
+                    <h2 className="font-display mt-4 text-2xl font-semibold">
+                      {item.title}
+                    </h2>
+                    {item.body ? (
+                      <p className="text-muted-foreground mt-3 text-sm">
+                        {item.body}
+                      </p>
+                    ) : null}
+                    <p className="text-accent mt-6 text-sm opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                      {item.videoUrl ? "Play →" : "View →"}
+                    </p>
+                  </div>
+                </Link>
+              </TiltMedia>
+            </HoverLift>
+          </StaggerItem>
+        ))}
+      </StaggerList>
+    </div>
   );
 }

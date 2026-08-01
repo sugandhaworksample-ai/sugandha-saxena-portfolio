@@ -1,0 +1,25 @@
+# ============================================================
+# content/pages/contact.yaml
+# ============================================================
+# Controls the text content on the Contact page (/contact).
+#
+# NOTE: Your email, phone number, and social links are NOT here.
+# Those live in: constants/site.ts
+# (Change them there and they update everywhere — footer, contact page, etc.)
+#
+# FIELDS:
+#   eyebrow  — tiny uppercase label above the H1
+#   headline — the large display heading (the "Say hello" text)
+#   subtitle — the paragraph below the headline that describes your availability
+# ============================================================
+
+eyebrow: "Contact"
+
+# The big display heading on the contact page
+# Keep it short and punchy — it's displayed at a very large size
+headline: "Say hello"
+
+# The availability / invitation copy below the headline
+# Update this to reflect your current availability status
+subtitle: >
+  Available for freelance and full-time. Let's build something that moves people.

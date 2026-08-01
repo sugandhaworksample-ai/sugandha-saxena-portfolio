@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
+import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal } from "@/components/motion/reveal";
-import { PageShell } from "@/components/page-shell";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/constants/site";
+import { getContactPage } from "@/lib/pages";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
@@ -15,69 +15,85 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function ContactPage() {
-  const telHref = `tel:${siteConfig.phone.replace(/\s+/g, "")}`;
+  // Hero copy is configured in content/pages/contact.yaml
+  // Email, phone, and social links come from constants/site.ts
+  const { eyebrow, headline, subtitle } = getContactPage();
 
   return (
-    <PageShell
-      title="Contact"
-      description="Open for freelance and full-time opportunities. Reach out by email, phone, or LinkedIn."
-    >
-      <Reveal className="space-y-8">
-        <div className="text-muted-foreground max-w-md space-y-2 text-sm">
-          <p>
-            <span className="text-foreground font-medium">Email</span>
-            <br />
-            <a
-              href={`mailto:${siteConfig.email}`}
-              className="hover:text-foreground transition-colors duration-200"
-            >
-              {siteConfig.email}
-            </a>
+    <div className="relative min-h-[80vh] overflow-hidden">
+      <div aria-hidden className="hero-atmosphere absolute inset-0 -z-10" />
+      <div aria-hidden className="grain-overlay -z-10" />
+      <section className="mx-auto flex max-w-6xl flex-col justify-center px-6 pt-28 pb-24 md:min-h-[75vh] md:pt-36">
+        <Reveal>
+          <p className="text-muted-foreground text-xs tracking-[0.2em] uppercase">
+            {eyebrow}
           </p>
-          <p>
-            <span className="text-foreground font-medium">Phone</span>
-            <br />
-            <a
-              href={telHref}
-              className="hover:text-foreground transition-colors duration-200"
-            >
-              {siteConfig.phone}
-            </a>
+          <h1 className="kinetic-display mt-6 text-[clamp(3rem,11vw,8rem)]">
+            {headline}
+          </h1>
+          <p className="text-muted-foreground mt-6 max-w-xl text-lg md:text-xl">
+            {subtitle}
           </p>
-          <p>
-            <span className="text-foreground font-medium">Location</span>
-            <br />
-            {siteConfig.location}
-          </p>
-        </div>
+        </Reveal>
 
-        <div className="flex flex-wrap gap-3">
-          <Button asChild>
-            <a href={`mailto:${siteConfig.email}`}>Email</a>
-          </Button>
-          <Button asChild variant="outline">
-            <a href={telHref}>Call</a>
-          </Button>
-          <Button asChild variant="outline">
-            <Link
-              href={siteConfig.links.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
+        <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+          <Magnetic strength={0.4}>
+            <Button
+              asChild
+              size="lg"
+              className="pressable focus-visible:ring-accent"
             >
-              LinkedIn
-            </Link>
-          </Button>
-          <Button asChild variant="outline">
-            <Link
-              href={siteConfig.links.behance}
-              target="_blank"
-              rel="noopener noreferrer"
+              <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+            </Button>
+          </Magnetic>
+          {siteConfig.phone ? (
+            <Magnetic strength={0.3}>
+              <Button
+                asChild
+                size="lg"
+                variant="outline"
+                className="pressable focus-visible:ring-accent"
+              >
+                <a href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}>
+                  {siteConfig.phone}
+                </a>
+              </Button>
+            </Magnetic>
+          ) : null}
+          <Magnetic strength={0.25}>
+            <Button
+              asChild
+              size="lg"
+              variant="ghost"
+              className="underline-draw pressable"
             >
-              Behance
-            </Link>
-          </Button>
+              <a
+                href={siteConfig.links.behance}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Behance
+              </a>
+            </Button>
+          </Magnetic>
+          <Magnetic strength={0.25}>
+            <Button
+              asChild
+              size="lg"
+              variant="ghost"
+              className="underline-draw pressable"
+            >
+              <a
+                href={siteConfig.links.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
+            </Button>
+          </Magnetic>
         </div>
-      </Reveal>
-    </PageShell>
+      </section>
+    </div>
   );
 }

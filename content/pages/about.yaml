@@ -1,0 +1,34 @@
+# ============================================================
+# content/pages/about.yaml
+# ============================================================
+# Controls the 4 stat cards shown on the RIGHT column of the
+# About page (/about), next to your name and bio.
+#
+# Each card has:
+#   label  — small uppercase text at the top of the card
+#   value  — the big text shown in the card
+#
+# You can have between 1 and 4 cards. The layout always fills
+# a 2×2 grid (or 1×N on mobile).
+# ============================================================
+
+stats:
+  # Card 1 — How long you've been working as a designer
+  # Change "7+" to "8+" when the time comes!
+  - label: "Years"
+    value: "7+"
+
+  # Card 2 — Your physical location
+  # Pulled from resume.md too, but this card can say something different
+  - label: "Location"
+    value: "Uttar Pradesh, India"
+
+  # Card 3 — Your main design focus areas
+  # Separate disciplines with a · symbol (Option+8 on Mac, Alt+0183 on Windows)
+  - label: "Focus"
+    value: "Brand · Motion · AI"
+
+  # Card 4 — What kind of work you're accepting right now
+  # Change to "Full-time only" or "Not available" as needed
+  - label: "Open to"
+    value: "Freelance · Full-time"

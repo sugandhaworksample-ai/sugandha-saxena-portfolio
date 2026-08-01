@@ -1,0 +1,79 @@
+# ============================================================
+# content/pages/blog.yaml
+# ============================================================
+# Controls everything on the Blog page (/blog).
+#
+# HERO SECTION
+#   eyebrow  — tiny uppercase label above the H1
+#   headline — the big display heading
+#   subtitle — paragraph below the heading
+#
+# POSTS (blog post list)
+#   Each item is one blog post or article card.
+#   Fields per item:
+#     title    — post title (required)
+#     subtitle — category or reading time (e.g. "Design · 4 min read")
+#     body     — short excerpt / teaser text
+#     href     — URL of the post (can be an external Medium/Substack link,
+#                or a future internal route like "/blog/my-post")
+#     image    — optional cover image path in /public
+#     tags     — list of tags
+#
+# TIP: You can start by linking to your existing Medium articles,
+# LinkedIn posts, or any writing you've published elsewhere.
+# Later, these can become full internal MDX blog pages.
+# ============================================================
+
+eyebrow: "Writing"
+headline: "Blog"
+subtitle: >
+  Notes on design, motion, and AI workflows — atmospheric essays, no filler.
+  Add your articles below by filling in the title, body, and href fields.
+
+posts:
+  # ---- Replace these placeholders with your real blog posts ----
+  # To link to an external post, set href to the full URL.
+  # To create a future internal post, set href to "/blog/post-slug".
+
+  - title: "Designing for Motion: Where Time Becomes the Medium"
+    subtitle: "Motion Design · 5 min read"
+    body: >
+      How thinking about time — not just space — changes the way you approach
+      every design decision, from colour to typography.
+    # href: "https://medium.com/@yourusername/your-article"
+    # image: "/blog/motion-time-cover.jpg"
+    tags:
+      - motion
+      - design-theory
+
+  - title: "AI as a Creative Partner, Not a Replacement"
+    subtitle: "AI & Design · 4 min read"
+    body: >
+      Seven months of integrating Midjourney, Firefly, and ChatGPT into my
+      daily design workflow — what worked and what didn't.
+    # href: "https://medium.com/@yourusername/your-article"
+    # image: "/blog/ai-partner-cover.jpg"
+    tags:
+      - ai
+      - workflow
+
+  - title: "Brand Identity in the Age of Generative AI"
+    subtitle: "Branding · 6 min read"
+    body: >
+      When every tool can generate a logo in seconds, what does it mean to
+      create a brand identity that actually means something?
+    # href: "https://medium.com/@yourusername/your-article"
+    tags:
+      - branding
+      - ai
+
+  - title: "The Hidden Typography of Indian Brands"
+    subtitle: "Typography · 3 min read"
+    body: >
+      An exploration of how the best Indian brands use type to communicate
+      culture, trust, and modernity at the same time.
+    # href: "https://medium.com/@yourusername/your-article"
+    tags:
+      - typography
+      - india
+      - branding

@@ -1,0 +1,99 @@
+# ============================================================
+# content/pages/ai.yaml
+# ============================================================
+# Controls everything on the AI Experiments page (/ai).
+#
+# HERO SECTION
+#   eyebrow  — tiny uppercase label above the H1
+#   headline — the big display heading
+#   subtitle — paragraph below the heading
+#
+# ITEMS (showcase grid)
+#   Each item is one card in the grid.
+#   Fields per item:
+#     title      — card heading (required)
+#     subtitle   — small label above the heading
+#     body       — description text
+#     href       — optional link (e.g. Behance, Dribbble, external URL)
+#     image      — path to image in /public (e.g. "/ai/midjourney-thumb.jpg")
+#     tags       — list of tags (for future filtering)
+#
+# TIP: When you generate images with AI tools (Midjourney, Firefly, etc.)
+# drop the exported image into public/ai/ and set the image: field here.
+# ============================================================
+
+eyebrow: "AI"
+headline: "AI Experiments"
+subtitle: >
+  Generative worlds and hybrid AI workflows — where design meets computation.
+  Add your AI-generated work below by setting the image and href fields.
+
+items:
+  # ---- Replace these placeholders with your real AI work ----
+
+  - title: "Generative Brand Identity"
+    subtitle: "Midjourney · Adobe Firefly"
+    body: >
+      AI-assisted brand exploration using Midjourney for concept generation
+      and Adobe Firefly for production-ready assets.
+    # href: "https://www.behance.net/saxenasugu7614"
+    # image: "/ai/generative-brand-thumb.jpg"
+    tags:
+      - midjourney
+      - branding
+      - generative
+
+  - title: "AI-Powered Social Content"
+    subtitle: "Workflow"
+    body: >
+      End-to-end social media campaign created with AI tools — from prompt
+      engineering to final asset delivery.
+    # href: "https://www.behance.net/saxenasugu7614"
+    # image: "/ai/social-content-thumb.jpg"
+    tags:
+      - social
+      - workflow
+      - ai
+
+  - title: "Prompt-to-Poster Series"
+    subtitle: "Typographic Experiments"
+    body: >
+      A series of typographic posters generated through iterative prompting,
+      refined in Adobe Illustrator.
+    # href: "https://www.behance.net/saxenasugu7614"
+    # image: "/ai/poster-series-thumb.jpg"
+    tags:
+      - typography
+      - poster
+      - generative
+
+  - title: "Image Upscaling & Restoration"
+    subtitle: "Post-Production AI"
+    body: >
+      Using AI upscaling tools to restore and enhance legacy photography assets
+      for modern print and digital use.
+    # image: "/ai/upscaling-thumb.jpg"
+    tags:
+      - upscaling
+      - restoration
+
+  - title: "AI Illustration"
+    subtitle: "Concept Art"
+    body: >
+      Concept art and illustration using generative AI as a creative partner —
+      not a replacement for craft.
+    # image: "/ai/illustration-thumb.jpg"
+    tags:
+      - illustration
+      - concept
+
+  - title: "Adobe Firefly Workflows"
+    subtitle: "Production Tool"
+    body: >
+      Integrating Adobe Firefly's generative fill and text-to-image into
+      existing Creative Cloud design workflows.
+    # href: "https://www.behance.net/saxenasugu7614"
+    tags:
+      - firefly
+      - adobe
+      - workflow

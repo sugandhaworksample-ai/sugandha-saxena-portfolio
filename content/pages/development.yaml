@@ -1,0 +1,79 @@
+# ============================================================
+# content/pages/development.yaml
+# ============================================================
+# Controls everything on the Development page (/development).
+#
+# HERO SECTION
+#   eyebrow  — tiny uppercase label above the H1
+#   headline — the big display heading
+#   subtitle — paragraph below the heading
+#
+# PROJECTS (dev project cards)
+#   Each item is one project card.
+#   Fields per item:
+#     title    — project name (required)
+#     subtitle — tech stack or category (e.g. "Next.js · TypeScript")
+#     body     — description of what you built
+#     href     — link to GitHub, live site, or Behance project
+#     image    — optional screenshot in /public
+#     tags     — list of tags
+#
+# TIP: Start with this portfolio site itself as your first project!
+# ============================================================
+
+eyebrow: "Development"
+headline: "Creative Code"
+subtitle: >
+  Interactive builds and creative coding experiments — where design
+  thinking meets engineering craft. Add your projects below.
+
+projects:
+  # ---- Replace these placeholders with your real dev projects ----
+
+  - title: "Sugandha Saxena Portfolio"
+    subtitle: "Next.js · TypeScript · Framer Motion · GSAP"
+    body: >
+      This portfolio site — built with Next.js 15, TypeScript, and a custom
+      animation system using both Framer Motion and GSAP. Designed and
+      developed as a single cohesive creative system.
+    href: "https://sugandha-saxena-portfolio.vercel.app"
+    # image: "/development/portfolio-screenshot.jpg"
+    tags:
+      - nextjs
+      - typescript
+      - animation
+      - portfolio
+
+  - title: "Brand Website — STEMROBO Technologies"
+    subtitle: "Web Design · CMS"
+    body: >
+      Designed and maintained the company website for a consistent
+      visual experience aligned with the brand identity system.
+    # href: "https://stemrobo.com"
+    # image: "/development/stemrobo-screenshot.jpg"
+    tags:
+      - web-design
+      - branding
+      - cms
+
+  - title: "Interactive Motion Prototype"
+    subtitle: "Figma · Prototyping"
+    body: >
+      High-fidelity interactive prototype built in Figma for a
+      campaign landing page with micro-animation triggers.
+    # href: "https://www.behance.net/saxenasugu7614"
+    tags:
+      - figma
+      - prototype
+      - ux
+
+  - title: "Social Media Design System"
+    subtitle: "Adobe Illustrator · Templates"
+    body: >
+      A scalable template system covering 20+ social media post formats,
+      enabling fast, on-brand content production at scale.
+    # href: "https://www.behance.net/saxenasugu7614"
+    tags:
+      - design-system
+      - social
+      - templates

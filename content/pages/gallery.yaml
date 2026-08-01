@@ -1,0 +1,91 @@
+# ============================================================
+# content/pages/gallery.yaml
+# ============================================================
+# Controls everything on the Gallery page (/gallery).
+#
+# HERO SECTION
+#   eyebrow  — tiny uppercase label above the H1
+#   headline — the big display heading
+#   subtitle — paragraph below the heading
+#
+# ITEMS (image grid)
+#   Each item is one image in the gallery grid.
+#   Fields per item:
+#     title   — alt text / caption for the image (required for accessibility)
+#     subtitle — category label (e.g. "Branding", "Print", "UI")
+#     body    — optional description shown on hover
+#     image   — path to image in /public (e.g. "/gallery/my-photo.jpg")
+#               IMPORTANT: Drop your images into the public/gallery/ folder first!
+#     href    — optional link to the Behance project this image belongs to
+#     tags    — list of tags (for future filtering)
+#
+# HOW TO ADD AN IMAGE:
+#   1. Export/download the image from Behance
+#   2. Place it in: public/gallery/filename.jpg
+#   3. Add an item below with image: "/gallery/filename.jpg"
+# ============================================================
+
+eyebrow: "Gallery"
+headline: "Visual Archive"
+subtitle: >
+  A curated collection of frames, stills, and visual experiments.
+  Add your work by dropping images into public/gallery/ and listing them below.
+
+items:
+  # ---- Replace these placeholders with your real gallery images ----
+  # To add a real image:
+  #   1. Put the file in: public/gallery/your-image.jpg
+  #   2. Set   image: "/gallery/your-image.jpg"
+  #   3. Uncomment the href if you want it to link to Behance
+
+  - title: "Brand Identity — Logo Exploration"
+    subtitle: "Branding"
+    body: "Logo exploration and identity marks."
+    # image: "/gallery/brand-identity-01.jpg"
+    # href: "https://www.behance.net/saxenasugu7614"
+    tags:
+      - branding
+      - logo
+
+  - title: "Social Media Campaign"
+    subtitle: "Digital"
+    body: "Campaign creatives for social platforms."
+    # image: "/gallery/social-campaign-01.jpg"
+    # href: "https://www.behance.net/saxenasugu7614"
+    tags:
+      - social
+      - digital
+
+  - title: "Print Design — Packaging"
+    subtitle: "Print"
+    body: "Packaging design and print-ready artwork."
+    # image: "/gallery/packaging-01.jpg"
+    # href: "https://www.behance.net/saxenasugu7614"
+    tags:
+      - print
+      - packaging
+
+  - title: "Motion Still — Frame Capture"
+    subtitle: "Motion"
+    body: "Still frame from a motion graphics sequence."
+    # image: "/gallery/motion-still-01.jpg"
+    tags:
+      - motion
+      - still
+
+  - title: "UI/UX Screen Design"
+    subtitle: "UI Design"
+    body: "Interface design and screen layouts."
+    # image: "/gallery/ui-screen-01.jpg"
+    # href: "https://www.behance.net/saxenasugu7614"
+    tags:
+      - ui
+      - ux
+
+  - title: "Typography Poster"
+    subtitle: "Typography"
+    body: "Experimental typographic compositions."
+    # image: "/gallery/typography-poster-01.jpg"
+    tags:
+      - typography
+      - poster

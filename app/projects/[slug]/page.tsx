@@ -62,103 +62,111 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     .slice(0, 3);
 
   return (
-    <article className="mx-auto w-full max-w-6xl px-6 py-20 md:py-28">
-      <div className="max-w-3xl space-y-6">
-        <p className="text-muted-foreground text-xs tracking-[0.16em] uppercase">
-          {project.role ?? "Project"}
-          {project.duration ? ` · ${project.duration}` : ""}
-        </p>
-        <h1 className="font-display text-4xl font-semibold tracking-tight md:text-5xl">
-          {project.title}
-        </h1>
-        <p className="text-muted-foreground text-lg">{project.description}</p>
-        {project.links.behance ? (
-          <a
-            href={project.links.behance}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-accent inline-flex text-sm font-medium underline-offset-4 transition-colors duration-200 hover:underline"
-          >
-            View on Behance
-          </a>
+    <article className="relative overflow-hidden">
+      <div
+        aria-hidden
+        className="hero-atmosphere absolute inset-0 -z-10 opacity-40"
+      />
+      <div className="mx-auto w-full max-w-6xl px-6 py-20 md:py-28">
+        <div className="max-w-3xl space-y-6">
+          <p className="text-muted-foreground text-xs tracking-[0.16em] uppercase">
+            {project.role ?? "Project"}
+            {project.duration ? ` · ${project.duration}` : ""}
+          </p>
+          <h1 className="kinetic-display text-4xl md:text-6xl lg:text-7xl">
+            {project.title}
+          </h1>
+          <p className="text-muted-foreground text-lg md:text-xl">
+            {project.description}
+          </p>
+          {project.links.behance ? (
+            <a
+              href={project.links.behance}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline-draw hover:text-accent inline-flex text-sm font-medium transition-colors duration-200"
+            >
+              View on Behance
+            </a>
+          ) : null}
+        </div>
+
+        {project.cover ? (
+          <Reveal className="bg-muted relative mt-12 aspect-[16/9] overflow-hidden rounded-2xl">
+            <Image
+              src={project.cover}
+              alt={project.title}
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 1200px) 100vw, 1152px"
+            />
+          </Reveal>
+        ) : null}
+
+        <div className="mt-12 grid gap-10 md:grid-cols-[220px_minmax(0,1fr)]">
+          <aside className="space-y-6 text-sm md:sticky md:top-24 md:self-start">
+            {project.skills.length > 0 ? (
+              <div>
+                <p className="text-muted-foreground mb-2 text-xs tracking-[0.16em] uppercase">
+                  Skills
+                </p>
+                <ul className="text-foreground space-y-1">
+                  {project.skills.map((skill) => (
+                    <li key={skill}>{skill}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+            {project.tools.length > 0 ? (
+              <div>
+                <p className="text-muted-foreground mb-2 text-xs tracking-[0.16em] uppercase">
+                  Tools
+                </p>
+                <ul className="text-foreground space-y-1">
+                  {project.tools.map((tool) => (
+                    <li key={tool}>{tool}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+            {project.tags.length > 0 ? (
+              <div>
+                <p className="text-muted-foreground mb-2 text-xs tracking-[0.16em] uppercase">
+                  Tags
+                </p>
+                <p className="text-foreground">{project.tags.join(", ")}</p>
+              </div>
+            ) : null}
+          </aside>
+          <div className="prose-portfolio max-w-none">
+            <MDXRemote source={project.content} components={mdxComponents} />
+          </div>
+        </div>
+
+        {related.length > 0 ? (
+          <>
+            <Separator className="my-16" />
+            <section>
+              <h2 className="font-display mb-8 text-2xl font-semibold tracking-tight">
+                Related projects
+              </h2>
+              <ul className="grid gap-6 md:grid-cols-3">
+                {related.map((item) => (
+                  <li key={item.slug}>
+                    <Link
+                      href={`/projects/${item.slug}`}
+                      className="text-sm transition-opacity duration-200 hover:opacity-70"
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </>
         ) : null}
       </div>
-
-      {project.cover ? (
-        <Reveal className="bg-muted relative mt-12 aspect-[16/9] overflow-hidden">
-          <Image
-            src={project.cover}
-            alt={project.title}
-            fill
-            priority
-            className="object-cover"
-            sizes="(max-width: 1200px) 100vw, 1152px"
-          />
-        </Reveal>
-      ) : null}
-
-      <div className="mt-12 grid gap-10 md:grid-cols-[220px_minmax(0,1fr)]">
-        <aside className="space-y-6 text-sm md:sticky md:top-24 md:self-start">
-          {project.skills.length > 0 ? (
-            <div>
-              <p className="text-muted-foreground mb-2 text-xs tracking-[0.16em] uppercase">
-                Skills
-              </p>
-              <ul className="text-foreground space-y-1">
-                {project.skills.map((skill) => (
-                  <li key={skill}>{skill}</li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-          {project.tools.length > 0 ? (
-            <div>
-              <p className="text-muted-foreground mb-2 text-xs tracking-[0.16em] uppercase">
-                Tools
-              </p>
-              <ul className="text-foreground space-y-1">
-                {project.tools.map((tool) => (
-                  <li key={tool}>{tool}</li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-          {project.tags.length > 0 ? (
-            <div>
-              <p className="text-muted-foreground mb-2 text-xs tracking-[0.16em] uppercase">
-                Tags
-              </p>
-              <p className="text-foreground">{project.tags.join(", ")}</p>
-            </div>
-          ) : null}
-        </aside>
-        <div className="prose-portfolio max-w-none">
-          <MDXRemote source={project.content} components={mdxComponents} />
-        </div>
-      </div>
-
-      {related.length > 0 ? (
-        <>
-          <Separator className="my-16" />
-          <section>
-            <h2 className="font-display mb-8 text-2xl font-semibold tracking-tight">
-              Related projects
-            </h2>
-            <ul className="grid gap-6 md:grid-cols-3">
-              {related.map((item) => (
-                <li key={item.slug}>
-                  <Link
-                    href={`/projects/${item.slug}`}
-                    className="text-sm transition-opacity duration-200 hover:opacity-70"
-                  >
-                    {item.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </>
-      ) : null}
     </article>
   );
 }

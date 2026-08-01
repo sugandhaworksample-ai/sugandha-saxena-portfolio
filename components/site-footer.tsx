@@ -10,11 +10,11 @@ import { siteConfig } from "@/constants/site";
 export function SiteFooter() {
   return (
     <Reveal as="div" className="mt-auto">
-      <footer className="border-border/60 border-t">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-12">
+      <footer className="border-border/50 border-t">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-14">
           <div className="grid gap-8 md:grid-cols-[1.4fr_1fr_1fr]">
             <div className="space-y-3">
-              <p className="font-display text-xl font-semibold tracking-tight">
+              <p className="font-display text-2xl font-semibold tracking-tight">
                 {siteConfig.name}
               </p>
               <p className="text-muted-foreground max-w-sm text-sm">
@@ -32,7 +32,7 @@ export function SiteFooter() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-muted-foreground hover:text-foreground pressable transition-colors duration-200"
+                      className="text-muted-foreground hover:text-foreground underline-draw pressable transition-colors duration-200"
                     >
                       {item.title}
                     </Link>
@@ -49,7 +49,7 @@ export function SiteFooter() {
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="text-muted-foreground hover:text-foreground pressable transition-colors duration-200"
+                      className="text-muted-foreground hover:text-foreground underline-draw pressable transition-colors duration-200"
                     >
                       {item.title}
                     </Link>
@@ -60,7 +60,7 @@ export function SiteFooter() {
                     href={siteConfig.links.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground pressable transition-colors duration-200"
+                    className="text-muted-foreground hover:text-foreground underline-draw pressable transition-colors duration-200"
                   >
                     LinkedIn
                   </a>
@@ -70,7 +70,7 @@ export function SiteFooter() {
                     href={siteConfig.links.behance}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground pressable transition-colors duration-200"
+                    className="text-muted-foreground hover:text-foreground underline-draw pressable transition-colors duration-200"
                   >
                     Behance
                   </a>
@@ -84,7 +84,7 @@ export function SiteFooter() {
               © {new Date().getFullYear()} {siteConfig.name}. All rights
               reserved.
             </p>
-            <p>Built with Next.js · Designed for craft.</p>
+            <p>Crafted with motion · Built to feel alive.</p>
           </div>
         </div>
       </footer>

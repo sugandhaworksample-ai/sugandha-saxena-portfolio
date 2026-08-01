@@ -1,50 +1,40 @@
 import type { Metadata } from "next";
 
 import { Reveal } from "@/components/motion/reveal";
-import { PageShell } from "@/components/page-shell";
-import {
-  ClientList,
-  ExperienceList,
-} from "@/components/resume/experience-list";
-import { getResume } from "@/lib/resume";
+import { ExperienceTimeline } from "@/features/experience/experience-timeline";
+import { getExperience } from "@/lib/resume";
 import { createPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Experience",
   description:
-    "Professional experience and freelance collaborations for Sugandha Saxena across creative design, branding, and motion.",
+    "Professional experience and roles for Sugandha Saxena across creative design and technology.",
   path: "/experience",
 });
 
 export default function ExperiencePage() {
-  const resume = getResume();
+  const roles = getExperience();
 
   return (
-    <PageShell
-      title="Experience"
-      description="Roles, impact, and selected client collaborations across branding, digital, and motion."
-    >
-      <div className="space-y-16">
-        <Reveal as="section" className="space-y-8">
-          <h2 className="font-display text-2xl font-semibold tracking-tight">
-            Work experience
-          </h2>
-          <ExperienceList items={resume.experience} />
-        </Reveal>
-
-        <Reveal as="section" className="space-y-8" delay={0.05}>
-          <div className="space-y-2">
-            <h2 className="font-display text-2xl font-semibold tracking-tight">
-              Selected clients
-            </h2>
-            <p className="text-muted-foreground max-w-2xl text-sm text-pretty">
-              Freelance collaborations spanning entertainment brands, political
-              campaigns, and brand systems.
-            </p>
-          </div>
-          <ClientList items={resume.projects} />
-        </Reveal>
+    <div className="relative overflow-hidden pb-28">
+      <div
+        aria-hidden
+        className="hero-atmosphere absolute inset-0 -z-10 opacity-60"
+      />
+      <Reveal className="mx-auto max-w-6xl px-6 pt-28 md:pt-36">
+        <p className="text-muted-foreground text-xs tracking-[0.2em] uppercase">
+          Career
+        </p>
+        <h1 className="kinetic-display mt-4 text-5xl md:text-7xl">
+          Experience
+        </h1>
+        <p className="text-muted-foreground mt-5 max-w-xl text-lg">
+          Roles that shaped the craft — scroll the line as chapters unlock.
+        </p>
+      </Reveal>
+      <div className="mt-16 px-6">
+        <ExperienceTimeline roles={roles} />
       </div>
-    </PageShell>
+    </div>
   );
 }
