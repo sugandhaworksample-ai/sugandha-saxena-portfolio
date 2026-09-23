@@ -15,6 +15,20 @@ const nextConfig: NextConfig = {
     ],
   },
   pageExtensions: ["ts", "tsx", "md", "mdx"],
+  async redirects() {
+    return [
+      {
+        source: "/projects/logo-design",
+        destination: "/projects/branding/logo",
+        permanent: true,
+      },
+      {
+        source: "/projects/visiting-card-design",
+        destination: "/projects/branding/stationery",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

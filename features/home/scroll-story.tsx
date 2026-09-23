@@ -9,6 +9,7 @@ import { Marquee } from "@/components/motion/marquee";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/constants/site";
 import { NameRibbon } from "@/features/home/name-ribbon";
+import { EventsShowcase } from "@/features/work/events-showcase";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import {
   ensureGsapPlugins,
@@ -16,15 +17,21 @@ import {
   killScrollTriggers,
   ScrollTrigger,
 } from "@/lib/gsap";
-import type { Project } from "@/types/project";
+import type { WorkCategory, WorkEventsTree } from "@/types/work-tree";
 
 type ScrollStoryProps = {
-  projects: Project[];
+  categories: WorkCategory[];
+  events: WorkEventsTree;
   skills: string[];
   blurb: string;
 };
 
-export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
+export function ScrollStory({
+  categories,
+  events,
+  skills,
+  blurb,
+}: ScrollStoryProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const reduceMotion = usePrefersReducedMotion();
@@ -75,7 +82,7 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
           );
         }
 
-        if (index === 2 && projects.length > 0) {
+        if (index === 2 && categories.length > 0) {
           const track = chapter.querySelector<HTMLElement>("[data-work-track]");
           if (track) {
             const amount = Math.max(track.scrollWidth - window.innerWidth, 0);
@@ -116,7 +123,7 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
       ctx.revert();
       killScrollTriggers(rootRef.current ?? undefined);
     };
-  }, [reduceMotion, projects.length]);
+  }, [reduceMotion, categories.length]);
 
   const skillItems = skills.length
     ? skills
@@ -147,7 +154,6 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
         />
       </div>
 
-      {/* Chapter 1 — Brand (tall runway = ribbon scrub, then next panel covers) */}
       <div className="hero-rise-runway" data-hero-runway>
         <section
           data-chapter
@@ -195,7 +201,6 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
         </section>
       </div>
 
-      {/* Chapter 2 — Positioning */}
       <section
         data-chapter
         data-section-rise
@@ -230,7 +235,7 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
         </div>
       </section>
 
-      {/* Chapter 3 — Selected work horizontal scrub (own pin — skip sticky rise) */}
+      {/* Stories in frames — Scroll-to-Explore categories */}
       <section
         data-chapter
         data-rise-skip
@@ -243,26 +248,27 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
           >
             <div className="flex w-[70vw] shrink-0 flex-col justify-center md:w-[40vw]">
               <p className="text-muted-foreground text-xs tracking-[0.2em] uppercase">
-                Selected work
+                Scroll to explore
               </p>
               <h2 className="kinetic-display mt-4 text-4xl md:text-6xl">
                 Stories in frames
               </h2>
               <p className="text-muted-foreground mt-4 max-w-sm">
-                Scroll to travel through projects — each frame is a world.
+                Travel categories — branding through illustration — each frame
+                opens a world.
               </p>
             </div>
-            {projects.map((project) => (
+            {categories.map((category) => (
               <Link
-                key={project.slug}
-                href={`/projects/${project.slug}`}
+                key={category.slug}
+                href={`/projects/${category.slug}`}
                 className="group relative h-[60vh] w-[75vw] shrink-0 overflow-hidden md:w-[42vw]"
               >
                 <div data-parallax className="absolute inset-0">
-                  {project.cover ? (
+                  {category.hero ? (
                     <Image
-                      src={project.cover}
-                      alt={project.title}
+                      src={category.hero.thumbSrc ?? category.hero.src}
+                      alt={category.title}
                       fill
                       className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
                       sizes="42vw"
@@ -274,11 +280,17 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                 <div className="absolute right-6 bottom-6 left-6 text-white">
                   <p className="text-xs tracking-[0.16em] uppercase opacity-80">
-                    {project.tags.slice(0, 2).join(" · ")}
+                    {category.label}
                   </p>
                   <h3 className="font-display mt-2 text-2xl md:text-3xl">
-                    {project.title}
+                    {category.title}
                   </h3>
+                  <p className="mt-2 text-sm opacity-80">
+                    {category.subsections
+                      .slice(0, 3)
+                      .map((s) => s.title)
+                      .join(" · ")}
+                  </p>
                 </div>
               </Link>
             ))}
@@ -290,7 +302,7 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
                   variant="outline"
                   className="pressable"
                 >
-                  <Link href="/projects">All projects</Link>
+                  <Link href="/projects">All categories</Link>
                 </Button>
               </Magnetic>
             </div>
@@ -298,7 +310,7 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
         </div>
       </section>
 
-      {/* Chapter 4 — Skills marquee */}
+      {/* Tools of obsession */}
       <section
         data-chapter
         data-section-rise
@@ -339,7 +351,10 @@ export function ScrollStory({ projects, skills, blurb }: ScrollStoryProps) {
         </div>
       </section>
 
-      {/* Chapter 5 — Invite */}
+      {/* Event & Exhibition — below tools */}
+      <EventsShowcase tree={events} />
+
+      {/* Invite */}
       <section
         data-chapter
         data-section-rise

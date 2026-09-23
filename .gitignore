@@ -45,5 +45,10 @@ next-env.d.ts
 !.cursor/mcp.json
 .vercel
 
-
-.vercel
+# Master / print sources + heavy footage — keep on disk, host off-GitHub
+*.pdf
+*.PDF
+*.psd
+*.PSD
+*.mp4
+*.mov

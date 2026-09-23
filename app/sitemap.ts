@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { mainNav, secondaryNav } from "@/constants/nav";
 import { siteConfig } from "@/constants/site";
-import { getAllProjects } from "@/lib/projects";
+import { getEventsTree, getWorkCategories } from "@/lib/work-tree";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
@@ -18,14 +18,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === "" ? 1 : 0.7,
   }));
 
-  const projects = getAllProjects().map((project) => ({
-    url: `${siteConfig.url}/projects/${project.slug}`,
-    lastModified: project.publishedAt
-      ? new Date(project.publishedAt)
-      : new Date(),
+  const categories = getWorkCategories();
+  const categoryUrls = categories.map((category) => ({
+    url: `${siteConfig.url}/projects/${category.slug}`,
+    lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
 
-  return [...pages, ...projects];
+  const subsectionUrls = categories.flatMap((category) =>
+    category.subsections.map((subsection) => ({
+      url: `${siteConfig.url}/projects/${category.slug}/${subsection.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
+  );
+
+  const eventUrls = getEventsTree().groups.map((group) => ({
+    url: `${siteConfig.url}/projects/events/${group.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.75,
+  }));
+
+  return [...pages, ...categoryUrls, ...subsectionUrls, ...eventUrls];
 }

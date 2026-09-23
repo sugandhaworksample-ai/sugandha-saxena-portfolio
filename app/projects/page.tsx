@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 
-import { ProjectsIndex } from "@/features/projects/projects-index";
-import { getAllProjects } from "@/lib/projects";
+import { ExploreIndex } from "@/features/work/explore-index";
 import { createPageMetadata } from "@/lib/seo";
+import { getWorkCategories } from "@/lib/work-tree";
 
 export const metadata: Metadata = createPageMetadata({
-  title: "Projects",
+  title: "Work",
   description:
-    "Selected projects by Sugandha Saxena across branding, UI, packaging, and AI-driven visual storytelling.",
+    "Scroll to explore — branding, print, social, UI, motion, AI, and illustration by Sugandha Saxena.",
   path: "/projects",
 });
 
 export default function ProjectsPage() {
-  const projects = getAllProjects();
-  return <ProjectsIndex projects={projects} />;
+  const categories = getWorkCategories();
+  return <ExploreIndex categories={categories} />;
 }
