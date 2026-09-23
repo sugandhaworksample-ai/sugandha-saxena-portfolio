@@ -8,7 +8,7 @@ import { Magnetic } from "@/components/motion/magnetic";
 import { Marquee } from "@/components/motion/marquee";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/constants/site";
-import { NameRibbon } from "@/features/home/name-ribbon";
+// import { NameRibbon } from "@/features/home/name-ribbon";
 import { EventsShowcase } from "@/features/work/events-showcase";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import {
@@ -158,52 +158,57 @@ export function ScrollStory({
         />
       </div>
 
-      <div className="hero-rise-runway" data-hero-runway>
-        <section
-          data-chapter
-          data-section-rise
-          className="chapter-screen relative overflow-x-clip"
-        >
-          <div
-            aria-hidden
-            data-hero-atmosphere
-            data-parallax-skip
-            className="hero-atmosphere absolute inset-0 origin-center will-change-transform"
-          />
-          <div
-            aria-hidden
-            data-hero-grain
-            data-parallax-skip
-            className="grain-overlay"
-          />
-          <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col px-6">
-            <p
-              data-hero-role
-              className="text-muted-foreground mb-6 text-sm tracking-[0.22em] uppercase"
-            >
-              {siteConfig.role} · {siteConfig.location}
-            </p>
-            <NameRibbon />
-            <div data-brand-ctas className="mt-10 flex flex-wrap gap-4">
-              <Magnetic>
-                <Button asChild size="lg" className="pressable text-base">
-                  <Link href="/projects">Enter the work</Link>
-                </Button>
-              </Magnetic>
-              <Magnetic strength={0.25}>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="pressable"
-                >
-                  <Link href="/contact">Start a project</Link>
-                </Button>
-              </Magnetic>
-            </div>
+      {/* Ribbon scrub removed — was pinned via 320vh runway; keep a normal hero chapter. */}
+      <section
+        data-chapter
+        data-section-rise
+        className="chapter-screen relative overflow-x-clip"
+      >
+        <div
+          aria-hidden
+          data-hero-atmosphere
+          data-parallax-skip
+          className="hero-atmosphere absolute inset-0 origin-center will-change-transform"
+        />
+        <div
+          aria-hidden
+          data-hero-grain
+          data-parallax-skip
+          className="grain-overlay"
+        />
+        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col px-6">
+          <p
+            data-hero-role
+            className="text-muted-foreground mb-6 text-sm tracking-[0.22em] uppercase"
+          >
+            {siteConfig.role} · {siteConfig.location}
+          </p>
+          {/* <NameRibbon /> */}
+          <h1
+            data-brand
+            className="kinetic-display text-[clamp(3.2rem,12vw,8rem)]"
+          >
+            {siteConfig.name}
+          </h1>
+          <div data-brand-ctas className="mt-10 flex flex-wrap gap-4">
+            <Magnetic>
+              <Button asChild size="lg" className="pressable text-base">
+                <Link href="/projects">Enter the work</Link>
+              </Button>
+            </Magnetic>
+            <Magnetic strength={0.25}>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="pressable"
+              >
+                <Link href="/contact">Start a project</Link>
+              </Button>
+            </Magnetic>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       <section
         data-chapter
