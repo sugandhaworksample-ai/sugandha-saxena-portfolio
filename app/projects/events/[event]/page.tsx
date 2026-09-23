@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Reveal } from "@/components/motion/reveal";
-import { FocusMediaGrid } from "@/features/work/focus-media-grid";
+import { WorkGallery } from "@/features/work/work-gallery";
 import { createPageMetadata } from "@/lib/seo";
 import { getEventsTree } from "@/lib/work-tree";
 
@@ -60,20 +59,7 @@ export default async function EventDetailPage({ params }: EventPageProps) {
           </h1>
         </Reveal>
 
-        {group.hero ? (
-          <Reveal className="bg-muted relative mt-12 aspect-[21/9] overflow-hidden rounded-3xl">
-            <Image
-              src={group.hero.src}
-              alt={group.title}
-              fill
-              priority
-              className="object-cover"
-              sizes="(max-width: 1200px) 100vw, 1152px"
-            />
-          </Reveal>
-        ) : null}
-
-        <FocusMediaGrid
+        <WorkGallery
           media={group.media}
           stacks={group.stacks}
           title={group.title}

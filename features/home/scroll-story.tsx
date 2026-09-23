@@ -8,7 +8,7 @@ import { Magnetic } from "@/components/motion/magnetic";
 import { Marquee } from "@/components/motion/marquee";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/constants/site";
-import { NameRibbon } from "@/features/home/name-ribbon";
+// import { NameRibbon } from "@/features/home/name-ribbon";
 import { EventsShowcase } from "@/features/work/events-showcase";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import {
@@ -85,6 +85,10 @@ export function ScrollStory({
         if (index === 2 && categories.length > 0) {
           const track = chapter.querySelector<HTMLElement>("[data-work-track]");
           if (track) {
+            // Phone: native horizontal snap — pin distance was enormous (7× ~75vw).
+            const mobile = window.matchMedia("(max-width: 767px)").matches;
+            if (mobile) return;
+
             const amount = Math.max(track.scrollWidth - window.innerWidth, 0);
             gsap.to(track, {
               x: () => -amount,
@@ -92,7 +96,7 @@ export function ScrollStory({
               scrollTrigger: {
                 trigger: chapter,
                 start: "top top",
-                end: () => `+=${amount + window.innerHeight}`,
+                end: () => `+=${amount + window.innerHeight * 0.35}`,
                 pin: true,
                 scrub: 1,
                 invalidateOnRefresh: true,
@@ -154,52 +158,57 @@ export function ScrollStory({
         />
       </div>
 
-      <div className="hero-rise-runway" data-hero-runway>
-        <section
-          data-chapter
-          data-section-rise
-          className="chapter-screen relative overflow-x-clip"
-        >
-          <div
-            aria-hidden
-            data-hero-atmosphere
-            data-parallax-skip
-            className="hero-atmosphere absolute inset-0 origin-center will-change-transform"
-          />
-          <div
-            aria-hidden
-            data-hero-grain
-            data-parallax-skip
-            className="grain-overlay"
-          />
-          <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col px-6">
-            <p
-              data-hero-role
-              className="text-muted-foreground mb-6 text-sm tracking-[0.22em] uppercase"
-            >
-              {siteConfig.role} · {siteConfig.location}
-            </p>
-            <NameRibbon />
-            <div data-brand-ctas className="mt-10 flex flex-wrap gap-4">
-              <Magnetic>
-                <Button asChild size="lg" className="pressable text-base">
-                  <Link href="/projects">Enter the work</Link>
-                </Button>
-              </Magnetic>
-              <Magnetic strength={0.25}>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="pressable"
-                >
-                  <Link href="/contact">Start a project</Link>
-                </Button>
-              </Magnetic>
-            </div>
+      {/* Ribbon scrub removed — was pinned via 320vh runway; keep a normal hero chapter. */}
+      <section
+        data-chapter
+        data-section-rise
+        className="chapter-screen relative overflow-x-clip"
+      >
+        <div
+          aria-hidden
+          data-hero-atmosphere
+          data-parallax-skip
+          className="hero-atmosphere absolute inset-0 origin-center will-change-transform"
+        />
+        <div
+          aria-hidden
+          data-hero-grain
+          data-parallax-skip
+          className="grain-overlay"
+        />
+        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col px-6">
+          <p
+            data-hero-role
+            className="text-muted-foreground mb-6 text-sm tracking-[0.22em] uppercase"
+          >
+            {siteConfig.role} · {siteConfig.location}
+          </p>
+          {/* <NameRibbon /> */}
+          <h1
+            data-brand
+            className="kinetic-display text-[clamp(3.2rem,12vw,8rem)]"
+          >
+            {siteConfig.name}
+          </h1>
+          <div data-brand-ctas className="mt-10 flex flex-wrap gap-4">
+            <Magnetic>
+              <Button asChild size="lg" className="pressable text-base">
+                <Link href="/projects">Enter the work</Link>
+              </Button>
+            </Magnetic>
+            <Magnetic strength={0.25}>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="pressable"
+              >
+                <Link href="/contact">Start a project</Link>
+              </Button>
+            </Magnetic>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       <section
         data-chapter
@@ -241,19 +250,19 @@ export function ScrollStory({
         data-rise-skip
         className="relative z-[3] overflow-hidden bg-[var(--background)]"
       >
-        <div className="flex h-screen items-center">
+        <div className="flex min-h-[70vh] items-center md:h-screen md:min-h-0">
           <div
             data-work-track
-            className="flex gap-8 px-6 will-change-transform"
+            className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] will-change-transform md:gap-8 md:overflow-visible md:px-6 md:pb-0 [&::-webkit-scrollbar]:hidden"
           >
-            <div className="flex w-[70vw] shrink-0 flex-col justify-center md:w-[40vw]">
+            <div className="flex w-[min(78vw,18rem)] shrink-0 snap-center flex-col justify-center md:w-[40vw]">
               <p className="text-muted-foreground text-xs tracking-[0.2em] uppercase">
                 Scroll to explore
               </p>
-              <h2 className="kinetic-display mt-4 text-4xl md:text-6xl">
+              <h2 className="kinetic-display mt-4 text-3xl md:text-6xl">
                 Stories in frames
               </h2>
-              <p className="text-muted-foreground mt-4 max-w-sm">
+              <p className="text-muted-foreground mt-4 max-w-sm text-sm md:text-base">
                 Travel categories — branding through illustration — each frame
                 opens a world.
               </p>
@@ -262,7 +271,7 @@ export function ScrollStory({
               <Link
                 key={category.slug}
                 href={`/projects/${category.slug}`}
-                className="group relative h-[60vh] w-[75vw] shrink-0 overflow-hidden md:w-[42vw]"
+                className="group relative h-[48vh] w-[min(72vw,17rem)] shrink-0 snap-center overflow-hidden md:h-[60vh] md:w-[42vw]"
               >
                 <div data-parallax className="absolute inset-0">
                   {category.hero ? (
@@ -271,21 +280,21 @@ export function ScrollStory({
                       alt={category.title}
                       fill
                       className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-                      sizes="42vw"
+                      sizes="(max-width: 768px) 72vw, 42vw"
                     />
                   ) : (
                     <div className="bg-muted absolute inset-0" />
                   )}
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                <div className="absolute right-6 bottom-6 left-6 text-white">
+                <div className="absolute right-4 bottom-4 left-4 text-white md:right-6 md:bottom-6 md:left-6">
                   <p className="text-xs tracking-[0.16em] uppercase opacity-80">
                     {category.label}
                   </p>
-                  <h3 className="font-display mt-2 text-2xl md:text-3xl">
+                  <h3 className="font-display mt-2 text-xl md:text-3xl">
                     {category.title}
                   </h3>
-                  <p className="mt-2 text-sm opacity-80">
+                  <p className="mt-2 text-xs opacity-80 md:text-sm">
                     {category.subsections
                       .slice(0, 3)
                       .map((s) => s.title)
@@ -294,7 +303,7 @@ export function ScrollStory({
                 </div>
               </Link>
             ))}
-            <div className="flex w-[40vw] shrink-0 items-center">
+            <div className="flex w-[min(55vw,12rem)] shrink-0 snap-center items-center md:w-[40vw]">
               <Magnetic>
                 <Button
                   asChild
@@ -329,9 +338,9 @@ export function ScrollStory({
             </h2>
           </div>
           <Marquee speed={40} className="py-4">
-            {skillItems.map((skill) => (
+            {skillItems.map((skill, index) => (
               <span
-                key={skill}
+                key={`skill-${index}-${skill}`}
                 className="border-border/70 hover:border-accent hover:text-accent font-display rounded-full border px-6 py-3 text-2xl tracking-tight transition-colors duration-200 md:text-4xl"
               >
                 {skill}
@@ -339,9 +348,9 @@ export function ScrollStory({
             ))}
           </Marquee>
           <Marquee speed={48} reverse className="py-4">
-            {[...skillItems].reverse().map((skill) => (
+            {[...skillItems].reverse().map((skill, index) => (
               <span
-                key={`rev-${skill}`}
+                key={`rev-${index}-${skill}`}
                 className="text-muted-foreground/80 font-display text-xl tracking-tight md:text-3xl"
               >
                 {skill}
@@ -354,11 +363,11 @@ export function ScrollStory({
       {/* Event & Exhibition — below tools */}
       <EventsShowcase tree={events} />
 
-      {/* Invite */}
+      {/* Invite — solid plate after Events (no sticky cover over Events) */}
       <section
         data-chapter
-        data-section-rise
-        className="chapter-screen relative overflow-hidden"
+        data-rise-skip
+        className="relative overflow-x-clip bg-[var(--background)] py-24 md:py-32"
       >
         <div aria-hidden className="hero-atmosphere absolute inset-0" />
         <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-start px-6">
