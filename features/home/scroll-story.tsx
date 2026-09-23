@@ -329,9 +329,9 @@ export function ScrollStory({
             </h2>
           </div>
           <Marquee speed={40} className="py-4">
-            {skillItems.map((skill) => (
+            {skillItems.map((skill, index) => (
               <span
-                key={skill}
+                key={`skill-${index}-${skill}`}
                 className="border-border/70 hover:border-accent hover:text-accent font-display rounded-full border px-6 py-3 text-2xl tracking-tight transition-colors duration-200 md:text-4xl"
               >
                 {skill}
@@ -339,9 +339,9 @@ export function ScrollStory({
             ))}
           </Marquee>
           <Marquee speed={48} reverse className="py-4">
-            {[...skillItems].reverse().map((skill) => (
+            {[...skillItems].reverse().map((skill, index) => (
               <span
-                key={`rev-${skill}`}
+                key={`rev-${index}-${skill}`}
                 className="text-muted-foreground/80 font-display text-xl tracking-tight md:text-3xl"
               >
                 {skill}
@@ -354,11 +354,11 @@ export function ScrollStory({
       {/* Event & Exhibition — below tools */}
       <EventsShowcase tree={events} />
 
-      {/* Invite */}
+      {/* Invite — solid plate after Events (no sticky cover over Events) */}
       <section
         data-chapter
-        data-section-rise
-        className="chapter-screen relative overflow-hidden"
+        data-rise-skip
+        className="relative overflow-x-clip bg-[var(--background)] py-24 md:py-32"
       >
         <div aria-hidden className="hero-atmosphere absolute inset-0" />
         <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-start px-6">

@@ -82,15 +82,13 @@ export default function RootLayout({
       data-theme={defaultTheme}
       className={`${instrumentSans.variable} ${syne.variable} h-full`}
     >
-      <head>
+      <body className="flex min-h-full flex-col">
         {themeCss ? (
           <style
             id="portfolio-themes"
             dangerouslySetInnerHTML={{ __html: themeCss }}
           />
         ) : null}
-      </head>
-      <body className="flex min-h-full flex-col">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

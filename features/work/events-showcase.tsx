@@ -2,36 +2,51 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { Marquee } from "@/components/motion/marquee";
 import { Reveal } from "@/components/motion/reveal";
-import { StaggerItem, StaggerList } from "@/components/motion/stagger-list";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
-import type { WorkEventGroup, WorkEventsTree } from "@/types/work-tree";
+import { cn } from "@/lib/utils";
+import type { WorkEventGroup, WorkEventsTree, WorkMedia } from "@/types/work-tree";
 
 type EventsShowcaseProps = {
   tree: WorkEventsTree;
 };
 
+function previewStrip(group: WorkEventGroup): WorkMedia[] {
+  const fromStacks = group.stacks.flatMap((stack) => [
+    stack.hero,
+    ...stack.items.slice(0, 3),
+  ]);
+  const seen = new Set<string>();
+  const out: WorkMedia[] = [];
+  for (const item of [...group.media, ...fromStacks]) {
+    if (seen.has(item.src)) continue;
+    seen.add(item.src);
+    out.push(item);
+    if (out.length >= 14) break;
+  }
+  return out;
+}
+
 export function EventsShowcase({ tree }: EventsShowcaseProps) {
   const reduceMotion = usePrefersReducedMotion();
-  const [active, setActive] = useState(tree.groups[0]?.slug ?? "");
+  const groups = tree.groups.slice(0, 2);
 
-  const group = useMemo(
-    () => tree.groups.find((g) => g.slug === active) ?? tree.groups[0],
-    [active, tree.groups],
-  );
-
-  if (!tree.groups.length) return null;
+  if (!groups.length) return null;
 
   return (
-    <section data-chapter className="chapter-screen relative overflow-hidden">
+    <section
+      data-chapter
+      data-rise-skip
+      className="relative overflow-x-clip bg-[var(--background)] py-20 md:py-28"
+    >
       <div
         aria-hidden
         className="hero-atmosphere absolute inset-0 opacity-50"
       />
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-20 md:py-28">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-6">
         <Reveal>
           <p className="text-muted-foreground text-xs tracking-[0.22em] uppercase">
             Live environments
@@ -49,205 +64,142 @@ export function EventsShowcase({ tree }: EventsShowcaseProps) {
           </p>
         </Reveal>
 
-        <div className="mt-10 flex flex-wrap gap-2">
-          {tree.groups.map((g) => (
-            <button
-              key={g.slug}
-              type="button"
-              onClick={() => setActive(g.slug)}
-              className={
-                g.slug === group?.slug
-                  ? "bg-foreground text-background pressable rounded-full px-4 py-2 text-xs tracking-[0.14em] uppercase"
-                  : "border-border/70 pressable rounded-full border px-4 py-2 text-xs tracking-[0.14em] uppercase"
-              }
-            >
-              {g.title}
-            </button>
+        <div className="mt-14 grid gap-8 md:grid-cols-2 md:items-center md:gap-6 lg:gap-10">
+          {groups.map((group, index) => (
+            <EventSemicircle
+              key={group.slug}
+              group={group}
+              side={index === 0 ? "left" : "right"}
+              reduceMotion={!!reduceMotion}
+            />
           ))}
-        </div>
-
-        {group ? (
-          <EventGroupPanel
-            key={group.slug}
-            group={group}
-            reduceMotion={!!reduceMotion}
-          />
-        ) : null}
-
-        <div className="mt-10">
-          <Link
-            href={`/projects/events/${group?.slug ?? ""}`}
-            className="underline-draw hover:text-accent text-sm font-medium"
-          >
-            Open full event gallery
-          </Link>
         </div>
       </div>
     </section>
   );
 }
 
-function editionKeys(group: WorkEventGroup): string[] {
-  const keys = new Set<string>();
-  for (const stack of group.stacks) {
-    const [prefix] = stack.title.split(/\s+[—–-]\s+/);
-    if (prefix && prefix !== stack.title) keys.add(prefix.trim());
-  }
-  return [...keys];
-}
-
-function EventGroupPanel({
+function EventSemicircle({
   group,
+  side,
   reduceMotion,
 }: {
   group: WorkEventGroup;
+  side: "left" | "right";
   reduceMotion: boolean;
 }) {
-  const editions = editionKeys(group);
-  const [edition, setEdition] = useState(editions[0] ?? "");
-
-  const stacks =
-    edition && editions.length > 1
-      ? group.stacks.filter((s) => s.title.startsWith(edition))
-      : group.stacks;
-
-  const hero =
-    stacks[0]?.hero ?? group.hero ?? group.media[0] ?? group.stacks[0]?.hero;
-  const strip = [
-    ...group.media,
-    ...stacks.flatMap((s) => s.items.slice(0, 2)),
-  ].slice(0, 16);
+  const cover = useMemo(
+    () => group.hero ?? group.media[0] ?? group.stacks[0]?.hero,
+    [group],
+  );
+  const strip = useMemo(() => previewStrip(group), [group]);
 
   return (
-    <div className="mt-12 grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-      <div className="bg-muted relative min-h-[50vh] overflow-hidden rounded-3xl">
-        {hero ? (
-          hero.kind === "video" ? (
+    <Link
+      href={`/projects/events/${group.slug}`}
+      className={cn(
+        "group relative block outline-none",
+        "focus-visible:ring-accent focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--background)]",
+      )}
+    >
+      <div
+        className={cn(
+          "bg-muted relative mx-auto aspect-square w-full max-w-[420px] overflow-hidden md:max-w-none",
+          side === "left"
+            ? "rounded-l-full rounded-r-[2.5rem] md:rounded-r-[3rem]"
+            : "rounded-r-full rounded-l-[2.5rem] md:rounded-l-[3rem]",
+        )}
+      >
+        {cover ? (
+          cover.kind === "video" ? (
             <video
-              src={hero.src}
+              src={cover.src}
               muted
               loop
               playsInline
-              autoPlay
-              className="absolute inset-0 size-full object-cover"
+              autoPlay={!reduceMotion}
+              className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] group-focus-visible:scale-[1.04]"
             />
           ) : (
             <Image
-              src={hero.src}
-              alt={hero.alt}
+              src={cover.thumbSrc ?? cover.src}
+              alt=""
               fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 55vw"
-              priority
+              quality={60}
+              className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] group-focus-visible:scale-[1.04]"
+              sizes="(max-width: 768px) min(90vw, 420px), min(40vw, 320px)"
             />
           )
         ) : null}
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent"
+        />
+
+        <div className="absolute inset-x-0 bottom-0 z-10 space-y-3 p-6 md:p-8">
           <p className="font-display text-2xl text-white md:text-3xl">
-            {edition && editions.length > 1 ? edition : group.title}
+            {group.title}
           </p>
+
+          {group.stacks.length ? (
+            <ul className="flex max-h-0 flex-wrap gap-1.5 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-h-24 group-hover:opacity-100 group-focus-visible:max-h-24 group-focus-visible:opacity-100">
+              {group.stacks.map((stack) => (
+                <li
+                  key={stack.id}
+                  className="rounded-full bg-black/55 px-2.5 py-1 text-[10px] tracking-[0.12em] uppercase text-white backdrop-blur"
+                >
+                  {stack.title}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
+          <div className="max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-h-36 group-hover:opacity-100 group-focus-visible:max-h-36 group-focus-visible:opacity-100">
+            {strip.length ? (
+              reduceMotion ? (
+                <div className="grid grid-cols-3 gap-1.5 pt-1">
+                  {strip.slice(0, 6).map((item) => (
+                    <Thumb key={item.src} item={item} />
+                  ))}
+                </div>
+              ) : (
+                <Marquee speed={32} className="py-1">
+                  {strip.map((item) => (
+                    <div key={item.src} className="mx-1.5 shrink-0">
+                      <Thumb item={item} />
+                    </div>
+                  ))}
+                </Marquee>
+              )
+            ) : null}
+          </div>
         </div>
       </div>
+    </Link>
+  );
+}
 
-      <div className="space-y-6">
-        {editions.length > 1 ? (
-          <div className="flex flex-wrap gap-2">
-            {editions.map((key) => (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setEdition(key)}
-                className={
-                  key === edition
-                    ? "bg-accent text-background pressable rounded-full px-3 py-1.5 text-[10px] tracking-[0.14em] uppercase"
-                    : "border-border/70 pressable rounded-full border px-3 py-1.5 text-[10px] tracking-[0.14em] uppercase"
-                }
-              >
-                {key}
-              </button>
-            ))}
-          </div>
-        ) : null}
-
-        <StaggerList className="grid grid-cols-2 gap-3" as="ul">
-          {stacks.slice(0, 4).map((stack) => (
-            <StaggerItem key={stack.id} as="li">
-              <Link
-                href={`/projects/events/${group.slug}`}
-                className="bg-muted relative block aspect-[4/3] overflow-hidden rounded-2xl"
-              >
-                <Image
-                  src={stack.hero.thumbSrc ?? stack.hero.src}
-                  alt={stack.title}
-                  fill
-                  className="object-cover"
-                  sizes="200px"
-                />
-                <span className="bg-background/70 absolute right-2 bottom-2 left-2 truncate rounded-full px-2 py-1 text-[10px] tracking-[0.12em] uppercase backdrop-blur">
-                  {stack.title}
-                </span>
-              </Link>
-            </StaggerItem>
-          ))}
-        </StaggerList>
-
-        {strip.length > 0 ? (
-          reduceMotion ? (
-            <div className="grid grid-cols-3 gap-2">
-              {strip.slice(0, 6).map((item) => (
-                <div
-                  key={item.src}
-                  className="bg-muted relative aspect-square overflow-hidden rounded-xl"
-                >
-                  {item.kind === "video" ? (
-                    <video
-                      src={item.src}
-                      muted
-                      className="size-full object-cover"
-                    />
-                  ) : (
-                    <Image
-                      src={item.thumbSrc ?? item.src}
-                      alt={item.alt}
-                      fill
-                      className="object-cover"
-                      sizes="120px"
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <Marquee speed={36} className="py-2">
-              {strip.map((item) => (
-                <div
-                  key={item.src}
-                  className="bg-muted relative mx-2 h-28 w-40 shrink-0 overflow-hidden rounded-xl"
-                >
-                  {item.kind === "video" ? (
-                    <video
-                      src={item.src}
-                      muted
-                      loop
-                      playsInline
-                      autoPlay
-                      className="size-full object-cover"
-                    />
-                  ) : (
-                    <Image
-                      src={item.thumbSrc ?? item.src}
-                      alt={item.alt}
-                      fill
-                      className="object-cover"
-                      sizes="160px"
-                    />
-                  )}
-                </div>
-              ))}
-            </Marquee>
-          )
-        ) : null}
-      </div>
+function Thumb({ item }: { item: WorkMedia }) {
+  return (
+    <div className="bg-muted relative h-20 w-28 overflow-hidden rounded-lg border border-white/15 shadow-sm">
+      {item.kind === "video" ? (
+        <video
+          src={item.src}
+          muted
+          playsInline
+          className="size-full object-cover"
+        />
+      ) : (
+        <Image
+          src={item.thumbSrc ?? item.src}
+          alt=""
+          fill
+          quality={50}
+          className="object-cover"
+          sizes="120px"
+        />
+      )}
     </div>
   );
 }

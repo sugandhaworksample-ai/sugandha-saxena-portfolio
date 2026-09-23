@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Reveal } from "@/components/motion/reveal";
-import { FocusMediaGrid } from "@/features/work/focus-media-grid";
+import { WorkGallery } from "@/features/work/work-gallery";
 import { createPageMetadata } from "@/lib/seo";
 import { getWorkCategories, getWorkSubsection } from "@/lib/work-tree";
 
@@ -77,7 +77,7 @@ export default async function SubsectionPage({ params }: SubsectionPageProps) {
           ) : null}
         </Reveal>
 
-        <FocusMediaGrid
+        <WorkGallery
           media={sub.media}
           stacks={sub.stacks}
           title={sub.title}
