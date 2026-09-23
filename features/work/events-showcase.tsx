@@ -8,7 +8,11 @@ import { Marquee } from "@/components/motion/marquee";
 import { Reveal } from "@/components/motion/reveal";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 import { cn } from "@/lib/utils";
-import type { WorkEventGroup, WorkEventsTree, WorkMedia } from "@/types/work-tree";
+import type {
+  WorkEventGroup,
+  WorkEventsTree,
+  WorkMedia,
+} from "@/types/work-tree";
 
 type EventsShowcaseProps = {
   tree: WorkEventsTree;
@@ -64,9 +68,9 @@ export function EventsShowcase({ tree }: EventsShowcaseProps) {
           </p>
         </Reveal>
 
-        <div className="mt-14 grid gap-8 md:grid-cols-2 md:items-center md:gap-6 lg:gap-10">
+        <div className="mt-14 grid gap-6 sm:gap-8 md:grid-cols-2 md:items-stretch md:gap-5 lg:gap-8">
           {groups.map((group, index) => (
-            <EventSemicircle
+            <EventPanel
               key={group.slug}
               group={group}
               side={index === 0 ? "left" : "right"}
@@ -79,7 +83,7 @@ export function EventsShowcase({ tree }: EventsShowcaseProps) {
   );
 }
 
-function EventSemicircle({
+function EventPanel({
   group,
   side,
   reduceMotion,
@@ -93,6 +97,7 @@ function EventSemicircle({
     [group],
   );
   const strip = useMemo(() => previewStrip(group), [group]);
+  const alignEnd = side === "left";
 
   return (
     <Link
@@ -104,10 +109,11 @@ function EventSemicircle({
     >
       <div
         className={cn(
-          "bg-muted relative mx-auto aspect-square w-full max-w-[420px] overflow-hidden md:max-w-none",
+          "bg-muted relative aspect-[3/4] w-full overflow-hidden sm:aspect-[4/5]",
+          // Soft facing arches — not full circles / pot shapes
           side === "left"
-            ? "rounded-l-full rounded-r-[2.5rem] md:rounded-r-[3rem]"
-            : "rounded-r-full rounded-l-[2.5rem] md:rounded-l-[3rem]",
+            ? "rounded-[1.75rem] md:rounded-l-[2.75rem] md:rounded-r-[1.25rem]"
+            : "rounded-[1.75rem] md:rounded-r-[2.75rem] md:rounded-l-[1.25rem]",
         )}
       >
         {cover ? (
@@ -134,16 +140,31 @@ function EventSemicircle({
 
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent"
+          className={cn(
+            "absolute inset-0",
+            alignEnd
+              ? "bg-gradient-to-tl from-black/80 via-black/30 to-transparent"
+              : "bg-gradient-to-tr from-black/80 via-black/30 to-transparent",
+          )}
         />
 
-        <div className="absolute inset-x-0 bottom-0 z-10 space-y-3 p-6 md:p-8">
+        <div
+          className={cn(
+            "absolute inset-x-0 bottom-0 z-10 space-y-3 p-5 sm:p-6 md:p-8",
+            alignEnd && "text-right",
+          )}
+        >
           <p className="font-display text-2xl text-white md:text-3xl">
             {group.title}
           </p>
 
           {group.stacks.length ? (
-            <ul className="flex max-h-0 flex-wrap gap-1.5 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-h-24 group-hover:opacity-100 group-focus-visible:max-h-24 group-focus-visible:opacity-100">
+            <ul
+              className={cn(
+                "flex max-h-0 flex-wrap gap-1.5 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-h-28 group-hover:opacity-100 group-focus-visible:max-h-28 group-focus-visible:opacity-100",
+                alignEnd && "justify-end",
+              )}
+            >
               {group.stacks.map((stack) => (
                 <li
                   key={stack.id}
@@ -155,16 +176,25 @@ function EventSemicircle({
             </ul>
           ) : null}
 
-          <div className="max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-h-36 group-hover:opacity-100 group-focus-visible:max-h-36 group-focus-visible:opacity-100">
+          <div className="max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-h-40 group-hover:opacity-100 group-focus-visible:max-h-40 group-focus-visible:opacity-100">
             {strip.length ? (
               reduceMotion ? (
-                <div className="grid grid-cols-3 gap-1.5 pt-1">
+                <div
+                  className={cn(
+                    "grid grid-cols-3 gap-1.5 pt-1",
+                    alignEnd && "ml-auto max-w-[90%]",
+                  )}
+                >
                   {strip.slice(0, 6).map((item) => (
                     <Thumb key={item.src} item={item} />
                   ))}
                 </div>
               ) : (
-                <Marquee speed={32} className="py-1">
+                <Marquee
+                  speed={32}
+                  reverse={alignEnd}
+                  className="py-1"
+                >
                   {strip.map((item) => (
                     <div key={item.src} className="mx-1.5 shrink-0">
                       <Thumb item={item} />
@@ -182,7 +212,7 @@ function EventSemicircle({
 
 function Thumb({ item }: { item: WorkMedia }) {
   return (
-    <div className="bg-muted relative h-20 w-28 overflow-hidden rounded-lg border border-white/15 shadow-sm">
+    <div className="bg-muted relative h-16 w-24 overflow-hidden rounded-md border border-white/15 shadow-sm sm:h-20 sm:w-28 sm:rounded-lg">
       {item.kind === "video" ? (
         <video
           src={item.src}

@@ -53,7 +53,7 @@ Path: `public/projects/EVENTS & EXHIBITIONS/`
 
 - Top-level folders → event groups (Didac Event 2025, SIL Event Creatives)
 - Nested folders → gallery sections on `/projects/events/[event]`
-- **Home** (below Tools of obsession): two equal semicircle teasers. Hover shows stack titles + a small thumbnail marquee (or a static thumb grid when reduced-motion is on). Click opens the event gallery.
+- **Home** (below Tools of obsession): two equal portrait panels (soft facing radii). Hover shows stack titles + a small thumbnail marquee (or a static thumb grid when reduced-motion is on). Didac (left) aligns copy/marquee to the right toward center. Click opens the event gallery.
 - Events are **not** listed inside Scroll to explore
 
 ## Day-to-day

@@ -85,6 +85,10 @@ export function ScrollStory({
         if (index === 2 && categories.length > 0) {
           const track = chapter.querySelector<HTMLElement>("[data-work-track]");
           if (track) {
+            // Phone: native horizontal snap — pin distance was enormous (7× ~75vw).
+            const mobile = window.matchMedia("(max-width: 767px)").matches;
+            if (mobile) return;
+
             const amount = Math.max(track.scrollWidth - window.innerWidth, 0);
             gsap.to(track, {
               x: () => -amount,
@@ -92,7 +96,7 @@ export function ScrollStory({
               scrollTrigger: {
                 trigger: chapter,
                 start: "top top",
-                end: () => `+=${amount + window.innerHeight}`,
+                end: () => `+=${amount + window.innerHeight * 0.35}`,
                 pin: true,
                 scrub: 1,
                 invalidateOnRefresh: true,
@@ -241,19 +245,19 @@ export function ScrollStory({
         data-rise-skip
         className="relative z-[3] overflow-hidden bg-[var(--background)]"
       >
-        <div className="flex h-screen items-center">
+        <div className="flex min-h-[70vh] items-center md:h-screen md:min-h-0">
           <div
             data-work-track
-            className="flex gap-8 px-6 will-change-transform"
+            className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] will-change-transform md:gap-8 md:overflow-visible md:px-6 md:pb-0 [&::-webkit-scrollbar]:hidden"
           >
-            <div className="flex w-[70vw] shrink-0 flex-col justify-center md:w-[40vw]">
+            <div className="flex w-[min(78vw,18rem)] shrink-0 snap-center flex-col justify-center md:w-[40vw]">
               <p className="text-muted-foreground text-xs tracking-[0.2em] uppercase">
                 Scroll to explore
               </p>
-              <h2 className="kinetic-display mt-4 text-4xl md:text-6xl">
+              <h2 className="kinetic-display mt-4 text-3xl md:text-6xl">
                 Stories in frames
               </h2>
-              <p className="text-muted-foreground mt-4 max-w-sm">
+              <p className="text-muted-foreground mt-4 max-w-sm text-sm md:text-base">
                 Travel categories — branding through illustration — each frame
                 opens a world.
               </p>
@@ -262,7 +266,7 @@ export function ScrollStory({
               <Link
                 key={category.slug}
                 href={`/projects/${category.slug}`}
-                className="group relative h-[60vh] w-[75vw] shrink-0 overflow-hidden md:w-[42vw]"
+                className="group relative h-[48vh] w-[min(72vw,17rem)] shrink-0 snap-center overflow-hidden md:h-[60vh] md:w-[42vw]"
               >
                 <div data-parallax className="absolute inset-0">
                   {category.hero ? (
@@ -271,21 +275,21 @@ export function ScrollStory({
                       alt={category.title}
                       fill
                       className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-                      sizes="42vw"
+                      sizes="(max-width: 768px) 72vw, 42vw"
                     />
                   ) : (
                     <div className="bg-muted absolute inset-0" />
                   )}
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                <div className="absolute right-6 bottom-6 left-6 text-white">
+                <div className="absolute right-4 bottom-4 left-4 text-white md:right-6 md:bottom-6 md:left-6">
                   <p className="text-xs tracking-[0.16em] uppercase opacity-80">
                     {category.label}
                   </p>
-                  <h3 className="font-display mt-2 text-2xl md:text-3xl">
+                  <h3 className="font-display mt-2 text-xl md:text-3xl">
                     {category.title}
                   </h3>
-                  <p className="mt-2 text-sm opacity-80">
+                  <p className="mt-2 text-xs opacity-80 md:text-sm">
                     {category.subsections
                       .slice(0, 3)
                       .map((s) => s.title)
@@ -294,7 +298,7 @@ export function ScrollStory({
                 </div>
               </Link>
             ))}
-            <div className="flex w-[40vw] shrink-0 items-center">
+            <div className="flex w-[min(55vw,12rem)] shrink-0 snap-center items-center md:w-[40vw]">
               <Magnetic>
                 <Button
                   asChild
