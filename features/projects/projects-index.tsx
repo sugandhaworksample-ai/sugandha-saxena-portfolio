@@ -42,8 +42,8 @@ export function ProjectsIndex({ projects }: ProjectsIndexProps) {
         </p>
         <h1 className="kinetic-display mt-4 text-5xl md:text-7xl">Projects</h1>
         <p className="text-muted-foreground mt-5 max-w-xl text-lg">
-          Case studies built for craft, process, and outcomes — hover to feel
-          the material.
+          Selected work across brand, print, and motion — open a project to
+          browse the gallery.
         </p>
 
         {tags.length > 0 ? (
