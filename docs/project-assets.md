@@ -11,8 +11,9 @@ Path: `public/projects/scroll to explore/`
 | Order | Leading number on the folder (`1`, `02`, `07`…) |
 | Category | Each numbered folder (e.g. `1 Branding`) |
 | Subsection | Direct child folders (e.g. `1 Logo`, `Stationery → …`) |
-| Nested folders | Become **gallery sections** — every image/video inside is a full tile (same size language as loose media) |
-| Loose media | Images/videos sitting in a subsection folder appear in the first gallery section |
+| Nested folders | Become **gallery sections** — images keep their real aspect (2 per row from small screens, 3 from large). Not cropped, no full-width hero tile |
+| Loose media | Images/videos sitting in a subsection folder use that same row layout |
+| Carousel | A nested folder named `Name - carousel` uses the same stacked image card as a subsection. The count sits under the title. Click opens a fullscreen slideshow with Previous / Next (and arrow keys) |
 
 ### Hero image names (any of these)
 
@@ -42,10 +43,18 @@ Home Events and gallery grids prefer `thumbSrc` when present; otherwise Next.js 
 
 ## Gallery UI notes
 
-- Subsection and event detail pages use a **fixed-aspect bento** (`WorkGallery`): spans and aspects do **not** change on hover.
-- Hover = lift / slight scale only. Click opens a lightbox (Esc, ←/→).
-- Do **not** reintroduce hover `col-span` / aspect reflow — mixed resolutions make the grid fight itself.
-- Nested folder images are flattened into labeled sections, not tiny fan-out stacks.
+- Subsection and event pages show images at their **real aspect**: 1 per row on phones, 2 from `sm`, 3 from `lg`. `object-contain` / intrinsic height — nothing is cropped into a 16:9 banner.
+- Hover does not change column span. Click an image for a fullscreen view (Esc, ←/→).
+- Videos sit in the same cells with controls.
+- A nested folder whose name ends with ` - carousel` (for example `Javnic - carousel`) is a stacked card, same as a subsection. The image count stays under the title. Clicking the stack opens that folder in a fullscreen carousel with Previous and Next.
+
+## Loose files in a category
+
+Motion and AI videos live directly in the category folder (next to `Hero.png`), with no subsection folders.
+
+- `Hero.png` is the category cover only — it is not repeated in the gallery.
+- Other images and every video in that folder appear on `/projects/[category]` under the title.
+- If the category also has subsection folders, those cards stay, and the loose files render below them.
 
 ## Events & Exhibitions
 
@@ -61,7 +70,9 @@ Path: `public/projects/EVENTS & EXHIBITIONS/`
 1. Drop a numbered category folder under `scroll to explore` → it appears in order  
 2. Add subsection folders + heroes  
 3. Nest client folders inside a subsection → they become gallery sections  
-4. Drop Didac/SIL files under `EVENTS & EXHIBITIONS/...` → home semicircles + event pages update on rebuild  
-5. Optionally add `compressed/` thumbs next to large event creatives  
+   Name a folder `Client - carousel` when those frames should open as a slideshow  
+4. Drop videos or images directly in a category folder (Motion, AI) → they show on that category page  
+5. Drop Didac/SIL files under `EVENTS & EXHIBITIONS/...` → home panels + event pages update on rebuild  
+6. Optionally add `compressed/` thumbs next to large event creatives  
 
 No MDX required for this tree.

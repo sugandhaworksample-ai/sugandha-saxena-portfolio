@@ -8,10 +8,14 @@ export type WorkMedia = {
   thumbSrc?: string;
 };
 
+export type WorkStackLayout = "gallery" | "carousel";
+
 export type WorkStackNode = {
   id: string;
   slug: string;
   title: string;
+  /** "Name - carousel" folders open a fullscreen slideshow */
+  layout: WorkStackLayout;
   hero: WorkMedia;
   items: WorkMedia[];
 };
@@ -40,6 +44,8 @@ export type WorkCategory = {
   order: number;
   folder: string;
   hero?: WorkMedia;
+  /** Files sitting in the category folder (not inside a subsection). Hero stills excluded. */
+  looseMedia: WorkMedia[];
   subsections: WorkSubsection[];
 };
 

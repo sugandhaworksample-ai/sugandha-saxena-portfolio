@@ -147,10 +147,17 @@ function pickHero(
   return toMedia(path.join(dir, heroFile), alt);
 }
 
+function isCarouselName(dirName: string): boolean {
+  const { subtitle } = parseFolderTitle(dirName);
+  if (subtitle?.toLowerCase() === "carousel") return true;
+  return /\bcarousel$/i.test(dirName.trim());
+}
+
 function buildStackNode(dirName: string, parentDir: string): WorkStackNode {
   const abs = path.join(parentDir, dirName);
   const { title } = parseFolderTitle(dirName);
   const slug = slugify(dirName);
+  const layout = isCarouselName(dirName) ? "carousel" : "gallery";
   const files = listMediaFiles(abs);
   const items = files.map((f, i) =>
     toMedia(path.join(abs, f), `${title} — ${i + 1}`),
@@ -168,6 +175,7 @@ function buildStackNode(dirName: string, parentDir: string): WorkStackNode {
     id: slug,
     slug,
     title,
+    layout,
     hero,
     items: items.length ? items : [hero],
   };
@@ -234,6 +242,11 @@ function buildCategory(dirName: string): WorkCategory {
   const catFiles = listMediaFiles(abs);
   const hero =
     pickHero(catFiles, abs, title) ?? subsections[0]?.cover ?? undefined;
+  const looseMedia = catFiles
+    .filter((file) => isVideoSrc(file) || !isHeroName(file))
+    .map((file, index) =>
+      toMedia(path.join(abs, file), `${title} — ${index + 1}`),
+    );
 
   return {
     id: slug,
@@ -243,6 +256,7 @@ function buildCategory(dirName: string): WorkCategory {
     order,
     folder: path.relative(PUBLIC, abs).split(path.sep).join("/"),
     hero,
+    looseMedia,
     subsections,
   };
 }

@@ -26,6 +26,21 @@ assert.ok(
   "branding needs subsections",
 );
 
+const motion = categories.find((c) => c.slug === "motion-and-video");
+assert.ok(
+  motion && motion.looseMedia.some((item) => item.kind === "video"),
+  "motion category should expose loose mp4s",
+);
+const ai = categories.find((c) => c.slug === "ai-creative");
+assert.ok(
+  ai && ai.looseMedia.some((item) => item.kind === "video"),
+  "ai category should expose loose mp4s",
+);
+assert.ok(
+  motion?.looseMedia.every((item) => !/hero\.png$/i.test(item.src)),
+  "hero still should stay a cover, not a gallery item",
+);
+
 const events = getEventsTree();
 assert.ok(
   events.groups.length >= 1,
@@ -33,5 +48,5 @@ assert.ok(
 );
 
 console.log(
-  `ok — ${categories.length} categories, branding subsections=${branding?.subsections.length}, events=${events.groups.length}`,
+  `ok — ${categories.length} categories, branding subsections=${branding?.subsections.length}, motion videos=${motion?.looseMedia.length}, ai videos=${ai?.looseMedia.length}, events=${events.groups.length}`,
 );
