@@ -5,6 +5,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { imageSize } from "image-size";
 
 import { isImageSrc, isVideoSrc } from "@/lib/project-gallery";
 import type {
@@ -134,7 +135,22 @@ function toMedia(absPath: string, alt: string): WorkMedia {
   const src = toPublicSrc(absPath);
   const kind = isVideoSrc(absPath) ? "video" : "image";
   const thumbSrc = kind === "image" ? findThumb(absPath) : undefined;
-  return { src, alt, kind, thumbSrc };
+
+  let width: number | undefined;
+  let height: number | undefined;
+
+  if (kind === "image" && fs.existsSync(absPath)) {
+    try {
+      // @ts-expect-error - image-size accepts a file path string but types may not reflect it correctly
+      const dimensions = imageSize(absPath);
+      width = dimensions.width;
+      height = dimensions.height;
+    } catch (e) {
+      // ignore parsing errors
+    }
+  }
+
+  return { src, alt, kind, thumbSrc, width, height };
 }
 
 function pickHero(

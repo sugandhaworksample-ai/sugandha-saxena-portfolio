@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { StackedSubsectionCard } from "@/features/work/stacked-subsection-card";
@@ -25,14 +26,9 @@ type WorkGalleryProps = {
   title: string;
 };
 
-const cellClass =
-  "w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)]";
+const cellClass = "w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)]";
 
-export function WorkGallery({
-  media,
-  stacks = [],
-  title,
-}: WorkGalleryProps) {
+export function WorkGallery({ media, stacks = [], title }: WorkGalleryProps) {
   const sections = useMemo((): GallerySection[] => {
     const out: GallerySection[] = [];
     if (media.length) {
@@ -165,7 +161,10 @@ export function WorkGallery({
                 {section.items.map((item, index) => {
                   const globalIndex = start + index;
                   return (
-                    <li key={`${item.src}-${globalIndex}`} className={cellClass}>
+                    <li
+                      key={`${item.src}-${globalIndex}`}
+                      className={cellClass}
+                    >
                       {item.kind === "video" ? (
                         <video
                           src={item.src}
@@ -181,11 +180,12 @@ export function WorkGallery({
                           className="block w-full cursor-zoom-in text-left"
                           aria-label={`Open ${item.alt || title}`}
                         >
-                          {/* Native img keeps the file's real aspect — no crop box. */}
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
+                          <Image
                             src={item.src}
                             alt={item.alt}
+                            width={item.width || 1200}
+                            height={item.height || 800}
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             className="h-auto w-full rounded-2xl"
                           />
                         </button>
@@ -207,7 +207,9 @@ export function WorkGallery({
           total={flat.length}
           onClose={close}
           onPrev={() =>
-            setActive((i) => (i === null ? i : (i - 1 + flat.length) % flat.length))
+            setActive((i) =>
+              i === null ? i : (i - 1 + flat.length) % flat.length,
+            )
           }
           onNext={() =>
             setActive((i) => (i === null ? i : (i + 1) % flat.length))
@@ -223,7 +225,9 @@ export function WorkGallery({
           total={carousel.items.length}
           onClose={close}
           onPrev={() =>
-            setSlide((i) => (i - 1 + carousel.items.length) % carousel.items.length)
+            setSlide(
+              (i) => (i - 1 + carousel.items.length) % carousel.items.length,
+            )
           }
           onNext={() => setSlide((i) => (i + 1) % carousel.items.length)}
         />
@@ -300,10 +304,12 @@ function Lightbox({
             className="max-h-[85vh] w-auto max-w-full rounded-xl"
           />
         ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={item.src}
             alt={item.alt || title}
+            width={item.width || 1200}
+            height={item.height || 800}
+            sizes="100vw"
             className="max-h-[85vh] w-auto max-w-full object-contain"
           />
         )}
