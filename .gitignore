@@ -51,3 +51,4 @@ next-env.d.ts
 *.pdf
 *.PDF
 !public/resume/*.pdf
+scratch_ffmpeg/*
