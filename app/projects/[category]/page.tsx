@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -72,19 +71,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           ) : null}
         </Reveal>
 
-        {category.hero ? (
-          <Reveal className="bg-muted relative mt-12 aspect-[21/9] overflow-hidden rounded-3xl">
-            <Image
-              src={category.hero.src}
-              alt={category.title}
-              fill
-              priority
-              className="object-cover"
-              sizes="(max-width: 1200px) 100vw, 1152px"
-            />
-          </Reveal>
-        ) : null}
-
         {category.subsections.length ? (
           <StaggerList
             as="ul"
@@ -93,7 +79,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             {category.subsections.map((subsection) => (
               <StaggerItem key={subsection.slug} as="li">
                 <StackedSubsectionCard
-                  categorySlug={category.slug}
+                  href={`/projects/${category.slug}/${subsection.slug}`}
                   subsection={subsection}
                 />
               </StaggerItem>

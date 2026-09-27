@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Reveal } from "@/components/motion/reveal";
+import { StaggerItem, StaggerList } from "@/components/motion/stagger-list";
+import { StackedSubsectionCard } from "@/features/work/stacked-subsection-card";
 import { WorkGallery } from "@/features/work/work-gallery";
 import { createPageMetadata } from "@/lib/seo";
 import { getEventsTree } from "@/lib/work-tree";
@@ -59,11 +61,25 @@ export default async function EventDetailPage({ params }: EventPageProps) {
           </h1>
         </Reveal>
 
-        <WorkGallery
-          media={group.media}
-          stacks={group.stacks}
-          title={group.title}
-        />
+        {group.subsections.length ? (
+          <StaggerList
+            as="ul"
+            className="mt-14 grid list-none gap-10 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {group.subsections.map((subsection) => (
+              <StaggerItem key={subsection.slug} as="li">
+                <StackedSubsectionCard
+                  href={`/projects/events/${group.slug}/${subsection.slug}`}
+                  subsection={subsection}
+                />
+              </StaggerItem>
+            ))}
+          </StaggerList>
+        ) : null}
+
+        {group.media.length ? (
+          <WorkGallery media={group.media} title={group.title} />
+        ) : null}
       </div>
     </article>
   );

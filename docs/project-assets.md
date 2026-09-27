@@ -43,7 +43,7 @@ Home Events and gallery grids prefer `thumbSrc` when present; otherwise Next.js 
 
 ## Gallery UI notes
 
-- Subsection and event pages show images at their **real aspect**: 1 per row on phones, 2 from `sm`, 3 from `lg`. `object-contain` / intrinsic height — nothing is cropped into a 16:9 banner.
+- Subsection pages and event folder pages show images at their **real aspect**: 1 per row on phones, 2 from `sm`, 3 from `lg`. `object-contain` / intrinsic height — nothing is cropped into a 16:9 banner.
 - Hover does not change column span. Click an image for a fullscreen view (Esc, ←/→).
 - Videos sit in the same cells with controls.
 - A nested folder whose name ends with ` - carousel` (for example `Javnic - carousel`) is a stacked card, same as a subsection. The image count stays under the title. Clicking the stack opens that folder in a fullscreen carousel with Previous and Next.
@@ -60,9 +60,11 @@ Motion and AI videos live directly in the category folder (next to `Hero.png`), 
 
 Path: `public/projects/EVENTS & EXHIBITIONS/`
 
-- Top-level folders → event groups (Didac Event 2025, SIL Event Creatives)
-- Nested folders → gallery sections on `/projects/events/[event]`
-- **Home** (below Tools of obsession): two equal portrait panels (soft facing radii). Hover shows stack titles + a small thumbnail marquee (or a static thumb grid when reduced-motion is on). Didac (left) aligns copy/marquee to the right toward center. Click opens the event gallery.
+- Top-level folders → event groups (Didac Event 2025, SIL Event)
+- Direct child folders → stacked cards on `/projects/events/[event]`, same as scroll-to-explore subsections
+- Opening a card → `/projects/events/[event]/[folder]`, which uses the same gallery as a subsection: loose images keep their real aspect, and a nested folder named `Name - carousel` is a stacked card that opens a slideshow
+- **Home thumbnail:** drop a hero-named file in the event root (`hero.jpg`, `hero.png`, `hero_image.*`, `hero-image.*`, or `* Hero Image.*`). That file is the panel cover only — it is not repeated in the loose gallery. If the root has no hero, a hero-named file inside a child folder is used. Otherwise the first root image (or the first folder cover) is the thumbnail.
+- **Home** (below Tools of obsession): two equal portrait panels (soft facing radii). Hover shows folder titles + a small thumbnail marquee (or a static thumb grid when reduced-motion is on). Didac (left) aligns copy/marquee to the right toward center. Click opens the event page.
 - Events are **not** listed inside Scroll to explore
 
 ## Day-to-day
@@ -72,7 +74,7 @@ Path: `public/projects/EVENTS & EXHIBITIONS/`
 3. Nest client folders inside a subsection → they become gallery sections  
    Name a folder `Client - carousel` when those frames should open as a slideshow  
 4. Drop videos or images directly in a category folder (Motion, AI) → they show on that category page  
-5. Drop Didac/SIL files under `EVENTS & EXHIBITIONS/...` → home panels + event pages update on rebuild  
+5. Drop Didac/SIL folders under `EVENTS & EXHIBITIONS/...` → stacked cards on the event page. Add `hero.png` (or any hero-named file) in the event folder to set the home thumbnail  
 6. Optionally add `compressed/` thumbs next to large event creatives  
 
 No MDX required for this tree.

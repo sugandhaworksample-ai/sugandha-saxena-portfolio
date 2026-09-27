@@ -11,7 +11,7 @@ type StackedSubsectionCardProps = {
   className?: string;
 } & (
   | {
-      categorySlug: string;
+      href: string;
       subsection: WorkSubsection;
       stack?: never;
       onOpen?: never;
@@ -19,7 +19,7 @@ type StackedSubsectionCardProps = {
   | {
       stack: WorkStackNode;
       onOpen: () => void;
-      categorySlug?: never;
+      href?: never;
       subsection?: never;
     }
 );
@@ -77,10 +77,7 @@ export function StackedSubsectionCard(props: StackedSubsectionCardProps) {
           {frame}
         </button>
       ) : (
-        <Link
-          href={`/projects/${props.categorySlug}/${props.subsection.slug}`}
-          className="group block"
-        >
+        <Link href={props.href} className="group block">
           {frame}
         </Link>
       )}
@@ -92,11 +89,9 @@ function StackFrame({ layers }: { layers: WorkMedia[] }) {
   return (
         <div className="relative aspect-[4/5] w-full">
           {layers.map((layer, index) => {
-            const fromBack = layers.length - 1 - index;
-            const offset = fromBack * 10;
-            const rotate =
-              fromBack % 2 === 0 ? -fromBack * 2.5 : fromBack * 2.5;
             const isFront = index === 0;
+            const offset = index * 10;
+            const rotate = index % 2 === 0 ? -index * 2.5 : index * 2.5;
             const src = layer.thumbSrc ?? layer.src;
 
             return (
@@ -105,15 +100,15 @@ function StackFrame({ layers }: { layers: WorkMedia[] }) {
                 className={cn(
                   "bg-muted absolute inset-0 overflow-hidden rounded-2xl border border-white/10 shadow-[0_20px_50px_-28px_rgba(0,0,0,0.65)] transition-transform duration-300 ease-out",
                   isFront
-                    ? "z-20 group-hover:-translate-y-2 group-hover:scale-[1.02]"
-                    : "z-10 opacity-90 group-hover:opacity-100",
+                    ? "group-hover:-translate-y-2 group-hover:scale-[1.02]"
+                    : "opacity-90 group-hover:opacity-100",
                 )}
                 style={
                   isFront
-                    ? undefined
+                    ? { zIndex: layers.length + 1 }
                     : {
-                        transform: `translate(${offset}px, ${offset * 0.6}px) rotate(${rotate}deg) scale(${1 - fromBack * 0.04})`,
-                        zIndex: 20 - fromBack,
+                        transform: `translate(${offset}px, ${offset * 0.6}px) rotate(${rotate}deg) scale(${1 - index * 0.04})`,
+                        zIndex: layers.length - index,
                       }
                 }
               >

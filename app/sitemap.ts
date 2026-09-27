@@ -35,12 +35,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   );
 
-  const eventUrls = getEventsTree().groups.map((group) => ({
+  const events = getEventsTree().groups;
+  const eventUrls = events.map((group) => ({
     url: `${siteConfig.url}/projects/events/${group.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.75,
   }));
+  const eventFolderUrls = events.flatMap((group) =>
+    group.subsections.map((folder) => ({
+      url: `${siteConfig.url}/projects/events/${group.slug}/${folder.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+  );
 
-  return [...pages, ...categoryUrls, ...subsectionUrls, ...eventUrls];
+  return [
+    ...pages,
+    ...categoryUrls,
+    ...subsectionUrls,
+    ...eventUrls,
+    ...eventFolderUrls,
+  ];
 }

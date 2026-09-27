@@ -19,13 +19,13 @@ type EventsShowcaseProps = {
 };
 
 function previewStrip(group: WorkEventGroup): WorkMedia[] {
-  const fromStacks = group.stacks.flatMap((stack) => [
-    stack.hero,
-    ...stack.items.slice(0, 3),
+  const fromSubs = group.subsections.flatMap((sub) => [
+    sub.cover,
+    ...sub.stackPreview.slice(0, 3),
   ]);
   const seen = new Set<string>();
   const out: WorkMedia[] = [];
-  for (const item of [...group.media, ...fromStacks]) {
+  for (const item of [...group.media, ...fromSubs]) {
     if (seen.has(item.src)) continue;
     seen.add(item.src);
     out.push(item);
@@ -93,7 +93,7 @@ function EventPanel({
   reduceMotion: boolean;
 }) {
   const cover = useMemo(
-    () => group.hero ?? group.media[0] ?? group.stacks[0]?.hero,
+    () => group.hero ?? group.media[0] ?? group.subsections[0]?.cover,
     [group],
   );
   const strip = useMemo(() => previewStrip(group), [group]);
@@ -158,19 +158,19 @@ function EventPanel({
             {group.title}
           </p>
 
-          {group.stacks.length ? (
+          {group.subsections.length ? (
             <ul
               className={cn(
                 "flex max-h-0 flex-wrap gap-1.5 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-h-28 group-hover:opacity-100 group-focus-visible:max-h-28 group-focus-visible:opacity-100",
                 alignEnd && "justify-end",
               )}
             >
-              {group.stacks.map((stack) => (
+              {group.subsections.map((subsection) => (
                 <li
-                  key={stack.id}
+                  key={subsection.id}
                   className="rounded-full bg-black/55 px-2.5 py-1 text-[10px] tracking-[0.12em] uppercase text-white backdrop-blur"
                 >
-                  {stack.title}
+                  {subsection.title}
                 </li>
               ))}
             </ul>

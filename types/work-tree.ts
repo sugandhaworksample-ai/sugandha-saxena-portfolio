@@ -55,10 +55,10 @@ export type WorkEventGroup = {
   title: string;
   folder: string;
   hero?: WorkMedia;
-  /** Top-level creatives */
+  /** Top-level creatives. A root hero file is cover-only and is not included. */
   media: WorkMedia[];
-  /** Nested folders e.g. Glimps, Designs, SIL 2025 */
-  stacks: WorkStackNode[];
+  /** Direct child folders, shown as stacked cards */
+  subsections: WorkSubsection[];
 };
 
 export type WorkEventsTree = {

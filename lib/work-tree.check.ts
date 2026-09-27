@@ -4,7 +4,11 @@
  */
 import assert from "node:assert/strict";
 
-import { getEventsTree, getWorkCategories } from "@/lib/work-tree";
+import {
+  getEventsTree,
+  getWorkCategories,
+  pickNamedHeroFile,
+} from "@/lib/work-tree";
 
 const categories = getWorkCategories();
 assert.ok(
@@ -45,6 +49,16 @@ const events = getEventsTree();
 assert.ok(
   events.groups.length >= 1,
   "expected event groups under EVENTS & EXHIBITIONS",
+);
+assert.equal(
+  pickNamedHeroFile(["4 - 1200x1500mm.jpg", "Hero.png", "21-1.jpg"]),
+  "Hero.png",
+  "a hero-named file beats an earlier loose filename",
+);
+const sil = events.groups.find((group) => group.slug === "sil-event");
+assert.ok(
+  sil && sil.subsections.length >= 1,
+  "SIL should expose child folders as stacked cards",
 );
 
 console.log(
