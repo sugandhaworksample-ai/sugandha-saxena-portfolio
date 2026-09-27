@@ -51,7 +51,3 @@ next-env.d.ts
 *.pdf
 *.PDF
 !public/resume/*.pdf
-
-# Videos > 100MB cannot be pushed to GitHub
-public/projects/scroll to explore/06 AI CREATIVE/43 Kits.mp4
-public/projects/scroll to explore/06 AI CREATIVE/49 mechatron kit.mp4
