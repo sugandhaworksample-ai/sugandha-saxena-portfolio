@@ -4,7 +4,11 @@
  */
 import assert from "node:assert/strict";
 
-import { getEventsTree, getWorkCategories } from "@/lib/work-tree";
+import {
+  getEventsTree,
+  getWorkCategories,
+  pickNamedHeroFile,
+} from "@/lib/work-tree";
 
 const categories = getWorkCategories();
 assert.ok(
@@ -26,12 +30,37 @@ assert.ok(
   "branding needs subsections",
 );
 
+const motion = categories.find((c) => c.slug === "motion-and-video");
+assert.ok(
+  motion && motion.looseMedia.some((item) => item.kind === "video"),
+  "motion category should expose loose mp4s",
+);
+const ai = categories.find((c) => c.slug === "ai-creative");
+assert.ok(
+  ai && ai.looseMedia.some((item) => item.kind === "video"),
+  "ai category should expose loose mp4s",
+);
+assert.ok(
+  motion?.looseMedia.every((item) => !/hero\.png$/i.test(item.src)),
+  "hero still should stay a cover, not a gallery item",
+);
+
 const events = getEventsTree();
 assert.ok(
   events.groups.length >= 1,
   "expected event groups under EVENTS & EXHIBITIONS",
 );
+assert.equal(
+  pickNamedHeroFile(["4 - 1200x1500mm.jpg", "Hero.png", "21-1.jpg"]),
+  "Hero.png",
+  "a hero-named file beats an earlier loose filename",
+);
+const sil = events.groups.find((group) => group.slug === "sil-event");
+assert.ok(
+  sil && sil.subsections.length >= 1,
+  "SIL should expose child folders as stacked cards",
+);
 
 console.log(
-  `ok — ${categories.length} categories, branding subsections=${branding?.subsections.length}, events=${events.groups.length}`,
+  `ok — ${categories.length} categories, branding subsections=${branding?.subsections.length}, motion videos=${motion?.looseMedia.length}, ai videos=${ai?.looseMedia.length}, events=${events.groups.length}`,
 );

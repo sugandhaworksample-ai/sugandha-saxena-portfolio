@@ -143,14 +143,39 @@ function pickHero(
   alt: string,
 ): WorkMedia | undefined {
   if (!files.length) return undefined;
-  const heroFile = files.find((f) => isHeroName(f)) ?? files[0];
+  const heroFile = pickNamedHeroFile(files) ?? files[0];
   return toMedia(path.join(dir, heroFile), alt);
+}
+
+/** First hero-named file in `names`. Earlier loose names do not win. */
+export function pickNamedHeroFile(names: string[]): string | undefined {
+  return names.find((name) => isHeroName(name));
+}
+
+function fileNameFromSrc(src: string): string {
+  const last = src.split("/").pop() ?? src;
+  try {
+    return decodeURIComponent(last);
+  } catch {
+    return last;
+  }
+}
+
+function firstNamedHero(items: WorkMedia[]): WorkMedia | undefined {
+  return items.find((item) => isHeroName(fileNameFromSrc(item.src)));
+}
+
+function isCarouselName(dirName: string): boolean {
+  const { subtitle } = parseFolderTitle(dirName);
+  if (subtitle?.toLowerCase() === "carousel") return true;
+  return /\bcarousel$/i.test(dirName.trim());
 }
 
 function buildStackNode(dirName: string, parentDir: string): WorkStackNode {
   const abs = path.join(parentDir, dirName);
   const { title } = parseFolderTitle(dirName);
   const slug = slugify(dirName);
+  const layout = isCarouselName(dirName) ? "carousel" : "gallery";
   const files = listMediaFiles(abs);
   const items = files.map((f, i) =>
     toMedia(path.join(abs, f), `${title} — ${i + 1}`),
@@ -168,6 +193,7 @@ function buildStackNode(dirName: string, parentDir: string): WorkStackNode {
     id: slug,
     slug,
     title,
+    layout,
     hero,
     items: items.length ? items : [hero],
   };
@@ -234,6 +260,11 @@ function buildCategory(dirName: string): WorkCategory {
   const catFiles = listMediaFiles(abs);
   const hero =
     pickHero(catFiles, abs, title) ?? subsections[0]?.cover ?? undefined;
+  const looseMedia = catFiles
+    .filter((file) => isVideoSrc(file) || !isHeroName(file))
+    .map((file, index) =>
+      toMedia(path.join(abs, file), `${title} — ${index + 1}`),
+    );
 
   return {
     id: slug,
@@ -243,8 +274,16 @@ function buildCategory(dirName: string): WorkCategory {
     order,
     folder: path.relative(PUBLIC, abs).split(path.sep).join("/"),
     hero,
+    looseMedia,
     subsections,
   };
+}
+
+function subsectionNamedHero(sub: WorkSubsection): WorkMedia | undefined {
+  return (
+    firstNamedHero(sub.media) ??
+    sub.stacks.map((stack) => firstNamedHero(stack.items)).find(Boolean)
+  );
 }
 
 function buildEventGroup(dirName: string): WorkEventGroup {
@@ -252,43 +291,26 @@ function buildEventGroup(dirName: string): WorkEventGroup {
   const { title } = parseFolderTitle(dirName);
   const slug = slugify(dirName);
 
-  const nested = listDirs(abs).filter(
-    (d) => !THUMB_DIR_NAMES.has(d.toLowerCase()),
-  );
-  const stacks = nested.map((d) => buildStackNode(d, abs));
-
-  // One more level: SIL Event Creatives → SIL 2025 → Designs
-  const deepStacks: WorkStackNode[] = [];
-  for (const mid of nested) {
-    const midAbs = path.join(abs, mid);
-    const kids = listDirs(midAbs).filter(
-      (d) => !THUMB_DIR_NAMES.has(d.toLowerCase()),
-    );
-    if (kids.length) {
-      for (const kid of kids) {
-        const node = buildStackNode(kid, midAbs);
-        node.title = `${parseFolderTitle(mid).title} — ${node.title}`;
-        node.id = `${slugify(mid)}-${node.slug}`;
-        node.slug = node.id;
-        deepStacks.push(node);
-      }
-      // Also treat mid-level loose files as a stack
-      const midFiles = listMediaFiles(midAbs);
-      if (midFiles.length) {
-        deepStacks.unshift(buildStackNode(mid, abs));
-      }
-    } else {
-      deepStacks.push(buildStackNode(mid, abs));
-    }
-  }
+  const subsections = listDirs(abs)
+    .filter((d) => !THUMB_DIR_NAMES.has(d.toLowerCase()))
+    .map((d) => buildSubsection(d, abs));
 
   const files = listMediaFiles(abs);
-  const media = files.map((f, i) =>
-    toMedia(path.join(abs, f), `${title} — ${i + 1}`),
-  );
+  const rootHeroFile = pickNamedHeroFile(files);
+  const nestedHero = subsections
+    .map(subsectionNamedHero)
+    .find((item): item is WorkMedia => Boolean(item));
+  const hero = rootHeroFile
+    ? toMedia(path.join(abs, rootHeroFile), title)
+    : (nestedHero ??
+      (files[0] ? toMedia(path.join(abs, files[0]), title) : undefined) ??
+      subsections[0]?.cover);
 
-  const hero =
-    pickHero(files, abs, title) ?? deepStacks[0]?.hero ?? stacks[0]?.hero;
+  const media = files
+    .filter((file) => isVideoSrc(file) || !isHeroName(file))
+    .map((file, index) =>
+      toMedia(path.join(abs, file), `${title} — ${index + 1}`),
+    );
 
   return {
     id: slug,
@@ -297,7 +319,7 @@ function buildEventGroup(dirName: string): WorkEventGroup {
     folder: path.relative(PUBLIC, abs).split(path.sep).join("/"),
     hero,
     media,
-    stacks: deepStacks.length ? deepStacks : stacks,
+    subsections,
   };
 }
 
@@ -327,6 +349,17 @@ export function getWorkSubsection(
   );
   if (!subsection) return undefined;
   return { category, subsection };
+}
+
+export function getEventFolder(
+  eventSlug: string,
+  folderSlug: string,
+): { group: WorkEventGroup; folder: WorkSubsection } | undefined {
+  const group = getEventsTree().groups.find((g) => g.slug === eventSlug);
+  if (!group) return undefined;
+  const folder = group.subsections.find((s) => s.slug === folderSlug);
+  if (!folder) return undefined;
+  return { group, folder };
 }
 
 export function getEventsTree(): WorkEventsTree {

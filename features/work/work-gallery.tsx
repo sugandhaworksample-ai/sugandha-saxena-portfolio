@@ -1,19 +1,23 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { HoverLift } from "@/components/motion/hover-lift";
-import { StaggerItem, StaggerList } from "@/components/motion/stagger-list";
-import { TiltMedia } from "@/components/motion/tilt-media";
-import { cn } from "@/lib/utils";
+import { StackedSubsectionCard } from "@/features/work/stacked-subsection-card";
 import type { WorkMedia, WorkStackNode } from "@/types/work-tree";
 
-type GallerySection = {
+type MediaSection = {
+  kind: "media";
   id: string;
   label?: string;
   items: WorkMedia[];
 };
+
+type CarouselSection = {
+  kind: "carousel";
+  stack: WorkStackNode;
+};
+
+type GallerySection = MediaSection | CarouselSection;
 
 type WorkGalleryProps = {
   media: WorkMedia[];
@@ -21,21 +25,8 @@ type WorkGalleryProps = {
   title: string;
 };
 
-function tileClass(index: number) {
-  const span =
-    index % 5 === 0
-      ? "md:col-span-12"
-      : index % 5 === 1 || index % 5 === 2
-        ? "md:col-span-6"
-        : "md:col-span-4";
-  const aspect =
-    index % 5 === 0
-      ? "aspect-[16/9]"
-      : index % 5 === 3 || index % 5 === 4
-        ? "aspect-[4/5]"
-        : "aspect-[4/3]";
-  return { span, aspect };
-}
+const cellClass =
+  "w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.75rem)]";
 
 export function WorkGallery({
   media,
@@ -45,38 +36,66 @@ export function WorkGallery({
   const sections = useMemo((): GallerySection[] => {
     const out: GallerySection[] = [];
     if (media.length) {
-      out.push({ id: "loose", items: media });
+      out.push({ kind: "media", id: "loose", items: media });
     }
     for (const stack of stacks) {
       if (!stack.items.length) continue;
-      out.push({
-        id: stack.id,
-        label: stack.title,
-        items: stack.items,
-      });
+      if (stack.layout === "carousel") {
+        out.push({ kind: "carousel", stack });
+      } else {
+        out.push({
+          kind: "media",
+          id: stack.id,
+          label: stack.title,
+          items: stack.items,
+        });
+      }
     }
     return out;
   }, [media, stacks]);
 
   const flat = useMemo(
-    () => sections.flatMap((section) => section.items),
+    () =>
+      sections.flatMap((section) =>
+        section.kind === "media" ? section.items : [],
+      ),
     [sections],
   );
 
   const [active, setActive] = useState<number | null>(null);
-  const close = useCallback(() => setActive(null), []);
+  const [carousel, setCarousel] = useState<WorkStackNode | null>(null);
+  const [slide, setSlide] = useState(0);
+
+  const close = useCallback(() => {
+    setActive(null);
+    setCarousel(null);
+  }, []);
+
+  const openCarousel = useCallback((stack: WorkStackNode) => {
+    setActive(null);
+    setSlide(0);
+    setCarousel(stack);
+  }, []);
 
   useEffect(() => {
-    if (active === null) return;
+    const viewing = active !== null || carousel !== null;
+    if (!viewing) return;
+    const length = carousel ? carousel.items.length : flat.length;
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") close();
       if (event.key === "ArrowRight") {
-        setActive((i) => (i === null ? i : (i + 1) % flat.length));
+        if (carousel) {
+          setSlide((i) => (i + 1) % length);
+        } else {
+          setActive((i) => (i === null ? i : (i + 1) % length));
+        }
       }
       if (event.key === "ArrowLeft") {
-        setActive((i) =>
-          i === null ? i : (i - 1 + flat.length) % flat.length,
-        );
+        if (carousel) {
+          setSlide((i) => (i - 1 + length) % length);
+        } else {
+          setActive((i) => (i === null ? i : (i - 1 + length) % length));
+        }
       }
     };
     window.addEventListener("keydown", onKey);
@@ -86,19 +105,55 @@ export function WorkGallery({
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
     };
-  }, [active, close, flat.length]);
+  }, [active, carousel, close, flat.length]);
 
-  if (!flat.length) return null;
+  if (!sections.length) return null;
 
+  const blocks: Array<
+    | { kind: "carousels"; stacks: WorkStackNode[] }
+    | { kind: "media"; section: MediaSection; start: number }
+  > = [];
+  let carouselRun: WorkStackNode[] = [];
   let flatIndex = 0;
+  const flushCarousels = () => {
+    if (!carouselRun.length) return;
+    blocks.push({ kind: "carousels", stacks: carouselRun });
+    carouselRun = [];
+  };
+  for (const section of sections) {
+    if (section.kind === "carousel") {
+      carouselRun.push(section.stack);
+      continue;
+    }
+    flushCarousels();
+    blocks.push({ kind: "media", section, start: flatIndex });
+    flatIndex += section.items.length;
+  }
+  flushCarousels();
 
   return (
     <>
       <div className="mt-12 space-y-14">
-        {sections.map((section) => {
-          const start = flatIndex;
-          flatIndex += section.items.length;
+        {blocks.map((block) => {
+          if (block.kind === "carousels") {
+            return (
+              <ul
+                key={block.stacks.map((stack) => stack.id).join("-")}
+                className="grid list-none gap-10 sm:grid-cols-2 lg:grid-cols-3"
+              >
+                {block.stacks.map((stack) => (
+                  <li key={stack.id}>
+                    <StackedSubsectionCard
+                      stack={stack}
+                      onOpen={() => openCarousel(stack)}
+                    />
+                  </li>
+                ))}
+              </ul>
+            );
+          }
 
+          const { section, start } = block;
           return (
             <section key={section.id}>
               {section.label ? (
@@ -106,157 +161,156 @@ export function WorkGallery({
                   {section.label}
                 </h2>
               ) : null}
-              <StaggerList
-                as="ul"
-                className="grid list-none gap-5 md:grid-cols-12 md:gap-6"
-              >
+              <ul className="flex list-none flex-wrap items-start gap-4">
                 {section.items.map((item, index) => {
                   const globalIndex = start + index;
-                  const { span, aspect } = tileClass(index);
                   return (
-                    <StaggerItem
-                      key={`${item.src}-${globalIndex}`}
-                      as="li"
-                      className={span}
-                    >
-                      <HoverLift>
+                    <li key={`${item.src}-${globalIndex}`} className={cellClass}>
+                      {item.kind === "video" ? (
+                        <video
+                          src={item.src}
+                          controls
+                          playsInline
+                          preload="metadata"
+                          className="h-auto w-full rounded-2xl bg-black"
+                        />
+                      ) : (
                         <button
                           type="button"
                           onClick={() => setActive(globalIndex)}
-                          className="group block w-full cursor-zoom-in text-left"
+                          className="block w-full cursor-zoom-in text-left"
                           aria-label={`Open ${item.alt || title}`}
                         >
-                          <TiltMedia
-                            className={cn(
-                              "bg-muted relative overflow-hidden rounded-2xl",
-                              aspect,
-                            )}
-                            maxTilt={6}
-                          >
-                            <TileMedia
-                              item={item}
-                              priority={globalIndex === 0}
-                            />
-                            {item.kind === "video" ? (
-                              <span className="bg-background/70 absolute bottom-3 left-3 rounded-full px-3 py-1 text-[10px] tracking-[0.16em] uppercase backdrop-blur">
-                                Video
-                              </span>
-                            ) : null}
-                          </TiltMedia>
+                          {/* Native img keeps the file's real aspect — no crop box. */}
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={item.src}
+                            alt={item.alt}
+                            className="h-auto w-full rounded-2xl"
+                          />
                         </button>
-                      </HoverLift>
-                    </StaggerItem>
+                      )}
+                    </li>
                   );
                 })}
-              </StaggerList>
+              </ul>
             </section>
           );
         })}
       </div>
 
-      {active !== null ? (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${title} gallery`}
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm md:p-10"
-          onClick={close}
-        >
-          <button
-            type="button"
-            onClick={close}
-            className="text-background/80 hover:text-background absolute top-4 right-4 z-10 text-sm tracking-[0.14em] uppercase"
-          >
-            Close
-          </button>
-          <button
-            type="button"
-            onClick={(event) => {
-              event.stopPropagation();
-              setActive((i) =>
-                i === null ? i : (i - 1 + flat.length) % flat.length,
-              );
-            }}
-            className="text-background/80 hover:text-background absolute top-1/2 left-3 z-10 -translate-y-1/2 text-sm tracking-[0.14em] uppercase md:left-8"
-            aria-label="Previous"
-          >
-            Prev
-          </button>
-          <button
-            type="button"
-            onClick={(event) => {
-              event.stopPropagation();
-              setActive((i) => (i === null ? i : (i + 1) % flat.length));
-            }}
-            className="text-background/80 hover:text-background absolute top-1/2 right-3 z-10 -translate-y-1/2 text-sm tracking-[0.14em] uppercase md:right-8"
-            aria-label="Next"
-          >
-            Next
-          </button>
-          <div
-            className="relative max-h-full max-w-6xl"
-            onClick={(event) => event.stopPropagation()}
-          >
-            {flat[active].kind === "video" ? (
-              <video
-                key={flat[active].src}
-                src={flat[active].src}
-                controls
-                autoPlay
-                playsInline
-                className="max-h-[85vh] w-auto max-w-full rounded-xl"
-              />
-            ) : (
-              <div className="relative h-[85vh] w-[min(92vw,1100px)]">
-                <Image
-                  src={flat[active].src}
-                  alt={flat[active].alt || title}
-                  fill
-                  className="object-contain"
-                  sizes="92vw"
-                  priority
-                />
-              </div>
-            )}
-            <p className="text-background/70 mt-4 text-center text-xs tracking-[0.16em] uppercase">
-              {active + 1} / {flat.length}
-            </p>
-          </div>
-        </div>
+      {active !== null && flat[active] ? (
+        <Lightbox
+          title={title}
+          item={flat[active]}
+          index={active}
+          total={flat.length}
+          onClose={close}
+          onPrev={() =>
+            setActive((i) => (i === null ? i : (i - 1 + flat.length) % flat.length))
+          }
+          onNext={() =>
+            setActive((i) => (i === null ? i : (i + 1) % flat.length))
+          }
+        />
+      ) : null}
+
+      {carousel && carousel.items[slide] ? (
+        <Lightbox
+          title={carousel.title}
+          item={carousel.items[slide]}
+          index={slide}
+          total={carousel.items.length}
+          onClose={close}
+          onPrev={() =>
+            setSlide((i) => (i - 1 + carousel.items.length) % carousel.items.length)
+          }
+          onNext={() => setSlide((i) => (i + 1) % carousel.items.length)}
+        />
       ) : null}
     </>
   );
 }
 
-function TileMedia({
+function Lightbox({
+  title,
   item,
-  priority,
+  index,
+  total,
+  onClose,
+  onPrev,
+  onNext,
 }: {
+  title: string;
   item: WorkMedia;
-  priority?: boolean;
+  index: number;
+  total: number;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
 }) {
-  if (item.kind === "video") {
-    return (
-      <video
-        src={item.src}
-        muted
-        loop
-        playsInline
-        autoPlay
-        className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-      />
-    );
-  }
-
   return (
-    <Image
-      src={item.thumbSrc ?? item.src}
-      alt={item.alt}
-      fill
-      priority={priority}
-      quality={60}
-      className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 640px"
-    />
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+      className="fixed inset-0 z-[80] flex items-center justify-center bg-black p-4 md:p-10"
+      onClick={onClose}
+    >
+      <button
+        type="button"
+        onClick={onClose}
+        className="absolute top-4 right-4 z-10 text-sm tracking-[0.14em] text-white/80 uppercase hover:text-white"
+      >
+        Close
+      </button>
+      <button
+        type="button"
+        onClick={(event) => {
+          event.stopPropagation();
+          onPrev();
+        }}
+        className="absolute top-1/2 left-3 z-10 -translate-y-1/2 rounded-full border border-white/30 px-4 py-3 text-sm tracking-[0.14em] text-white uppercase hover:bg-white/10 md:left-8"
+        aria-label="Previous"
+      >
+        Prev
+      </button>
+      <button
+        type="button"
+        onClick={(event) => {
+          event.stopPropagation();
+          onNext();
+        }}
+        className="absolute top-1/2 right-3 z-10 -translate-y-1/2 rounded-full border border-white/30 px-4 py-3 text-sm tracking-[0.14em] text-white uppercase hover:bg-white/10 md:right-8"
+        aria-label="Next"
+      >
+        Next
+      </button>
+      <div
+        className="flex max-h-full max-w-6xl flex-col items-center"
+        onClick={(event) => event.stopPropagation()}
+      >
+        {item.kind === "video" ? (
+          <video
+            key={item.src}
+            src={item.src}
+            controls
+            autoPlay
+            playsInline
+            className="max-h-[85vh] w-auto max-w-full rounded-xl"
+          />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={item.src}
+            alt={item.alt || title}
+            className="max-h-[85vh] w-auto max-w-full object-contain"
+          />
+        )}
+        <p className="mt-4 text-center text-xs tracking-[0.16em] text-white/70 uppercase">
+          {index + 1} / {total}
+        </p>
+      </div>
+    </div>
   );
 }

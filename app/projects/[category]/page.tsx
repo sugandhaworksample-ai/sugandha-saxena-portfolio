@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Reveal } from "@/components/motion/reveal";
 import { StaggerItem, StaggerList } from "@/components/motion/stagger-list";
 import { StackedSubsectionCard } from "@/features/work/stacked-subsection-card";
+import { WorkGallery } from "@/features/work/work-gallery";
 import { createPageMetadata } from "@/lib/seo";
 import { getWorkCategories, getWorkCategory } from "@/lib/work-tree";
 
@@ -64,37 +64,32 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <h1 className="kinetic-display mt-3 text-5xl md:text-7xl">
             {category.title}
           </h1>
-          <p className="text-muted-foreground mt-5 text-lg">
-            {category.subsections.map((s) => s.title).join(" · ")}
-          </p>
+          {category.subsections.length ? (
+            <p className="text-muted-foreground mt-5 text-lg">
+              {category.subsections.map((s) => s.title).join(" · ")}
+            </p>
+          ) : null}
         </Reveal>
 
-        {category.hero ? (
-          <Reveal className="bg-muted relative mt-12 aspect-[21/9] overflow-hidden rounded-3xl">
-            <Image
-              src={category.hero.src}
-              alt={category.title}
-              fill
-              priority
-              className="object-cover"
-              sizes="(max-width: 1200px) 100vw, 1152px"
-            />
-          </Reveal>
+        {category.subsections.length ? (
+          <StaggerList
+            as="ul"
+            className="mt-14 grid list-none gap-10 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {category.subsections.map((subsection) => (
+              <StaggerItem key={subsection.slug} as="li">
+                <StackedSubsectionCard
+                  href={`/projects/${category.slug}/${subsection.slug}`}
+                  subsection={subsection}
+                />
+              </StaggerItem>
+            ))}
+          </StaggerList>
         ) : null}
 
-        <StaggerList
-          as="ul"
-          className="mt-14 grid list-none gap-10 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {category.subsections.map((subsection) => (
-            <StaggerItem key={subsection.slug} as="li">
-              <StackedSubsectionCard
-                categorySlug={category.slug}
-                subsection={subsection}
-              />
-            </StaggerItem>
-          ))}
-        </StaggerList>
+        {category.looseMedia.length ? (
+          <WorkGallery media={category.looseMedia} title={category.title} />
+        ) : null}
       </div>
     </article>
   );
