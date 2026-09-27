@@ -49,20 +49,39 @@ export function SiteHeader() {
           className="relative hidden items-center gap-1 md:flex"
         >
           {mainNav.map((item) => {
+            const isExternal =
+              item.href.startsWith("http") ||
+              item.href.endsWith(".pdf") ||
+              item.href.includes("#");
             const active =
-              pathname === item.href ||
-              (item.href !== "/" && pathname.startsWith(item.href));
+              !isExternal &&
+              (pathname === item.href ||
+                (item.href !== "/" && pathname.startsWith(item.href)));
+            const sharedClass = cn(
+              "pressable relative rounded-full px-3 py-2 text-sm transition-colors duration-200",
+              active
+                ? "text-foreground"
+                : "text-muted-foreground hover:text-foreground",
+            );
+            if (isExternal) {
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target={item.href.endsWith(".pdf") ? "_blank" : undefined}
+                  rel={
+                    item.href.endsWith(".pdf")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
+                  className={sharedClass}
+                >
+                  <span className="relative z-10">{item.title}</span>
+                </a>
+              );
+            }
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "pressable relative rounded-full px-3 py-2 text-sm transition-colors duration-200",
-                  active
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
-              >
+              <Link key={item.href} href={item.href} className={sharedClass}>
                 {active ? (
                   <motion.span
                     layoutId="nav-pill"
@@ -108,9 +127,20 @@ export function SiteHeader() {
               className="mx-auto flex max-w-6xl flex-col gap-1 px-6 py-4"
             >
               {mainNav.map((item, index) => {
+                const isExternal =
+                  item.href.startsWith("http") ||
+                  item.href.endsWith(".pdf") ||
+                  item.href.includes("#");
                 const active =
-                  pathname === item.href ||
-                  (item.href !== "/" && pathname.startsWith(item.href));
+                  !isExternal &&
+                  (pathname === item.href ||
+                    (item.href !== "/" && pathname.startsWith(item.href)));
+                const sharedClass = cn(
+                  "pressable block rounded-md px-3 py-3 text-sm transition-colors duration-200",
+                  active
+                    ? "bg-secondary text-foreground"
+                    : "text-muted-foreground hover:text-foreground",
+                );
                 return (
                   <motion.div
                     key={item.href}
@@ -122,17 +152,27 @@ export function SiteHeader() {
                       ease: easings.out,
                     }}
                   >
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        "pressable block rounded-md px-3 py-3 text-sm transition-colors duration-200",
-                        active
-                          ? "bg-secondary text-foreground"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      {item.title}
-                    </Link>
+                    {isExternal ? (
+                      <a
+                        href={item.href}
+                        target={
+                          item.href.endsWith(".pdf") ? "_blank" : undefined
+                        }
+                        rel={
+                          item.href.endsWith(".pdf")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                        onClick={() => setOpen(false)}
+                        className={sharedClass}
+                      >
+                        {item.title}
+                      </a>
+                    ) : (
+                      <Link href={item.href} className={sharedClass}>
+                        {item.title}
+                      </Link>
+                    )}
                   </motion.div>
                 );
               })}

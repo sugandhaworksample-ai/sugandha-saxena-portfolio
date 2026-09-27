@@ -27,24 +27,50 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Scripts
 
-| Script              | Purpose                  |
-| ------------------- | ------------------------ |
-| `npm run dev`       | Local development server |
-| `npm run build`     | Production build         |
-| `npm run start`     | Serve production build   |
-| `npm run lint`      | ESLint                   |
-| `npm run format`    | Prettier write           |
-| `npm run typecheck` | TypeScript check         |
+| Script                                    | Purpose                                             |
+| ----------------------------------------- | --------------------------------------------------- |
+| `npm run dev`                             | Local development server                            |
+| `npm run build`                           | Production build                                    |
+| `npm run start`                           | Serve production build                              |
+| `npm run lint`                            | ESLint                                              |
+| `npm run format`                          | Prettier write                                      |
+| `npm run typecheck`                       | TypeScript check                                    |
+| `node scripts/compress-event-thumbs.mjs`  | Generate compressed thumbs for Events & Exhibitions |
+| `node scripts/compress-scroll-thumbs.mjs` | Generate compressed thumbs for Scroll to Explore    |
 
 ## Content workflow
 
-Projects live in `content/projects/*.mdx` with Zod-validated frontmatter.
+The portfolio uses two content workflows:
 
-1. Add an MDX file: `content/projects/my-project.mdx`
-2. Place media in `public/projects/my-project/`
-3. The route `/projects/my-project` is generated automatically
+### 1. Folder-driven Work Tree (Primary for visual galleries)
 
-Source of truth for Phase 2 imports: [Behance profile](https://www.behance.net/saxenasugu7614).
+Used for **Scroll-to-Explore** and **Events & Exhibitions**.
+
+- Drop categorized project folders under `public/projects/scroll to explore/` or `public/projects/EVENTS & EXHIBITIONS/`.
+- No MDX required; categories, subsections, and galleries are read directly from filesystem structure via `lib/work-tree.ts`.
+- Supports dual-resolution asset loading: high-performance `compressed/` thumbnails for grids + full-resolution images for carousels and modals.
+- Detailed rules: [`docs/project-assets.md`](docs/project-assets.md).
+
+### 2. MDX Case Studies
+
+Projects live in `content/projects/*.mdx` with Zod-validated frontmatter for deep-dive case studies.
+
+- Route `/projects/[slug]` is generated automatically.
+- Source of truth for Phase 2 imports: [Behance profile](https://www.behance.net/saxenasugu7614).
+
+### 3. Resume & About Sync
+
+- Master LaTeX file: `public/resume/resume.tex`
+- Web content: `content/resume.md` (parsed by `lib/resume.ts` for the `/about` page)
+- PDF download: `public/resume/Sugandha CV.pdf` (linked directly via "Download CV" on the home page)
+- Conversion rules: [`.agents/rules/latex-to-markdown-resume.md`](.agents/rules/latex-to-markdown-resume.md)
+
+## Documentation
+
+- [`docs/project-assets.md`](docs/project-assets.md) — Folder-driven work tree, naming conventions, and image compression pipeline.
+- [`docs/theme.md`](docs/theme.md) — Document-driven theme system (YAML presets in `content/themes/`).
+- [`docs/nextjs-rsc-boundaries.md`](docs/nextjs-rsc-boundaries.md) — RSC boundaries and client/server separation rules.
+- [`docs/work-log.md`](docs/work-log.md) — Detailed log of daily tasks, performance optimizations, bug fixes, and architectural decisions.
 
 ## Architecture
 

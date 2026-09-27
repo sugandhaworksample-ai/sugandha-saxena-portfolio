@@ -6,14 +6,14 @@ The site reads **folders under `public/projects/`**, not MDX, for Scroll-to-Expl
 
 Path: `public/projects/scroll to explore/`
 
-| Rule | Detail |
-|------|--------|
-| Order | Leading number on the folder (`1`, `02`, `07`…) |
-| Category | Each numbered folder (e.g. `1 Branding`) |
-| Subsection | Direct child folders (e.g. `1 Logo`, `Stationery → …`) |
-| Nested folders | Become **gallery sections** — images keep their real aspect (2 per row from small screens, 3 from large). Not cropped, no full-width hero tile |
-| Loose media | Images/videos sitting in a subsection folder use that same row layout |
-| Carousel | A nested folder named `Name - carousel` uses the same stacked image card as a subsection. The count sits under the title. Click opens a fullscreen slideshow with Previous / Next (and arrow keys) |
+| Rule           | Detail                                                                                                                                                                                             |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Order          | Leading number on the folder (`1`, `02`, `07`…)                                                                                                                                                    |
+| Category       | Each numbered folder (e.g. `1 Branding`)                                                                                                                                                           |
+| Subsection     | Direct child folders (e.g. `1 Logo`, `Stationery → …`)                                                                                                                                             |
+| Nested folders | Become **gallery sections** — images keep their real aspect (2 per row from small screens, 3 from large). Not cropped, no full-width hero tile                                                     |
+| Loose media    | Images/videos sitting in a subsection folder use that same row layout                                                                                                                              |
+| Carousel       | A nested folder named `Name - carousel` uses the same stacked image card as a subsection. The count sits under the title. Click opens a fullscreen slideshow with Previous / Next (and arrow keys) |
 
 ### Hero image names (any of these)
 
@@ -23,11 +23,18 @@ Path: `public/projects/scroll to explore/`
 
 If none exist, the first image in the folder (or first nested hero) is used.
 
-### Optional thumbs for cards
+### Thumbs and compression pipeline
 
 Place smaller files in a sibling folder named `compressed`, `thumb`, `thumbs`, or `small`, **or** name siblings `foo.thumb.jpg` / `foo-small.jpg`.
 
-Home Events and gallery grids prefer `thumbSrc` when present; otherwise Next.js downscales with tight `sizes` + lower `quality`. For huge event boards (multi‑MB print files), adding a `compressed/` sibling makes hover marquees much sharper.
+- **Automatic Directory Exclusion:** `lib/work-tree.ts` excludes thumbnail directory names (`compressed`, `thumb`, `thumbs`, `small`) from being treated as categories, subsections, or gallery routes. They will never appear in navigation or headings.
+- **Dual-Resolution Architecture:**
+  - Gallery grids and preview cards use `thumbSrc ?? src` for instant loading and 60fps scrolling without UI stutter.
+  - Fullscreen carousel, lightboxes, and click-to-expand modals always display the full-resolution uncompressed `src` so visitors view pristine, uncompressed artwork without blur.
+- **Compression Scripts:**
+  - `node scripts/compress-event-thumbs.mjs`: Compresses event and exhibition standees, banners, and backdrops.
+  - `node scripts/compress-scroll-thumbs.mjs`: Compresses scroll-to-explore project images and generates corresponding `compressed/` assets.
+- **Git / Push Best Practice:** When committing many high-res assets and compressed thumbs, commit in small, atomic batches or sync via GitHub Desktop to avoid HTTP/RPC buffer disconnects (`curl 55 Send failure: Connection was reset`).
 
 ### Skipped files
 
@@ -35,11 +42,11 @@ Home Events and gallery grids prefer `thumbSrc` when present; otherwise Next.js 
 
 ### URLs
 
-| Folder | URL |
-|--------|-----|
-| `1 Branding` | `/projects/branding` |
+| Folder              | URL                       |
+| ------------------- | ------------------------- |
+| `1 Branding`        | `/projects/branding`      |
 | `1 Branding/1 Logo` | `/projects/branding/logo` |
-| `07 illustrations` | `/projects/illustrations` |
+| `07 illustrations`  | `/projects/illustrations` |
 
 ## Gallery UI notes
 
@@ -69,12 +76,12 @@ Path: `public/projects/EVENTS & EXHIBITIONS/`
 
 ## Day-to-day
 
-1. Drop a numbered category folder under `scroll to explore` → it appears in order  
-2. Add subsection folders + heroes  
+1. Drop a numbered category folder under `scroll to explore` → it appears in order
+2. Add subsection folders + heroes
 3. Nest client folders inside a subsection → they become gallery sections  
-   Name a folder `Client - carousel` when those frames should open as a slideshow  
-4. Drop videos or images directly in a category folder (Motion, AI) → they show on that category page  
-5. Drop Didac/SIL folders under `EVENTS & EXHIBITIONS/...` → stacked cards on the event page. Add `hero.png` (or any hero-named file) in the event folder to set the home thumbnail  
-6. Optionally add `compressed/` thumbs next to large event creatives  
+   Name a folder `Client - carousel` when those frames should open as a slideshow
+4. Drop videos or images directly in a category folder (Motion, AI) → they show on that category page
+5. Drop Didac/SIL folders under `EVENTS & EXHIBITIONS/...` → stacked cards on the event page. Add `hero.png` (or any hero-named file) in the event folder to set the home thumbnail
+6. Optionally add `compressed/` thumbs next to large event creatives
 
 No MDX required for this tree.

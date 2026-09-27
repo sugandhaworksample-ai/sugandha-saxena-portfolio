@@ -27,69 +27,59 @@
 eyebrow: "Motion"
 headline: "Frames that breathe"
 subtitle: >
-  Hover a panel — built for showreel embeds and kinetic case studies.
-  Add your video URLs in the items below to bring this page to life.
+  Motion graphics, video edits, and animated campaigns — work made to move.
 
 items:
-  # ---- Replace these placeholders with your real motion work ----
+  - title: "Bitli Brand Motion"
+    subtitle: "Social Reels"
+    body: >
+      Animated brand content for Bitli — designed for Instagram and digital-first campaigns.
+    href: "/projects/motion-and-video"
+    tags:
+      - motion
+      - social
 
-  - title: "Motion Graphics Showreel"
+  - title: "KITS Product Video"
+    subtitle: "Product"
+    body: >
+      Product video for KITS — kinetic motion with brand storytelling.
+    href: "/projects/motion-and-video"
+    tags:
+      - product
+      - video
+
+  - title: "SIL Event Reel"
+    subtitle: "Event"
+    body: >
+      Motion reel produced for SIL 2025 — capturing live environments and brand energy.
+    href: "/projects/motion-and-video"
+    tags:
+      - event
+      - reel
+
+  - title: "Why Choose School"
+    subtitle: "Education"
+    body: >
+      Motion graphic video for an education brand — clear messaging with visual storytelling.
+    href: "/projects/motion-and-video"
+    tags:
+      - education
+      - motion
+
+  - title: "Showreel"
     subtitle: "Showreel"
     body: >
-      Add your Behance or YouTube showreel URL to the videoUrl field
-      and this card will embed it automatically.
-    # href: "https://www.behance.net/saxenasugu7614"
-    # videoUrl: "https://www.youtube.com/embed/YOUR_VIDEO_ID"
-    # image: "/motion/showreel-thumb.jpg"
+      Full creative showreel — a curated selection of motion, brand, and video work.
+    href: "/projects/motion-and-video"
     tags:
       - showreel
       - motion
 
-  - title: "Brand Animation"
-    subtitle: "Brand Motion"
+  - title: "All Motion Work"
+    subtitle: "Gallery"
     body: >
-      Logo animations, brand reveal sequences, and identity in motion.
-      Paste a Behance project link into href to link out.
-    # href: "https://www.behance.net/saxenasugu7614"
-    # image: "/motion/brand-animation-thumb.jpg"
+      Browse all motion and video work — social reels, event films, product videos, and more.
+    href: "/projects/motion-and-video"
     tags:
-      - branding
-      - animation
+      - all
 
-  - title: "Social Media Motion"
-    subtitle: "Social"
-    body: >
-      Scroll-stopping reels, story animations, and campaign motion graphics
-      for digital-first brands.
-    # href: "https://www.behance.net/saxenasugu7614"
-    # image: "/motion/social-motion-thumb.jpg"
-    tags:
-      - social
-      - motion
-
-  - title: "Title Sequences"
-    subtitle: "Cinematic"
-    body: >
-      Kinetic typography and opening title sequences with a cinematic feel.
-    # href: "https://www.behance.net/saxenasugu7614"
-    tags:
-      - typography
-      - cinematic
-
-  - title: "Video Editing"
-    subtitle: "Post-Production"
-    body: >
-      Full post-production editing including colour grading, sound design sync,
-      and motion graphics integration.
-    tags:
-      - editing
-      - post-production
-
-  - title: "After Effects Templates"
-    subtitle: "Capability"
-    body: >
-      Custom AE templates built for rapid iteration across campaign assets
-      without sacrificing quality.
-    tags:
-      - after-effects
-      - tools
