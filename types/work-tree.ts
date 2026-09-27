@@ -6,6 +6,9 @@ export type WorkMedia = {
   kind: MediaKind;
   /** Prefer for cards when present */
   thumbSrc?: string;
+  /** Intrinsic dimensions for next/image */
+  width?: number;
+  height?: number;
 };
 
 export type WorkStackLayout = "gallery" | "carousel";
