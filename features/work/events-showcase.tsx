@@ -42,6 +42,7 @@ export function EventsShowcase({ tree }: EventsShowcaseProps) {
 
   return (
     <section
+      id="events"
       data-chapter
       data-rise-skip
       className="relative overflow-x-clip bg-[var(--background)] py-20 md:py-28"

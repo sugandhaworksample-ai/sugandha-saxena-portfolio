@@ -199,7 +199,7 @@ export function ScrollStory({
             <Magnetic strength={0.25}>
               <Button asChild variant="outline" size="lg" className="pressable">
                 <a
-                  href="/resume/Sugandha CV.pdf"
+                  href="/resume/Sugandha%20CV.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
