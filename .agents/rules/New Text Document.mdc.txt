@@ -1,0 +1,131 @@
+# Behance MCP Integration & Validation
+
+Your task is to integrate the following MCP server into this project and ensure it is fully functional.
+
+MCP Server:
+https://glama.ai/mcp/servers/Arnonfr/behance-mcp-server
+
+## Primary Goal
+
+Configure this Behance MCP so you can directly interact with my Behance profile and projects from within Cursor.
+
+This MCP will become the primary content source for my portfolio website.
+
+---
+
+## Requirements
+
+1. Install and configure the Behance MCP according to its official documentation.
+2. Register the MCP with Cursor using the recommended configuration method.
+3. Install every required dependency.
+4. Ensure there are no missing environment variables or configuration issues.
+5. If authentication is required, explain exactly what I need to provide instead of hardcoding credentials.
+6. Verify the MCP starts successfully without errors.
+7. Verify Cursor can discover every exposed MCP tool.
+8. Produce a short validation report showing:
+
+   * Available tools
+   * MCP status
+   * Version
+   * Any warnings
+
+---
+
+## Functional Validation
+
+After installation, test that the following capabilities work (if supported by the MCP):
+
+* Search Behance projects
+* Fetch project details from a Behance project URL
+* Retrieve profile information
+* Retrieve project metadata
+* Retrieve project descriptions
+* Retrieve project tags
+* Retrieve tools used
+* Retrieve cover images
+* Retrieve gallery images
+
+Do not assume these work—actually test them if possible.
+
+---
+
+## Project Structure
+
+Create a clean folder for future imports.
+
+content/
+profile.json
+projects/
+
+scripts/
+
+docs/
+
+Do not populate these folders with placeholder data.
+
+---
+
+## Future Import Architecture
+
+Prepare the project so future imports can be saved in this format:
+
+content/
+profile.json
+
+```
+projects/
+    project-slug/
+        metadata.json
+        description.md
+        images/
+        assets/
+```
+
+The portfolio website will eventually read from these local files instead of querying Behance directly.
+
+Do not build this importer yet unless necessary for MCP validation.
+
+---
+
+## Code Quality
+
+* Use TypeScript where appropriate.
+* Keep configuration modular.
+* Do not modify unrelated project files.
+* Do not introduce unnecessary packages.
+* Follow current Cursor and MCP best practices.
+* Prefer official installation methods over community workarounds.
+
+---
+
+## Documentation
+
+Create:
+
+docs/behance-mcp.md
+
+Include:
+
+* Installation steps
+* Configuration
+* Dependencies
+* How to restart the MCP
+* How to test it
+* Troubleshooting
+* How Cursor communicates with the MCP
+* Any limitations discovered during testing
+
+---
+
+## Final Deliverables
+
+At completion provide:
+
+1. Installation summary
+2. Configuration summary
+3. List of available MCP tools
+4. Validation results
+5. Any limitations (especially around videos or unsupported assets)
+6. Any manual steps I still need to perform
+
+Do not stop until the MCP is installed, configured, validated, and documented. If an issue occurs, diagnose it, fix it where possible, and explain the resolution before proceeding.

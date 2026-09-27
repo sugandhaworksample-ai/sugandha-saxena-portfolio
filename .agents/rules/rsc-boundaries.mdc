@@ -1,0 +1,15 @@
+---
+description: Prevent exporting server-callable helpers from "use client" modules (RSC boundary)
+globs: app/**/*.tsx,features/**/*.tsx,components/**/*.tsx,lib/**/*.ts
+alwaysApply: false
+---
+
+# RSC client/server boundary
+
+Never export pure helpers from a `"use client"` file and import them into a Server Component (e.g. `app/**/page.tsx`).
+
+- Pure helpers/types → `lib/` (no `"use client"`)
+- Interactive UI → `"use client"` feature/component
+- Server pages may **render** client components and pass serializable props; they must **not call** functions from client modules
+
+See `docs/nextjs-rsc-boundaries.md`.
