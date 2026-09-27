@@ -181,7 +181,7 @@ export function WorkGallery({ media, stacks = [], title }: WorkGalleryProps) {
                           aria-label={`Open ${item.alt || title}`}
                         >
                           <Image
-                            src={item.src}
+                            src={item.thumbSrc ?? item.src}
                             alt={item.alt}
                             width={item.width || 1200}
                             height={item.height || 800}
