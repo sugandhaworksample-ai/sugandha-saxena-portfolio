@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Marquee } from "@/components/motion/marquee";
 import { Reveal } from "@/components/motion/reveal";
@@ -99,9 +99,25 @@ function EventPanel({
   const strip = useMemo(() => previewStrip(group), [group]);
   const alignEnd = side === "left";
 
+  const [isHovered, setIsHovered] = useState(false);
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    if (isHovered) {
+      setShouldRender(true);
+    } else {
+      const t = setTimeout(() => setShouldRender(false), 300);
+      return () => clearTimeout(t);
+    }
+  }, [isHovered]);
+
   return (
     <Link
       href={`/projects/events/${group.slug}`}
+      onPointerEnter={() => setIsHovered(true)}
+      onPointerLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => setIsHovered(false)}
       className={cn(
         "group relative block outline-none",
         "focus-visible:ring-accent focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--background)]",
@@ -113,7 +129,7 @@ function EventPanel({
           // Soft facing arches — not full circles / pot shapes
           side === "left"
             ? "rounded-[1.75rem] md:rounded-l-[2.75rem] md:rounded-r-[1.25rem]"
-            : "rounded-[1.75rem] md:rounded-r-[2.75rem] md:rounded-l-[1.25rem]",
+            : "rounded-[1.75rem] md:rounded-l-[1.25rem] md:rounded-r-[2.75rem]",
         )}
       >
         {cover ? (
@@ -123,6 +139,7 @@ function EventPanel({
               muted
               loop
               playsInline
+              preload="metadata"
               autoPlay={!reduceMotion}
               className="absolute inset-0 size-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] group-focus-visible:scale-[1.04]"
             />
@@ -168,7 +185,7 @@ function EventPanel({
               {group.subsections.map((subsection) => (
                 <li
                   key={subsection.id}
-                  className="rounded-full bg-black/55 px-2.5 py-1 text-[10px] tracking-[0.12em] uppercase text-white backdrop-blur"
+                  className="rounded-full bg-black/55 px-2.5 py-1 text-[10px] tracking-[0.12em] text-white uppercase backdrop-blur"
                 >
                   {subsection.title}
                 </li>
@@ -185,22 +202,21 @@ function EventPanel({
                     alignEnd && "ml-auto max-w-[90%]",
                   )}
                 >
-                  {strip.slice(0, 6).map((item) => (
-                    <Thumb key={item.src} item={item} />
-                  ))}
+                  {shouldRender &&
+                    strip
+                      .slice(0, 6)
+                      .map((item) => <Thumb key={item.src} item={item} />)}
                 </div>
               ) : (
-                <Marquee
-                  speed={32}
-                  reverse={alignEnd}
-                  className="py-1"
-                >
-                  {strip.map((item) => (
-                    <div key={item.src} className="mx-1.5 shrink-0">
-                      <Thumb item={item} />
-                    </div>
-                  ))}
-                </Marquee>
+                shouldRender && (
+                  <Marquee speed={32} reverse={alignEnd} className="py-1">
+                    {strip.map((item) => (
+                      <div key={item.src} className="mx-1.5 shrink-0">
+                        <Thumb item={item} />
+                      </div>
+                    ))}
+                  </Marquee>
+                )
               )
             ) : null}
           </div>
