@@ -86,7 +86,12 @@ function listDirs(dir: string): string[] {
   if (!fs.existsSync(dir)) return [];
   return fs
     .readdirSync(dir, { withFileTypes: true })
-    .filter((d) => d.isDirectory() && !d.name.startsWith("."))
+    .filter(
+      (d) =>
+        d.isDirectory() &&
+        !d.name.startsWith(".") &&
+        !THUMB_DIR_NAMES.has(d.name.toLowerCase()),
+    )
     .map((d) => d.name)
     .sort((a, b) => {
       const oa = parseOrder(a);
