@@ -197,13 +197,14 @@ export function ScrollStory({
               </Button>
             </Magnetic>
             <Magnetic strength={0.25}>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="pressable"
-              >
-                <Link href="/contact">Start a project</Link>
+              <Button asChild variant="outline" size="lg" className="pressable">
+                <a
+                  href="/resume/Sugandha CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Download CV
+                </a>
               </Button>
             </Magnetic>
           </div>
@@ -253,7 +254,7 @@ export function ScrollStory({
         <div className="flex min-h-[70vh] items-center md:h-screen md:min-h-0">
           <div
             data-work-track
-            className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] will-change-transform md:gap-8 md:overflow-visible md:px-6 md:pb-0 [&::-webkit-scrollbar]:hidden"
+            className="flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto px-5 pb-2 will-change-transform [-ms-overflow-style:none] md:gap-8 md:overflow-visible md:px-6 md:pb-0 [&::-webkit-scrollbar]:hidden"
           >
             <div className="flex w-[min(78vw,18rem)] shrink-0 snap-center flex-col justify-center md:w-[40vw]">
               <p className="text-muted-foreground text-xs tracking-[0.2em] uppercase">

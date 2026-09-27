@@ -5,15 +5,7 @@ phone: "+91 78382 92838"
 website: "https://sugandha-saxena-portfolio.vercel.app"
 location: "Uttar Pradesh, India"
 summary: >
-  Senior Creative Designer with 7+ years of experience delivering creative
-  solutions across branding, marketing, digital, print, motion graphics, UI/UX,
-  and web design. Experienced in building brand identities, designing
-  high-impact campaigns, and creating visual content that strengthens brand
-  presence and audience engagement. Contributed to projects for Red Chillies
-  Entertainment, Clean Slate Filmz, and led the creative design for the
-  national-level STEAM Innovation League 2025. Early adopter of AI-powered
-  creative workflows, using modern AI tools to accelerate ideation, content
-  creation, image generation, and production without compromising design quality.
+  Brand & Creative Designer with 7+ years of experience across diverse industries, growing from hands-on graphic design into broader brand and creative ownership. I have worked on brand identities and visual communication across digital, print, packaging, campaigns, events, exhibitions, and physical brand experiences. I enjoy taking projects from concept to execution, building cohesive visual identities, and finding the right way to communicate a brand across different touchpoints. My experience includes visual storytelling, creative development, campaign design, marketing communication, and working with creative teams and cross-functional teams to bring ideas to life. I also use AI as part of my creative process for ideation, visual exploration, image generation, and production support. Alongside my professional work, I have created social media content that has generated 1.4M+ organic views through personal creative projects.
 
 skills:
   - category: Software
@@ -26,28 +18,56 @@ skills:
       - Adobe XD
       - Figma
       - CorelDRAW
+  - category: AI Tools
+    items:
+      - ChatGPT
+      - Google Gemini
+      - Claude
+      - Adobe Firefly
+      - Leonardo AI
+      - PixVerse
+      - Perplexity
+      - ElevenLabs
   - category: Core Skills
     items:
+      - Brand Design
       - Brand Identity Design
-      - Visual Identity & Brand Guidelines
-      - Typography
-      - Print & Digital Design
-      - Marketing Collateral Design
-      - Social Media Design
+      - Visual Identity
+      - Brand Guidelines
+      - Brand Development
+      - Brand Applications
+      - Art Direction
+      - Creative Direction
+      - Visual Direction
+      - Creative Concept Development
+      - Visual Storytelling
+      - Visual Communication
+      - Campaign Design
+      - Marketing Communication
       - Advertising Design
-      - Layout Design
+      - Digital & Print Design
+      - Marketing Collateral
+      - Social Media Design
+      - Packaging Design
+      - Event Branding
+      - Exhibition Branding
+      - Experiential Design
+      - Outdoor Design
+      - Web Visual Design
+      - UI Design
+      - Motion Graphics
+      - Video Editing
       - Logo Design
+      - Typography
+      - Layout Design
       - Illustration
       - Infographic Design
       - Presentation Design
-      - UI/UX Design
-      - Wireframing & Prototyping
-      - Motion Graphics & Animation
-      - Packaging Design
-      - Video Editing & Post-Production
-      - Generative AI Tools
-      - Color Theory & Design Principles
-      - Event & Stall Designing
+      - Creative Project Ownership
+      - Creative Team Leadership
+      - Cross-functional Collaboration
+      - Brand Consistency
+      - AI-Assisted Design
 
 experience:
   - company: "STEMROBO TECHNOLOGIES PVT LTD"
@@ -56,53 +76,60 @@ experience:
     end: "Present"
     location: "Noida, Uttar Pradesh, India"
     responsibilities:
-      - Designed brand identity development for six sister companies, delivering more than 150+ assets in print, digital, and outdoor media, increasing brand visibility by 80%.
-      - Designed educational materials, books, packaging, and manuals to enhance user experience.
-      - Collaborated on event marketing designs to boost audience engagement.
-      - Designed and maintained company websites for a consistent user experience.
+      - Developed and maintained brand identities and visual systems across multiple business initiatives.
+      - Designed brand applications across packaging, brochures, books, manuals, educational materials, and marketing collateral.
+      - Created visual communication for digital, print, social media, outdoor, web, and physical brand environments.
+      - Led event and exhibition branding for SIL National Level 2025, DIDAC, and Semicon India 2026.
+      - Handled the creative development of SIL 2.0, covering campaign creatives, brochures, pamphlets, social media, and promotional collateral.
+      - Translated marketing requirements into creative concepts, visual directions, and campaign communication.
+      - Took ownership of projects from concept to execution, ensuring consistency across brand touchpoints.
+      - Led the creative team by assigning design requirements, reviewing work, and maintaining visual quality and consistency.
+      - Worked closely with marketing and internal teams on creative development, campaign design, and brand communication.
+      - Used AI-assisted creative workflows for ideation, visual exploration, image generation, and production support.
   - company: "TERABLOCK"
     role: "Graphic Designer"
     start: "Jul 2021"
     end: "Feb 2022"
     location: "Remote"
     responsibilities:
-      - Produced 80+ social media creatives, logos and UI elements, increasing digital reach by 40%.
-      - Developed blog campaign designs, email marketing visuals, and video edits.
-      - Designed illustrations to enhance brand communication.
+      - Developed brand identities and logo systems for TeraBlock and new Web3 ventures.
+      - Created campaign and marketing communication for crypto and DeFi products, including TBC token visuals.
+      - Designed email campaigns, blog graphics, promotional creatives, illustrations, and digital assets for brand communication.
+      - Created UI and landing page visuals, along with dark-themed concepts and logo reveal animations aligned with the brand's visual language.
   - company: "BHARAT ARPANET"
     role: "Motion Graphic Designer"
     start: "Sep 2020"
     end: "Feb 2021"
     location: "Noida, Uttar Pradesh, India"
     responsibilities:
-      - Delivered motion graphics, user interface assets, and promotional videos that contributed to a 60% boost in the engagement of the client's campaign.
-      - Designed targeted Google ads, YouTube thumbnails, and social posts that drove 50% more traffic to landing pages.
-      - Coordinated directly with 5+ international clients, achieving a 100% on-time delivery rate for custom designs.
+      - Designed UI and website visuals for FDI India and multiple healthcare and medical projects.
+      - Created motion graphics, YouTube videos, thumbnails, social media creatives, and promotional visuals for digital marketing campaigns.
+      - Handled creative requirements for national and international clients, working directly with clients to understand design needs and creative direction.
   - company: "IBA CRAFTS PVT. LTD."
     role: "Graphic Designer"
     start: "Jun 2019"
     end: "Aug 2020"
     location: "Noida, Uttar Pradesh, India"
     responsibilities:
-      - Developed e-commerce product mockups for 300+ apparel listings, boosting online sales conversion by 30%.
-      - Edited more than 500+ images for faster load times and optimized images for online use.
+      - Created digital textile mockups and realistic fabric visuals using image compositing, warping, masking, and retouching techniques.
+      - Prepared product visuals for company websites and e-commerce platforms including Amazon, IndiaMart, and Flipkart.
   - company: "BRIDE AND BEAUTIFUL"
     role: "Graphic Designer"
     start: "Jan 2018"
     end: "Oct 2018"
     location: "Delhi, India"
     responsibilities:
-      - Designed more than 30+ garment patterns (textile design) for western gowns.
-      - Designed social media campaigns and brand logo, increasing the follower count by 60% in three months.
+      - Designed social media creatives, pamphlets, wall posters, and gown pattern illustrations for western bridal collections, ensuring consistent visual presentation across marketing and product materials.
+      - Developed and prepared production-ready gown patterns, including large-format butter-paper printing, chapai/tracing coordination, and collaboration with tailoring, adda, and embroidery teams for final embellishment execution.
 
 education:
   - institution: "Galgotias University"
-    degree: "Bachelor of Mass Communication"
+    degree: "Bachelor of Journalism and Mass Communication"
     start: "2015"
     end: "2018"
     location: "Greater Noida, Uttar Pradesh, India"
   - institution: "Jagran Institute of Management and Mass Communication"
-    degree: "Diploma in Design and Advertising"
+    degree: "Diploma in Advertising & Public Relations"
     start: "2016"
     end: "2018"
     location: "Noida, Uttar Pradesh, India"
@@ -118,20 +145,11 @@ education:
     location: "Shalimar Garden, Uttar Pradesh, India"
 
 projects:
-  - title: "Red Chillies Entertainment (SRK Production House)"
-    description: "Designed social media creatives to enhance Shah Rukh Khan’s brand presence."
-    role: "Freelance Designer"
-  - title: "Clean Slate Filmz (Anushka Sharma Production House)"
-    description: "Created social media content to boost online visibility."
-    role: "Freelance Designer"
-  - title: "U.P. Election Campaign – Ajna Media & Entertainment Pvt. Ltd."
-    description: "Designed candidate profiles, banners, and campaign visuals to influence voter engagement."
-    role: "Freelance Designer"
+  - title: "RED CHILLIES ENTERTAINMENT & CLEAN SLATE FILMZ"
+    description: "Independently handled advertising, marketing, and digital content. Created quizzes, festival creatives, interactive posts, and promotional content. Managed content planning, visual direction, and creative execution from concept to final output."
+    role: "Freelance Creative Designer"
   - title: "Branding & Advertising – Insights Opinion"
-    description: "Created logos, brand guidelines, and visual communication strategies."
-    role: "Freelance Designer"
-  - title: "Ganesh Chaturthi Campaign – Jack Martin"
-    description: "Designed motion graphics videos and social media content."
+    description: "Developed logo identities, brand guidelines, advertising creatives, and visual communication."
     role: "Freelance Designer"
 
 languages:
@@ -151,7 +169,7 @@ links:
 
 # Summary
 
-Senior Creative Designer with **7+ years of experience** delivering creative solutions across branding, marketing, digital, print, motion graphics, UI/UX, and web design. Contributed to projects for **Red Chillies Entertainment**, **Clean Slate Filmz**, and led creative design for the national-level **STEAM Innovation League 2025**.
+Brand & Creative Designer with **7+ years of experience** across diverse industries, growing from hands-on graphic design into broader **brand and creative ownership.** I have worked on brand identities and visual communication across digital, print, packaging, campaigns, events, exhibitions, and physical brand experiences.
 
 # Experience
 
